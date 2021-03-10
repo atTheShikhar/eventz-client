@@ -1,0 +1,70 @@
+
+.header {
+    background-color: rgb(250, 250, 250);
+}
+.heroImage {
+    display: block;
+    height: auto;
+    width: 90vw;
+    margin: auto;
+    padding: 30px 0;
+}
+.headerContent {
+    width: 90vw;
+    margin: auto;
+    text-align: center;
+}
+.heading {
+    font-weight: 500;
+    line-height: 1.3em;
+    font-size: 2.1rem;
+    color:rgb(75, 75, 75);
+    padding: 10px 0;
+}
+.highlight {
+    color: rgb(0, 0, 120);
+}
+.content1 {
+    font-size: 1.3rem;
+    font-weight: 300;
+    color: rgb(100, 100, 100);
+    padding: 10px 0 30px;
+}
+.buttonGroup {
+    padding-bottom: 30px;
+}
+.bigButton {
+    padding: 12px 28px;
+}
+.book {
+    margin-left: 2vmax;
+}
+
+@media screen and (min-width: 800px) {
+    .header {
+        /* border: solid 1px red; */
+        display: flex;
+        margin: auto;
+        flex-direction: row-reverse;
+        flex-direction: center;
+        padding: 0 max(50px,10vw);
+    }
+    .headerContent {
+        /* border: solid 1px orange; */
+        text-align: left;
+        max-width: 50%;
+        padding: 30px 50px 0 50px;
+    }
+    .heading {
+        font-weight: 400;
+        font-size: 2.5rem;
+    }
+    .content1 {
+
+    }
+    .heroImage {
+        width: max(50%,360px);
+        /* border: solid 2px blue; */
+    }
+    
+}
