@@ -15,7 +15,10 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Copyright from '../components/Copyright';
 import useStyles from './FormStyle';
 import Textbox from '../components/Inputs/Textbox'
+// import GenericSnackbar from '../components/feedback/snackbar'
 import { ValidatorForm } from 'react-material-ui-form-validator'
+import {login} from '../helpers/auth';
+
 
 export default function Login() {
     const classes = useStyles();
@@ -45,7 +48,24 @@ export default function Login() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(values.email+" "+values.password);
+
+        login(values.email,values.password)
+            .then(res => {
+                switch(res.status) {
+                    case 401: {
+                        console.log(res.data.error);
+                        break;
+                    }
+                    case 400: {
+                        console.log(res.data.validationError);
+                        break;
+                    }
+                    default: {
+                        console.log(res.data.message);
+                        
+                    }
+                }
+            })
     }
 
     return (

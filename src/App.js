@@ -3,6 +3,7 @@ import Login from './Pages/Login'
 import Register from './Pages/Register';
 import About from './Pages/About';
 import Navbar from './components/Navbar/Navbar';
+import Create from './Pages/CreateEvents/Create';
 import './App.css';
 
 import {
@@ -18,21 +19,11 @@ function App() {
         <Navbar/>
         <Switch>
 
-          <Route exact path="/">
-            <Homepage/>
-          </Route>
-
-          <Route path="/Login">
-            <Login/>
-          </Route>
-
-          <Route path="/Register">
-            <Register/>
-          </Route>
-
-          <Route path="/About">
-            <About/>
-          </Route>
+          <Route exact path="/" component={Homepage}/>
+          <Route path="/login" component={Login}/>
+          <Route path="/register" component={Register}/>
+          <Route path="/about" component={About}/>
+          <Route path="/create" component={Create}/>
 
         </Switch>
       </Router>

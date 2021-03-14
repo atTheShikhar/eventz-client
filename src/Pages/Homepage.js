@@ -4,7 +4,8 @@ import heroImage from '../assets/events.svg';
 import "./Homepage.css"
 import FilledButton from '../components/buttons/FilledButton';
 
-function Homepage() {
+function Homepage(props) {
+    const {history} = props;
     
     return (
         <div className="container">
@@ -21,7 +22,9 @@ function Homepage() {
                         Participants can book those events.
                     </header>
                     <div className="buttonGroup">
-                        <FilledButton name="Create Event" className="bigButton"></FilledButton>
+                        <FilledButton name="Create Event" className="bigButton" onClick={() => {
+                            history.push('/create')
+                        }}></FilledButton>
                         <FlatButton name="Book Event" className="bigButton book"></FlatButton>
                     </div>
                 </div>
