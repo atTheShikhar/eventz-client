@@ -33,12 +33,7 @@
 .buttonGroup {
     padding-bottom: 30px;
 }
-.bigButton {
-    padding: 12px 28px;
-}
-.book {
-    margin-left: 2vmax;
-}
+
 
 @media screen and (min-width: 800px) {
     .header {

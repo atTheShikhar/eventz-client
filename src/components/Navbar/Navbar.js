@@ -1,11 +1,11 @@
+import { Button } from '@material-ui/core';
 import React,{useState} from 'react'
 import {
     useHistory,
     NavLink
 } from 'react-router-dom';
-import FlatButton from '../buttons/FlatButton';
-import FilledButton from '../buttons/FilledButton';
-import styles from './Navbar.module.css';
+// import FlatButton from '../buttons/FlatButton';
+
 
 function Navbar() {
     const history = useHistory();
@@ -27,7 +27,14 @@ function Navbar() {
                         <NavLink to="/About">About</NavLink>
                     </li>
                 </ul>
-                <FlatButton onClick={() => history.push('/Login')} name="Login" />
+                <Button 
+                    variant="contained" 
+                    color="primary" 
+                    onClick={() => history.push('/Login')}
+                    disableElevation
+                >
+                    Login
+                </Button>
             </nav>
         </>
     )

@@ -13,3 +13,17 @@ export const login = async (email,password) => {
         return err.response;
     }
 }
+
+export const register = async (fname,lname,email,password) => {
+    try {
+        const response = await axios.post(`${baseUrl}/api/register`,{
+            fname,
+            lname,
+            email,
+            password
+        });
+        return response;
+    } catch(err) {
+        return err.response;
+    }
+}

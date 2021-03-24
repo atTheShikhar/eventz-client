@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
     Avatar,
-    Button,
     FormControlLabel,
     Checkbox,
     Link,
@@ -12,23 +11,29 @@ import {
 } from '@material-ui/core';
 
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import SubmitButton from '../components/buttons/SubmitButton';
 import Copyright from '../components/Copyright';
 import useStyles from './FormStyle';
 import Textbox from '../components/Inputs/Textbox'
 // import GenericSnackbar from '../components/feedback/snackbar'
 import { ValidatorForm } from 'react-material-ui-form-validator'
 import {login} from '../helpers/auth';
+import { useHistory } from 'react-router';
 
 
 export default function Login() {
-    const classes = useStyles();
 
+    //Hooks
+    const classes = useStyles();
+    const history = useHistory();
     const [values,setValues] = useState({
         email: "",
         password: ""
     });
     const [passwordState,setPasswordState] = useState("password")
+    const [isDisabled, setIsDisabled] = useState(false);
 
+    //Functions
     const handleChange = (e) => {
         setValues(
             values => ({
@@ -37,7 +42,6 @@ export default function Login() {
             })
         )
     }
-
     const handleShowPassword = e => {
         if(e.target.checked) {
             setPasswordState("text");
@@ -45,13 +49,17 @@ export default function Login() {
             setPasswordState("password")
         }
     }
-
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        setIsDisabled(true);
+        setTimeout(() => {
+            setIsDisabled(false);
+        }, 1500);
+
         login(values.email,values.password)
             .then(res => {
-                switch(res.status) {
+                switch(res?.status) {
                     case 401: {
                         console.log(res.data.error);
                         break;
@@ -61,13 +69,20 @@ export default function Login() {
                         break;
                     }
                     default: {
-                        console.log(res.data.message);
-                        
+                        if(res === undefined ) {
+                            console.log("Error Connecting to network!");
+                        } else {
+                            console.log(res.data.message);
+                        }
                     }
                 }
             })
+            .catch(err => {
+                console.log(err);
+            })
     }
 
+    //Render Logic
     return (
         <div className={classes.page}>
         <Container component="main" maxWidth="xs">
@@ -78,7 +93,8 @@ export default function Login() {
                 <Typography component="h1" variant="h5">
                     Log In
                 </Typography>
-                <ValidatorForm className={classes.form} onSubmit={handleSubmit}>
+                
+                    <ValidatorForm className={classes.form} onSubmit={handleSubmit}>
                     <Textbox
                         label="Email Address"
                         name="email"
@@ -113,15 +129,12 @@ export default function Login() {
                         Forgot password?
                     </Link>
                     
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}    
+                    <SubmitButton
+                        className={classes.submit}   
+                        disabled={isDisabled} 
                     >
                         Log In
-                    </Button>
+                    </SubmitButton>
 
                     <Grid container direction="column">
                         
@@ -133,8 +146,14 @@ export default function Login() {
                                 Don't have an account?
                             </span>
 
-                            <Link href="#" variant="body2">
-                                {"Sign Up"}
+                            <Link 
+                                href="" 
+                                variant="body2"
+                                onClick={() => {
+                                    history.push('/Register')
+                                }}
+                            >
+                                Sign Up
                             </Link>
                         </Grid>
                     </Grid>

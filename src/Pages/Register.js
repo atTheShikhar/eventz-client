@@ -1,7 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import {
     Avatar,
-    Button,
     FormControlLabel,
     Checkbox,
     Link,
@@ -14,8 +13,11 @@ import {
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Copyright from '../components/Copyright';
 import Textbox from '../components/Inputs/Textbox';
+import SubmitButton from '../components/buttons/SubmitButton'
 import useStyles from './FormStyle';
 import { ValidatorForm } from 'react-material-ui-form-validator';
+import {register} from '../helpers/auth';
+import { useHistory } from 'react-router-dom';
 
 export default function Register() {
     const reqMsg = "This field is required!";
@@ -31,15 +33,17 @@ export default function Register() {
     });
 
     //Hooks
+    const history = useHistory();
     const classes = useStyles();
     const [values, setValues] = useState({
         fname: "",
-        lname: "",
+        lname: " ",
         email: "",
         password: "",
         confirmPassword: "",
     });
     const [passwordState, setPasswordState] = useState("password")
+    const [isDisabled, setIsDisabled] = useState(false);
     useEffect(() => {
         return () => {
             ValidatorForm.removeValidationRule('isSamePassword');
@@ -65,7 +69,26 @@ export default function Register() {
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(values);
+        
+        setIsDisabled(true);
+        setTimeout(() => {
+            setIsDisabled(false);
+        }, 1500);
+
+        //TODO: Handle registration Logic
+        register(values.fname,values.lname,values.email,values.password)
+            .then(res => {
+                switch(res?.status) {
+                    default: {
+                        if (res === undefined) {
+                            console.log("Error Connecting to network!");
+                        } else {
+                            console.log(res.data.message);
+                        }
+                    }
+                }
+            })
+            .catch(err => console.log(err))
     }
 
     //View Logic
@@ -136,15 +159,12 @@ export default function Register() {
                             />
                         </Grid>
 
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
+                        <SubmitButton
                             className={classes.submit}
+                            disabled={isDisabled}
                         >
                             Sign Up
-                        </Button>
+                        </SubmitButton>
 
                         <Grid container direction="column">
 
@@ -156,8 +176,14 @@ export default function Register() {
                                     Already have an account?
                                 </span>
 
-                                <Link href="#" variant="body2">
-                                    {"Log In"}
+                                <Link 
+                                    href="" 
+                                    onClick={() => {
+                                        history.push('/Login')
+                                    }} 
+                                    variant="body2"
+                                >
+                                    Log In
                                 </Link>
                             </Grid>
                         </Grid>
