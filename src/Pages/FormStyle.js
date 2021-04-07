@@ -7,6 +7,7 @@ const useStyles = makeStyles((theme) => ({
     },
     card: {
         marginTop: theme.spacing(8),
+        boxShadow: "0px 0px 5px 1px rgba(10,10,10,0.2)",
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
