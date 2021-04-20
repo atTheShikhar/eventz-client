@@ -10,7 +10,6 @@ function Textbox(props) {
             margin="normal"
             autoComplete={props.name}
             fullWidth
-            required
             {...props}
         />
     )
