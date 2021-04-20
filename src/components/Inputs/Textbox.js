@@ -11,7 +11,9 @@ function Textbox(props) {
             autoComplete={props.name}
             fullWidth
             {...props}
-        />
+        >
+            {props.children}
+        </TextValidator>
     )
 }
 

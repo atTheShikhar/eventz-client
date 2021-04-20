@@ -1,7 +1,8 @@
-import Homepage from './Pages/Homepage';
-import Login from './Pages/Login'
-import Register from './Pages/Register';
-import About from './Pages/About';
+import Homepage from './pages/Homepage';
+import Login from './pages/Login'
+import Register from './pages/Register';
+import About from './pages/About';
+import CreateEvent from './pages/Create/CreateEvent';
 import Navbar from './components/Navbar/Navbar';
 import './App.css';
 
@@ -10,7 +11,7 @@ import {
   Route,
   Switch
 } from 'react-router-dom'
-import CreateEvent from './Pages/Create/CreateEvent';
+
 
 function App() {
   return (

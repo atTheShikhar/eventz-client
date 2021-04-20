@@ -2,17 +2,19 @@ import React,{useState} from 'react'
 import AddressDetails from './AddressDetails';
 import EventDetails from './EventDetails';
 import OrganiserDetails from './OrganiserDetails';
-import {StepLabel, Stepper, Step} from '@material-ui/core';
+import {StepLabel, Stepper, Step, Container} from '@material-ui/core';
 
 function CreateEvent() {
+    let currentDate = new Date().toJSON().split('T')[0];
+    
     const [details,setDetails] = useState({
         //Event Details
         eventTitle: "",
-        eventDiscription: "",
-        noOfPeople: 100,
+        eventDescription: "",
+        noOfPeople: "Upto 100",
         isPaid: false,
-        eventDate: "",
-        eventDuration: "",
+        eventDate: currentDate,
+        eventTime: "",
         eventGenre: "",
 
         //Address Details
@@ -83,15 +85,18 @@ function CreateEvent() {
     
     return (
         <>
-        <Stepper activeStep={step} >
-            {
-                formSteps.map(label => 
-                    <Step key={label}>
-                        <StepLabel>{label}</StepLabel>
-                    </Step>
-                )
-            }
-        </Stepper>
+        <Container component="main" maxWidth="sm">
+            <Stepper activeStep={step} >
+                {
+                    formSteps.map(label =>
+                        <Step key={label}>
+                            <StepLabel>{label}</StepLabel>
+                        </Step>
+                    )
+                }
+            </Stepper>
+        </Container>
+        
         {renderForm}
         </>
     );

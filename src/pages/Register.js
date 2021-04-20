@@ -37,7 +37,7 @@ export default function Register() {
     const classes = useStyles();
     const [values, setValues] = useState({
         fname: "",
-        lname: " ",
+        lname: "",
         email: "",
         password: "",
         confirmPassword: "",
