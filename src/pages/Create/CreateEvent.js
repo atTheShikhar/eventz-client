@@ -2,19 +2,31 @@ import React,{useState} from 'react'
 import AddressDetails from './AddressDetails';
 import EventDetails from './EventDetails';
 import OrganiserDetails from './OrganiserDetails';
-import {StepLabel, Stepper, Step, Container} from '@material-ui/core';
+import {StepLabel, Stepper, Step, Container, makeStyles, Grid} from '@material-ui/core';
+
+const useStyles = makeStyles(theme => ({
+    stepperStyles: {
+        backgroundColor: theme.palette.background.default,
+    },
+    containerStyles: {
+        backgroundColor: theme.palette.background.default,
+        padding: theme.spacing(4)
+    }
+}));
 
 function CreateEvent() {
-    let currentDate = new Date().toJSON().split('T')[0];
+    const currentDate = new Date().toJSON().split('T')[0];
     
+
+    const classes = useStyles();
     const [details,setDetails] = useState({
         //Event Details
         eventTitle: "",
         eventDescription: "",
         noOfPeople: "Upto 100",
-        isPaid: false,
+        // isPaid: false,
         eventDate: currentDate,
-        eventTime: "",
+        eventTime: "12:00",
         eventGenre: "",
 
         //Address Details
@@ -22,7 +34,7 @@ function CreateEvent() {
         street: "",
         pinCode: "",
         city: "",
-        stateName: "",
+        stateName: "Andaman and Nicobar Islands",
         country: "India",
 
         //Organiser Details
@@ -84,21 +96,26 @@ function CreateEvent() {
     }
     
     return (
-        <>
-        <Container component="main" maxWidth="sm">
-            <Stepper activeStep={step} >
-                {
-                    formSteps.map(label =>
-                        <Step key={label}>
-                            <StepLabel>{label}</StepLabel>
-                        </Step>
-                    )
-                }
-            </Stepper>
+        <Container maxWidth="xl" className={classes.containerStyles}>
+            <Grid container direction="column" spacing={3}>
+                <Grid item>
+                    <Container maxWidth="sm">
+                        <Stepper activeStep={step} className={classes.stepperStyles}>
+                            {
+                                formSteps.map(label =>
+                                    <Step key={label}>
+                                        <StepLabel>{label}</StepLabel>
+                                    </Step>
+                                )
+                            }
+                        </Stepper>
+                    </Container>
+                </Grid>
+                <Grid item>
+                    {renderForm}
+                </Grid>
+            </Grid>
         </Container>
-        
-        {renderForm}
-        </>
     );
 }
 
