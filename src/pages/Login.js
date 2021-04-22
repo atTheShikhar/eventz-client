@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router';
 import {
     Avatar,
     FormControlLabel,
@@ -18,8 +19,7 @@ import Textbox from '../components/Inputs/Textbox'
 // import GenericSnackbar from '../components/feedback/snackbar'
 import { ValidatorForm } from 'react-material-ui-form-validator'
 import {login} from '../helpers/auth';
-import { useHistory } from 'react-router';
-
+import {reqErr,emailErr} from '../helpers/validators';
 
 export default function Login() {
 
@@ -106,7 +106,7 @@ export default function Login() {
                         value={values.email}
                         onChange={handleChange}
                         validators={['required', 'isEmail']}
-                        errorMessages={['this field is required', 'email is not valid']}
+                        errorMessages={[reqErr,emailErr]}
                     />
                     <Textbox
                         name="password"
@@ -115,7 +115,7 @@ export default function Login() {
                         value={values.password}
                         onChange={handleChange}
                         validators={['required']}
-                        errorMessages={['this field is required']}
+                        errorMessages={[reqErr]}
                     />
                     
                     <Grid item>

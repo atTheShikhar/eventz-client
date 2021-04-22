@@ -1,4 +1,5 @@
 import React, { useState,useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import {
     Avatar,
     FormControlLabel,
@@ -17,12 +18,9 @@ import SubmitButton from '../components/buttons/SubmitButton'
 import useStyles from './FormStyle';
 import { ValidatorForm } from 'react-material-ui-form-validator';
 import {register} from '../helpers/auth';
-import { useHistory } from 'react-router-dom';
+import { reqErr, emailErr, regexText, textErr } from '../helpers/validators';
 
 export default function Register() {
-    const reqMsg = "This field is required!";
-    const nameMsg = "Invalid Name!";
-    const emailMsg = "Invalid Email!";
 
     //Custom validation rule to rematch password 
     ValidatorForm.addValidationRule('isSamePassword', confirmPass => {
@@ -113,8 +111,8 @@ export default function Register() {
                             autoFocus
                             value={values.fname}
                             onChange={handleChange}
-                            validators={['required', 'matchRegexp:^[a-zA-Z. ]+$']}
-                            errorMessages={[reqMsg,nameMsg]}
+                            validators={['required', regexText]}
+                            errorMessages={[reqErr,textErr]}
                         />
                         <Textbox
                             label="Last Name"
@@ -122,8 +120,8 @@ export default function Register() {
                             required={false}
                             value={values.lname}
                             onChange={handleChange}
-                            validators={['matchRegexp:^[a-zA-Z. ]+$']}
-                            errorMessages={[nameMsg]}
+                            validators={[regexText]}
+                            errorMessages={[textErr]}
                         />
                         <Textbox
                             label="Email Address"
@@ -131,7 +129,7 @@ export default function Register() {
                             value={values.email}
                             onChange={handleChange}
                             validators={['required','isEmail']}
-                            errorMessages={[reqMsg,emailMsg]}
+                            errorMessages={[reqErr,emailErr]}
                         />
                         <Textbox
                             label="Password"
@@ -140,7 +138,7 @@ export default function Register() {
                             value={values.password}
                             onChange={handleChange}
                             validators={['required']}
-                            errorMessages={[reqMsg]}
+                            errorMessages={[reqErr]}
                         />
                         <Textbox
                             label="Confirm Password"
@@ -149,7 +147,7 @@ export default function Register() {
                             value={values.confirmPassword}
                             onChange={handleChange}
                             validators={['required','isSamePassword']}
-                            errorMessages={[reqMsg,'password mismatch']}
+                            errorMessages={[reqErr,'password mismatch']}
                         />
 
                         <Grid item>
