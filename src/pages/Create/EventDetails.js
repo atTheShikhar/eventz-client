@@ -1,22 +1,39 @@
-import { MenuItem,Grid,Container } from '@material-ui/core'
-import React from 'react'
+import { MenuItem,Grid,Container} from '@material-ui/core'
+import React,{useEffect} from 'react'
 import { ValidatorForm } from 'react-material-ui-form-validator';
 import SubmitButton from '../../components/buttons/SubmitButton';
 import Textbox from '../../components/Inputs/Textbox'
 import useStyles from './Styles'
+import Forward from '@material-ui/icons/ArrowForwardIos'
+import {
+    reqErr,
+    maxSize,
+    sizeErr,
+    regexText, 
+    textErr, 
+    futureDateValidator, 
+    pastDateErr
+} from '../../helpers/validators';
 
 function EventDetails(props) {
     const {details,nextStep,handleChange} = props;
-    const classes = useStyles();
+    const num = ["Upto 100", "Upto 500", "Upto 1000", "More than 1000"];
 
+    //Hooks
+    const classes = useStyles();
+    useEffect(() => {
+        futureDateValidator();
+    }, []);
+
+    //Functions
     const forward = e => {
         e.preventDefault();
         nextStep();
     }
 
-    const num = ["Upto 100","Upto 500","Upto 1000","More than 1000"];
+    //Render Logic
     return (
-    <ValidatorForm onSubmit={forward}>
+    <ValidatorForm onSubmit={forward} instantValidate={true}>
             <Container maxWidth="sm" className={classes.containerStyles}>
                 <Grid container spacing={1} className={classes.gridContainerStyles}>
                     <Grid item xs={12} sm={6}>
@@ -26,6 +43,8 @@ function EventDetails(props) {
                             value={details.eventTitle}
                             onChange={handleChange('eventTitle')}
                             name="eventTitle"
+                            validators={['required',maxSize(100),regexText]}
+                            errorMessages={[reqErr,sizeErr(100),textErr]}
                         />
                     </Grid>
                         
@@ -35,6 +54,8 @@ function EventDetails(props) {
                             value={details.eventGenre}
                             onChange={handleChange('eventGenre')}
                             name="eventGenre"
+                            validators={['required', maxSize(50), regexText]}
+                            errorMessages={[reqErr, sizeErr(50), textErr]}
                         />
                     </Grid>
 
@@ -67,6 +88,8 @@ function EventDetails(props) {
                             InputLabelProps={{
                                 shrink: true
                             }}
+                            validators={["futureDate"]}
+                            errorMessages={[pastDateErr]}
                         />
                     </Grid>
 
@@ -89,19 +112,24 @@ function EventDetails(props) {
                     
                     <Grid item xs={12}>
                         <Textbox
-                            label="Description (150 words max)"
+                            label="Description (2000 letters max)"
                             value={details.eventDescription}
                             onChange={handleChange('eventDescription')}
                             name="eventDescription"
                             multiline
                             rows={5}
+                            validators={['required',maxSize(2000)]}
+                            errorMessages={[reqErr,sizeErr(2000)]}
                         />
                     </Grid>
 
                     <Grid item xs>
                         <Grid container direction="row" justify="flex-end">
                             <Grid item>
-                                <SubmitButton fullWidth={false}>
+                                <SubmitButton 
+                                    fullWidth={false} 
+                                    endIcon={<Forward/>}
+                                >
                                     Next
                                 </SubmitButton>
                             </Grid>
@@ -114,3 +142,4 @@ function EventDetails(props) {
 }
 
 export default EventDetails
+

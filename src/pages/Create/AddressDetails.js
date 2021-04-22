@@ -5,24 +5,37 @@ import SubmitButton from '../../components/buttons/SubmitButton';
 import useStyles from './Styles';
 import Textbox from '../../components/Inputs/Textbox';
 import statesArray from '../../helpers/statesArray'
+import Forward from '@material-ui/icons/ArrowForwardIos'
+import {
+    reqErr,
+    maxSize,
+    sizeErr,
+    regexText,
+    textErr,
+    numErr,
+    exactDigit,
+    exactDigitErr
+} from '../../helpers/validators';
 
 function AddressDetails(props) {
-    const classes = useStyles();
-    
     const {details,prevStep,nextStep,handleChange} = props;    
 
+    //Hooks
+    const classes = useStyles();
+
+    //Functions
     const forward = e => {
         e.preventDefault();
         nextStep();
     }
-
     const backward = e => {
         e.preventDefault();
         prevStep();
     }
 
+    //Render Logic
     return (
-        <ValidatorForm onSubmit={forward}>
+        <ValidatorForm onSubmit={forward} instantValidate={true}>
             <Container maxWidth="sm" className={classes.containerStyles}>
                 <Grid container spacing={1} className={classes.gridContainerStyles}>
                     <Grid item xs={12} sm={6}>
@@ -32,6 +45,8 @@ function AddressDetails(props) {
                             onChange={handleChange('apartment')}
                             name="apartment"
                             autoFocus
+                            validators={['required',maxSize(50)]}
+                            errorMessages={[reqErr,sizeErr(50)]}
                         />
                     </Grid>
 
@@ -41,6 +56,8 @@ function AddressDetails(props) {
                             value={details.street}
                             onChange={handleChange('street')}
                             name="street"
+                            validators={['required',maxSize(100)]}
+                            errorMessages={[reqErr,sizeErr(100)]}
                         />
                     </Grid>
 
@@ -50,15 +67,19 @@ function AddressDetails(props) {
                             value={details.city}
                             onChange={handleChange('city')}
                             name="city"
+                            validators={['required',maxSize(40),regexText]}
+                            errorMessages={[reqErr,sizeErr(40),textErr]}
                         />
                     </Grid>
 
                     <Grid item xs={12} sm={6}>
                         <Textbox
-                            label="PIN Code (6 digits only)"
+                            label="PIN Code"
                             value={details.pinCode}
                             onChange={handleChange('pinCode')}
                             name="pinCode"
+                            validators={['required','isNumber',exactDigit(6)]}
+                            errorMessages={[reqErr,numErr,exactDigitErr(6)]}
                         />
                     </Grid>
 
@@ -99,7 +120,10 @@ function AddressDetails(props) {
                                     onClick={backward}
                                 >Previous</Button>
 
-                                <SubmitButton fullWidth={false}>
+                                <SubmitButton 
+                                    fullWidth={false}
+                                    endIcon={<Forward/>}
+                                >
                                     Next
                                 </SubmitButton>
                             </Grid>

@@ -102,7 +102,11 @@ export default function Register() {
                     <Typography component="h1" variant="h5">
                         Register
                     </Typography>
-                    <ValidatorForm className={classes.form} onSubmit={handleSubmit}>
+                    <ValidatorForm 
+                        className={classes.form} 
+                        onSubmit={handleSubmit} 
+                        instantValidate={true}
+                    >
                         <Textbox 
                             label="First Name"
                             name="fname"

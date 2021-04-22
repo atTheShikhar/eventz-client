@@ -2,22 +2,21 @@ import React,{useState} from 'react'
 import AddressDetails from './AddressDetails';
 import EventDetails from './EventDetails';
 import OrganiserDetails from './OrganiserDetails';
-import {StepLabel, Stepper, Step, Container, makeStyles, Grid} from '@material-ui/core';
-
-const useStyles = makeStyles(theme => ({
-    stepperStyles: {
-        backgroundColor: theme.palette.background.default,
-    },
-    containerStyles: {
-        backgroundColor: theme.palette.background.default,
-        padding: theme.spacing(4)
-    }
-}));
+import {StepLabel, Stepper, Step, Container, Grid, Box} from '@material-ui/core';
+import Copyright from '../../components/Copyright';
+import useStyles from './Styles'
 
 function CreateEvent() {
+    //Attributes
     const currentDate = new Date().toJSON().split('T')[0];
-    
+    const formSteps = [
+        "Event Details",
+        "Address Details",
+        "Organiser Details"
+    ];
+    let renderForm;
 
+    //Hooks
     const classes = useStyles();
     const [details,setDetails] = useState({
         //Event Details
@@ -45,27 +44,21 @@ function CreateEvent() {
     });
     const [step,setStep] = useState(0);
 
-    const formSteps = [
-        "Event Details",
-        "Address Details",
-        "Organiser Details"
-    ];
-
+    //Functions
     const nextStep = () => {
         setStep(step => step+1);
     }
-
     const prevStep = () => {
         setStep(step => step-1);
     }
-
     const handleChange = input => e => {
         setDetails({
             ...details,
             [input]: e.target.value
         });
     }
-    let renderForm;
+
+    //Multistep Form Logic
     switch(step) {
         case 0: renderForm = (
             <EventDetails
@@ -95,8 +88,9 @@ function CreateEvent() {
         default: return (<CreateEvent/>)
     }
     
+    //Render Logic
     return (
-        <Container maxWidth="xl" className={classes.containerStyles}>
+        <Container maxWidth="xl" component="main" className={classes.mainStyles}>
             <Grid container direction="column" spacing={3}>
                 <Grid item>
                     <Container maxWidth="sm">
@@ -114,6 +108,9 @@ function CreateEvent() {
                 <Grid item>
                     {renderForm}
                 </Grid>
+                <Box mt={5}>
+                    <Copyright />
+                </Box>
             </Grid>
         </Container>
     );

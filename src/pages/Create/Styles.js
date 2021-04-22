@@ -9,6 +9,13 @@ const useStyles = makeStyles(theme => ({
         boxShadow: "0px 0px 5px 1px rgba(10,10,10,0.2)",
         borderRadius: theme.spacing(1),
         backgroundColor: "white",
+    },
+    stepperStyles: {
+        backgroundColor: theme.palette.background.default,
+    },
+    mainStyles: {
+        backgroundColor: theme.palette.background.default,
+        padding: theme.spacing(4)
     }
 }));
 

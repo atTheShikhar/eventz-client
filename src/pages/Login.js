@@ -94,7 +94,11 @@ export default function Login() {
                     Log In
                 </Typography>
                 
-                    <ValidatorForm className={classes.form} onSubmit={handleSubmit}>
+                    <ValidatorForm 
+                        className={classes.form} 
+                        onSubmit={handleSubmit}
+                        instantValidate={true}
+                    >
                     <Textbox
                         label="Email Address"
                         name="email"
