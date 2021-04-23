@@ -3,11 +3,11 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
     page: {
         backgroundColor: theme.palette.background.default,
-        border: "solid 1px white"
+        border: "solid 1px white",
+        minHeight: "80vh"
     },
     card: {
         marginTop: theme.spacing(8),
-        boxShadow: "0px 0px 5px 1px rgba(10,10,10,0.2)",
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -26,6 +26,13 @@ const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(3, 0, 3),
     },
+    container: {
+        width: "100%",
+        margin: theme.spacing(1,0),
+    },
+    primaryColor: {
+        color: theme.palette.primary.main
+    }
 }));
 
 export default useStyles;

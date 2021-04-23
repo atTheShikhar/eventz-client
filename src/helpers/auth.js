@@ -27,3 +27,5 @@ export const register = async (fname,lname,email,password) => {
         return err.response;
     }
 }
+
+export const isAuth = true;

@@ -90,7 +90,7 @@ function CreateEvent() {
     
     //Render Logic
     return (
-        <Container maxWidth="xl" component="main" className={classes.mainStyles}>
+        <div className={classes.mainStyles}>
             <Grid container direction="column" spacing={3}>
                 <Grid item>
                     <Container maxWidth="sm">
@@ -112,7 +112,7 @@ function CreateEvent() {
                     <Copyright />
                 </Box>
             </Grid>
-        </Container>
+        </div>
     );
 }
 

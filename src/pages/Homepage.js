@@ -1,5 +1,5 @@
 import { Button } from '@material-ui/core';
-import React,{useState} from 'react'
+import React from 'react'
 // import FlatButton from '../components/buttons/FlatButton';
 import heroImage from '../assets/events.svg';
 import "./Homepage.css"

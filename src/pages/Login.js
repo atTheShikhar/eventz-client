@@ -8,7 +8,8 @@ import {
     Grid,
     Box,
     Typography,
-    Container
+    Container,
+    Card
 } from '@material-ui/core';
 
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -86,7 +87,7 @@ export default function Login() {
     return (
         <div className={classes.page}>
         <Container component="main" maxWidth="xs">
-            <div className={classes.card}>
+            <Card className={classes.card}>
                 <Avatar className={classes.avatar}>
                     <LockOutlinedIcon />
                 </Avatar>
@@ -162,7 +163,7 @@ export default function Login() {
                         </Grid>
                     </Grid>
                 </ValidatorForm>
-            </div>
+            </Card>
             <Box mt={5}>
                 <Copyright />
             </Box>

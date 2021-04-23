@@ -8,7 +8,8 @@ import {
     Grid,
     Box,
     Typography,
-    Container
+    Container,
+    Card
 } from '@material-ui/core';
 
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -89,11 +90,11 @@ export default function Register() {
             .catch(err => console.log(err))
     }
 
-    //View Logic
+    //Render Logic
     return (
         <div className={classes.page}>
             <Container component="main" maxWidth="xs">
-                <div className={classes.card}>
+                <Card className={classes.card}>
                     <Avatar className={classes.avatar}>
                         <AccountCircleIcon />
                     </Avatar>
@@ -190,7 +191,7 @@ export default function Register() {
                             </Grid>
                         </Grid>
                     </ValidatorForm>
-                </div>
+                </Card>
                 <Box mt={5}>
                     <Copyright />
                 </Box>
