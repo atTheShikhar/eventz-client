@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router';
 import {
     Avatar,
     FormControlLabel,
@@ -9,7 +8,7 @@ import {
     Box,
     Typography,
     Container,
-    Card
+    Paper
 } from '@material-ui/core';
 
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -20,7 +19,8 @@ import Textbox from '../components/Inputs/Textbox'
 // import GenericSnackbar from '../components/feedback/snackbar'
 import { ValidatorForm } from 'react-material-ui-form-validator'
 import {login} from '../helpers/auth';
-import {reqErr,emailErr} from '../helpers/validators';
+import {reqErr,emailErr, minSize,minSizeErr} from '../helpers/validators';
+import { useHistory } from 'react-router';
 
 export default function Login() {
 
@@ -71,7 +71,7 @@ export default function Login() {
                     }
                     default: {
                         if(res === undefined ) {
-                            console.log("Error Connecting to network!");
+                            history.push('/neterr');
                         } else {
                             console.log(res.data.message);
                         }
@@ -87,7 +87,7 @@ export default function Login() {
     return (
         <div className={classes.page}>
         <Container component="main" maxWidth="xs">
-            <Card className={classes.card}>
+            <Paper className={classes.card}>
                 <Avatar className={classes.avatar}>
                     <LockOutlinedIcon />
                 </Avatar>
@@ -115,8 +115,8 @@ export default function Login() {
                         type={passwordState}
                         value={values.password}
                         onChange={handleChange}
-                        validators={['required']}
-                        errorMessages={[reqErr]}
+                        validators={['required',minSize(6)]}
+                        errorMessages={[reqErr,minSizeErr("Password",6)]}
                     />
                     
                     <Grid item>
@@ -130,7 +130,9 @@ export default function Login() {
                         />
                     </Grid>
 
-                    <Link href="#" variant="body2">
+                    <Link href="" variant="body2" onClick={() => {
+                        history.push('/user/forgetpassword');
+                    }}>
                         Forgot password?
                     </Link>
                     
@@ -163,7 +165,7 @@ export default function Login() {
                         </Grid>
                     </Grid>
                 </ValidatorForm>
-            </Card>
+            </Paper>
             <Box mt={5}>
                 <Copyright />
             </Box>

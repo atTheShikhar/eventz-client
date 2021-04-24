@@ -8,7 +8,7 @@ import Forward from '@material-ui/icons/ArrowForwardIos'
 import {
     reqErr,
     maxSize,
-    sizeErr,
+    maxSizeErr,
     regexText, 
     textErr, 
     futureDateValidator, 
@@ -44,7 +44,7 @@ function EventDetails(props) {
                             onChange={handleChange('eventTitle')}
                             name="eventTitle"
                             validators={['required',maxSize(100),regexText]}
-                            errorMessages={[reqErr,sizeErr(100),textErr]}
+                            errorMessages={[reqErr,maxSizeErr(100),textErr]}
                         />
                     </Grid>
                         
@@ -55,7 +55,7 @@ function EventDetails(props) {
                             onChange={handleChange('eventGenre')}
                             name="eventGenre"
                             validators={['required', maxSize(50), regexText]}
-                            errorMessages={[reqErr, sizeErr(50), textErr]}
+                            errorMessages={[reqErr, maxSizeErr(50), textErr]}
                         />
                     </Grid>
 
@@ -119,7 +119,7 @@ function EventDetails(props) {
                             multiline
                             rows={5}
                             validators={['required',maxSize(2000)]}
-                            errorMessages={[reqErr,sizeErr(2000)]}
+                            errorMessages={[reqErr,maxSizeErr(2000)]}
                         />
                     </Grid>
 

@@ -9,7 +9,7 @@ import Forward from '@material-ui/icons/ArrowForwardIos'
 import {
     reqErr,
     maxSize,
-    sizeErr,
+    maxSizeErr,
     regexText,
     textErr,
     numErr,
@@ -46,7 +46,7 @@ function AddressDetails(props) {
                             name="apartment"
                             autoFocus
                             validators={['required',maxSize(50)]}
-                            errorMessages={[reqErr,sizeErr(50)]}
+                            errorMessages={[reqErr,maxSizeErr(50)]}
                         />
                     </Grid>
 
@@ -57,7 +57,7 @@ function AddressDetails(props) {
                             onChange={handleChange('street')}
                             name="street"
                             validators={['required',maxSize(100)]}
-                            errorMessages={[reqErr,sizeErr(100)]}
+                            errorMessages={[reqErr,maxSizeErr(100)]}
                         />
                     </Grid>
 
@@ -68,7 +68,7 @@ function AddressDetails(props) {
                             onChange={handleChange('city')}
                             name="city"
                             validators={['required',maxSize(40),regexText]}
-                            errorMessages={[reqErr,sizeErr(40),textErr]}
+                            errorMessages={[reqErr,maxSizeErr(40),textErr]}
                         />
                     </Grid>
 

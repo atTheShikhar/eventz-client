@@ -24,14 +24,30 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(1),
     },
     submit: {
-        margin: theme.spacing(3, 0, 3),
+        margin: theme.spacing(2, 0, 2),
     },
     container: {
         width: "100%",
-        margin: theme.spacing(1,0),
+        margin: theme.spacing(1,"auto"),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: "center"
     },
     primaryColor: {
         color: theme.palette.primary.main
+    },
+    errorBg: {
+        backgroundColor: "#ffeded"
+    },
+    errorColor: {
+        color: theme.palette.error.dark
+    },
+    successBg: {
+        backgroundColor: "#eeffed"
+    },
+    successColor: {
+        color: theme.palette.success.dark
     }
 }));
 

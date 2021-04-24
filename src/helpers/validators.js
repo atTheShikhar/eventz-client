@@ -4,9 +4,13 @@ import { ValidatorForm } from "react-material-ui-form-validator";
 export const regexText = 'matchRegexp:^[a-zA-Z.,&\\- ]+$';
 export const textErr = "Can only contain alphabets and punctuations";
 
-//Rule to allow String of certain size
+//Rule to allow String of max size
 export const maxSize = len => `maxStringLength:${len}`;
-export const sizeErr = len => `Less than ${len} letters allowed`;
+export const maxSizeErr = len => `Less than ${len} letters allowed`;
+
+//Rule to allow String of min size
+export const minSize = len => `minStringLength:${len}`;
+export const minSizeErr = (field,len) => `${field} should be more than ${len-1} letters`;
 
 //Rule to allow numbers of exact length
 export const exactDigit = len => `matchRegexp:^\\d{${len}}$`
@@ -23,6 +27,17 @@ export function futureDateValidator() {
     });
 }
 export const pastDateErr = "Date cannot be in past"; 
+
+//Custom Rule to confirm password
+export function samePass(pass) {
+    ValidatorForm.addValidationRule('isSamePassword', confirmPass => {
+        if (confirmPass !== pass) {
+            return false;
+        }
+        return true;
+    });
+}
+export const samePassErr = "Password mismatch";
 
 //Errors
 export const reqErr = "This field is required";

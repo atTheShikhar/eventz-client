@@ -1,5 +1,4 @@
-import React, { useState,useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState } from 'react';
 import {
     Avatar,
     FormControlLabel,
@@ -9,7 +8,7 @@ import {
     Box,
     Typography,
     Container,
-    Card
+    Paper
 } from '@material-ui/core';
 
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -19,21 +18,17 @@ import SubmitButton from '../components/buttons/SubmitButton'
 import useStyles from './FormStyle';
 import { ValidatorForm } from 'react-material-ui-form-validator';
 import {register} from '../helpers/auth';
-import { reqErr, emailErr, regexText, textErr } from '../helpers/validators';
+import { reqErr, emailErr, 
+    regexText, textErr,
+    minSize, minSizeErr,
+    samePass, samePassErr } from '../helpers/validators';
+import { useHistory } from 'react-router';
 
-export default function Register() {
-
-    //Custom validation rule to rematch password 
-    ValidatorForm.addValidationRule('isSamePassword', confirmPass => {
-        if (confirmPass !== values.password) {
-            return false;
-        }
-        return true;
-    });
-
+export default function Register(props) {
+    
     //Hooks
-    const history = useHistory();
     const classes = useStyles();
+    const history = useHistory();
     const [values, setValues] = useState({
         fname: "",
         lname: "",
@@ -43,12 +38,6 @@ export default function Register() {
     });
     const [passwordState, setPasswordState] = useState("password")
     const [isDisabled, setIsDisabled] = useState(false);
-    useEffect(() => {
-        return () => {
-            ValidatorForm.removeValidationRule('isSamePassword');
-        }
-    },[]) 
-
 
     //Functions
     const handleChange = (e) => {
@@ -80,7 +69,7 @@ export default function Register() {
                 switch(res?.status) {
                     default: {
                         if (res === undefined) {
-                            console.log("Error Connecting to network!");
+                            history.push('/neterr');
                         } else {
                             console.log(res.data.message);
                         }
@@ -90,11 +79,14 @@ export default function Register() {
             .catch(err => console.log(err))
     }
 
+    //Calling custom validation rule
+    samePass(values.password);
+
     //Render Logic
     return (
         <div className={classes.page}>
             <Container component="main" maxWidth="xs">
-                <Card className={classes.card}>
+                <Paper className={classes.card}>
                     <Avatar className={classes.avatar}>
                         <AccountCircleIcon />
                     </Avatar>
@@ -138,8 +130,8 @@ export default function Register() {
                             type={passwordState}
                             value={values.password}
                             onChange={handleChange}
-                            validators={['required']}
-                            errorMessages={[reqErr]}
+                            validators={['required',minSize(6)]}
+                            errorMessages={[reqErr,minSizeErr("Password",6)]}
                         />
                         <Textbox
                             label="Confirm Password"
@@ -148,7 +140,7 @@ export default function Register() {
                             value={values.confirmPassword}
                             onChange={handleChange}
                             validators={['required','isSamePassword']}
-                            errorMessages={[reqErr,'password mismatch']}
+                            errorMessages={[reqErr,samePassErr]}
                         />
 
                         <Grid item>
@@ -191,7 +183,7 @@ export default function Register() {
                             </Grid>
                         </Grid>
                     </ValidatorForm>
-                </Card>
+                </Paper>
                 <Box mt={5}>
                     <Copyright />
                 </Box>

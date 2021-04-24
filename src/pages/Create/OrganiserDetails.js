@@ -8,7 +8,7 @@ import React from 'react'
 import {
     reqErr,
     maxSize,
-    sizeErr,
+    maxSizeErr,
     regexText,
     textErr,
     numErr,
@@ -51,7 +51,7 @@ function OrganiserDetails(props) {
                             name="organiserName"
                             autoFocus
                             validators={['required',regexText,maxSize(40)]}
-                            errorMessages={[reqErr,textErr,sizeErr(40)]}
+                            errorMessages={[reqErr,textErr,maxSizeErr(40)]}
                         />
                     </Grid>
 
@@ -84,7 +84,7 @@ function OrganiserDetails(props) {
                             onChange={handleChange("organisationName")}
                             name="organisationName"
                             validators={['required', regexText, maxSize(100)]}
-                            errorMessages={[reqErr, textErr, sizeErr(100)]}
+                            errorMessages={[reqErr, textErr, maxSizeErr(100)]}
                         />
                     </Grid>
 

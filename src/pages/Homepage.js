@@ -12,7 +12,7 @@ function Homepage(props) {
         <div className="container">
             <div className="header">
                 
-                <img src={heroImage} alt="create-event" className="heroImage"></img>
+                <img src={heroImage} alt="man creating an event" className="heroImage" />
                 <div className="headerContent">
                     <h1 className="heading">
                         Create or Book Events.<br/>

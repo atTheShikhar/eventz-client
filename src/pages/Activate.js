@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import jwt_decode from 'jwt-decode';
-import axios from 'axios';
-import { Button, Card, Container, Divider, Typography } from '@material-ui/core';
+import { Button, Paper, Container, Divider, Typography } from '@material-ui/core';
 import useStyles from './FormStyle';
-import ActivationFailed from '../components/ActivationFailed';
-import ActivationSuccess from '../components/ActivationSuccess';
+import StatusAndRedirect from '../components/StatusAndRedirect';
+import { activateAccount } from '../helpers/auth';
 
-const baseUrl = process.env.REACT_APP_BASE_URL;
 
-function Activate({match}) {
+function Activate({match,history}) {
     //Hooks
     const classes = useStyles();
     const [formData,setFormData] = useState({
@@ -32,35 +30,20 @@ function Activate({match}) {
             })
         }
     },[])
-
     //Functions 
     const confirmAccount = (e) => {
         e.preventDefault();
-        axios.post(`${baseUrl}/api/activate`,{token:formData.token})
-            .then((res) => {
-                console.log(res);
-                if(res.status === 200) {
-                    setFormData({
-                        ...formData,
-                        show: "success"
-                    })
-                }
-            })
-            .catch((err) => {
-                console.log(err);
-                setFormData({
-                    ...formData,
-                    show: "failed"
-                })
-            });
+        //post handler
+        activateAccount(formData,setFormData,history);
     }
+
 
     //Render Logic
     switch(formData.show) {
         case "activate": return (
             <div className={classes.page}>
                 <Container maxWidth="sm">
-                    <Card className={classes.card}>
+                    <Paper className={classes.card}>
                         <Container className={classes.container}>
                             <Typography
                                 variant="h4"
@@ -93,12 +76,31 @@ function Activate({match}) {
                                 Confirm Account
                             </Button>
                         </Container>
-                    </Card>
+                    </Paper>
                 </Container>
             </div>
         )
-        case "failed": return (<ActivationFailed />)
-        case "success": return (<ActivationSuccess />)
+        case "failed": return (
+            <StatusAndRedirect 
+                header="Activation Failed"
+                message="Link expired or invalid link!"
+                type="failed"
+            />
+        )
+        case "success": return (
+            <StatusAndRedirect 
+                header="Activation Successful"
+                message="Now you can login with your account!"
+                type="success"
+            />
+        )
+        case "already exists": return (
+            <StatusAndRedirect
+                header="Confirmed Already"
+                message="Email already confirmed!"
+                type="failed"
+            />
+        )
         default: return (<div></div>)
     }
 }
