@@ -20,7 +20,6 @@ import NetError from './components/NetError';
 
 
 function App() {
-  //TODO: add user activation forgot password routes
   return (
     <div>
       <Router>

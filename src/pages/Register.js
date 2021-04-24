@@ -12,6 +12,7 @@ import {
 } from '@material-ui/core';
 
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import GenericSnackbar from '../components/feedback/snackbar';
 import Copyright from '../components/Copyright';
 import Textbox from '../components/Inputs/Textbox';
 import SubmitButton from '../components/buttons/SubmitButton'
@@ -38,6 +39,11 @@ export default function Register(props) {
     });
     const [passwordState, setPasswordState] = useState("password")
     const [isDisabled, setIsDisabled] = useState(false);
+    const [feedback, setFeedback] = useState({
+        open: false,
+        severity: "",
+        message: ""
+    });
 
     //Functions
     const handleChange = (e) => {
@@ -55,6 +61,13 @@ export default function Register(props) {
             setPasswordState("password")
         }
     }
+    //Wrapper function to set the open value from the snackbar component
+    const setOpen = (isOpen) => {
+        setFeedback(feedback => ({
+            ...feedback,
+            open: isOpen
+        }))
+    }
     const handleSubmit = (e) => {
         e.preventDefault();
         
@@ -63,20 +76,7 @@ export default function Register(props) {
             setIsDisabled(false);
         }, 1500);
 
-        //TODO: Handle registration Logic
-        register(values.fname,values.lname,values.email,values.password)
-            .then(res => {
-                switch(res?.status) {
-                    default: {
-                        if (res === undefined) {
-                            history.push('/neterr');
-                        } else {
-                            console.log(res.data.message);
-                        }
-                    }
-                }
-            })
-            .catch(err => console.log(err))
+        register(values,history,setFeedback);
     }
 
     //Calling custom validation rule
@@ -85,6 +85,12 @@ export default function Register(props) {
     //Render Logic
     return (
         <div className={classes.page}>
+            <GenericSnackbar
+                message={feedback.message}
+                severity={feedback.severity}
+                open={feedback.open}
+                setOpen={setOpen}
+            />
             <Container component="main" maxWidth="xs">
                 <Paper className={classes.card}>
                     <Avatar className={classes.avatar}>

@@ -1,33 +1,34 @@
-import {
-    Snackbar,
-    IconButton
-} from '@material-ui/core'
-import CloseIcon from '@material-ui/icons/Close';
-import React from 'react'
+import React from 'react';
+import { Snackbar } from '@material-ui/core';
+import { Alert } from "@material-ui/lab";
 
-function GenericSnackbar(props) {
-    const {setOpen} = props;
-    const handleClose = (e) => {
-        setOpen(false)
-    }
+function GenericSnackbar(props) { 
+    const {message,severity,open,setOpen} = props;
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+    };
+
     return (
         <Snackbar 
-            {...props}
-            anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left'
-            }}
-            autoHideDuration={4000}
+            open={open} 
+            autoHideDuration={5000} 
             onClose={handleClose}
-            action={
-                <>
-                    <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
-                        <CloseIcon fontSize="small"/>
-                    </IconButton>
-                </>
-            }
-        />
+            anchorOrigin={{vertical: 'bottom', horizontal: 'left'}}
+        >
+            <Alert 
+                elevation={6}
+                variant="filled"
+                onClose={handleClose} 
+                severity={severity}
+            >
+                {message}
+            </Alert>
+        </Snackbar>
     )
 }
 
-export default GenericSnackbar;
+export default GenericSnackbar

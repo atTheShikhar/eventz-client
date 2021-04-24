@@ -21,6 +21,7 @@ import { ValidatorForm } from 'react-material-ui-form-validator'
 import {login} from '../helpers/auth';
 import {reqErr,emailErr, minSize,minSizeErr} from '../helpers/validators';
 import { useHistory } from 'react-router';
+import GenericSnackbar from '../components/feedback/snackbar';
 
 export default function Login() {
 
@@ -33,6 +34,11 @@ export default function Login() {
     });
     const [passwordState,setPasswordState] = useState("password")
     const [isDisabled, setIsDisabled] = useState(false);
+    const [feedback,setFeedback] = useState({
+        open: false,
+        severity: "",
+        message: ""
+    });
 
     //Functions
     const handleChange = (e) => {
@@ -57,35 +63,29 @@ export default function Login() {
         setTimeout(() => {
             setIsDisabled(false);
         }, 1500);
-
-        login(values.email,values.password)
-            .then(res => {
-                switch(res?.status) {
-                    case 401: {
-                        console.log(res.data.error);
-                        break;
-                    }
-                    case 400: {
-                        console.log(res.data.validationError);
-                        break;
-                    }
-                    default: {
-                        if(res === undefined ) {
-                            history.push('/neterr');
-                        } else {
-                            console.log(res.data.message);
-                        }
-                    }
-                }
-            })
-            .catch(err => {
-                console.log(err);
-            })
+        
+        login(values,history,setFeedback);
+    }
+    //Wrapper function to set the open value from the snackbar component
+    const setOpen = (isOpen) => {
+        setFeedback(feedback => ({
+            ...feedback,
+            open: isOpen
+        }))
     }
 
     //Render Logic
     return (
         <div className={classes.page}>
+
+        {/*This component is for feedback*/}
+        <GenericSnackbar 
+            message={feedback.message}
+            severity={feedback.severity}
+            open={feedback.open}
+            setOpen={setOpen}
+        />
+
         <Container component="main" maxWidth="xs">
             <Paper className={classes.card}>
                 <Avatar className={classes.avatar}>

@@ -1,7 +1,7 @@
 import { ValidatorForm } from "react-material-ui-form-validator";
 
 //Rule to allow only alphabets and basic punctuations
-export const regexText = 'matchRegexp:^[a-zA-Z.,&\\- ]+$';
+export const regexText = 'matchRegexp:^[a-zA-Z., ]+$';
 export const textErr = "Can only contain alphabets and punctuations";
 
 //Rule to allow String of max size
