@@ -1,15 +1,17 @@
 import { Button } from '@material-ui/core';
-import React,{useState} from 'react'
+import React,{useContext} from 'react'
 import {
     useHistory,
     NavLink
 } from 'react-router-dom';
+import { UserContext } from "../../UserContext";
 // import FlatButton from '../buttons/FlatButton';
 
 
 function Navbar() {
     const history = useHistory();
-    
+    const { user } = useContext(UserContext);
+
     return (
         <>
             <nav>
@@ -27,14 +29,23 @@ function Navbar() {
                         <NavLink to="/About">About</NavLink>
                     </li>
                 </ul>
-                <Button 
-                    variant="contained" 
-                    color="primary" 
-                    onClick={() => history.push('/Login')}
-                    disableElevation
-                >
-                    Login
-                </Button>
+
+                {
+                    user ? 
+                        (
+                            <div>{user.name}</div>
+                        ) :
+                        (
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                onClick={() => history.push('/Login')}
+                                disableElevation
+                            >
+                                Login
+                            </Button>
+                        )
+                }
             </nav>
         </>
     )

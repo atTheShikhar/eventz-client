@@ -29,7 +29,7 @@ function ForgetPassword() {
 
     return (
         <div className={classes.page}>
-            <Container maxWidth="xs" className={classes.container}>
+            <Container maxWidth="xs">
                 <Paper className={classes.card}>
                     <ValidatorForm 
                         onSubmit={submitHandler}

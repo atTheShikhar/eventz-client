@@ -1,13 +1,14 @@
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
-const baseUrl = process.env.REACT_APP_BASE_URL;
+// const baseUrl = process.env.REACT_APP_BASE_URL;
 
 const successHandler = (response,history,setFeedback) => {
     if (response.status === 200) {
         setFeedback({
             open: true,
             severity: "success",
-            message: response.data.message
+            message: "Welcome " + response.data.user.name
         });
         //Redirect to homepage after 3 seconds
         setTimeout(() => {
@@ -16,8 +17,10 @@ const successHandler = (response,history,setFeedback) => {
     }
 }
 
-const errorHandler = (err,history,setFeedback) => {
+const errorHandler = (err,history,setFeedback,timeout) => {
     if (err.message === "Network Error") {
+        //Clear timeout before pushing since this timeout changes the state
+        clearTimeout(timeout);
         history.push('/neterr');
     } else {
         const message = err.response?.data?.error ?? err.message;
@@ -29,29 +32,32 @@ const errorHandler = (err,history,setFeedback) => {
     }
 }
 
-export const login = async (formData,history,setFeedback) => {
+export const login = async (formData,history,setUser,setFeedback,timeout) => {
     try {
-        const response = await axios.post(`${baseUrl}/api/login`,formData);
-        //TODO: Set token 
+        const response = await axios.post(`/api/login`,formData);
+        // Setting user info to localStorage 
+        const { user } = response.data;
+        setUser(user);
+        localStorage.setItem("user",JSON.stringify(user));
         successHandler(response,history,setFeedback);
     } catch(err) { 
-        errorHandler(err, history, setFeedback);
+        errorHandler(err, history, setFeedback,timeout);
     }
 }
 
-export const register = async (formData, history, setFeedback) => {
+export const register = async (formData, history, setFeedback,timeout) => {
     try {
-        const response = await axios.post(`${baseUrl}/api/register`,formData);
+        const response = await axios.post(`/api/register`,formData);
         successHandler(response, history, setFeedback);
     } catch(err) {
-        errorHandler(err, history, setFeedback);
+        errorHandler(err, history, setFeedback,timeout);
     }
 }
 
 //Account activation request
 export const activateAccount = async (formData,setFormData,history) => {
     try {
-        const response = await axios.post(`${baseUrl}/api/activate`, { token: formData.token })
+        const response = await axios.post(`/api/activate`, { token: formData.token })
         if (response.status === 200) {
             setFormData({
                 ...formData,
@@ -83,4 +89,16 @@ export const activateAccount = async (formData,setFormData,history) => {
 
 
 //Auth
-export const isAuth = true;
+export const isAuth = () => {
+    if(Cookies.get('jwt')) {
+        const user = localStorage.getItem('user');
+        const userObj = JSON.parse(user);
+        return userObj;
+    }
+    //Remove user info if cookie is not present
+    localStorage.removeItem('user');
+    return false;
+};
+
+
+

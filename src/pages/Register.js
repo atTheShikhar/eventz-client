@@ -26,7 +26,6 @@ import { reqErr, emailErr,
 import { useHistory } from 'react-router';
 
 export default function Register(props) {
-    
     //Hooks
     const classes = useStyles();
     const history = useHistory();
@@ -72,11 +71,11 @@ export default function Register(props) {
         e.preventDefault();
         
         setIsDisabled(true);
-        setTimeout(() => {
+        const timeout = setTimeout(() => {
             setIsDisabled(false);
         }, 1500);
 
-        register(values,history,setFeedback);
+        register(values,history,setFeedback,timeout);
     }
 
     //Calling custom validation rule

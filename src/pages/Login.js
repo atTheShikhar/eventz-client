@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
     Avatar,
     FormControlLabel,
@@ -16,16 +16,16 @@ import SubmitButton from '../components/buttons/SubmitButton';
 import Copyright from '../components/Copyright';
 import useStyles from './FormStyle';
 import Textbox from '../components/Inputs/Textbox'
-// import GenericSnackbar from '../components/feedback/snackbar'
 import { ValidatorForm } from 'react-material-ui-form-validator'
 import {login} from '../helpers/auth';
 import {reqErr,emailErr, minSize,minSizeErr} from '../helpers/validators';
 import { useHistory } from 'react-router';
 import GenericSnackbar from '../components/feedback/snackbar';
+import { UserContext } from '../UserContext';
 
 export default function Login() {
-
     //Hooks
+    const {setUser} = useContext(UserContext); 
     const classes = useStyles();
     const history = useHistory();
     const [values,setValues] = useState({
@@ -40,7 +40,6 @@ export default function Login() {
         message: ""
     });
 
-    //Functions
     const handleChange = (e) => {
         setValues(
             values => ({
@@ -60,11 +59,12 @@ export default function Login() {
         e.preventDefault();
 
         setIsDisabled(true);
-        setTimeout(() => {
+
+        const timeout = setTimeout(() => {
             setIsDisabled(false);
         }, 1500);
         
-        login(values,history,setFeedback);
+        login(values,history,setUser,setFeedback,timeout);
     }
     //Wrapper function to set the open value from the snackbar component
     const setOpen = (isOpen) => {
