@@ -5,12 +5,13 @@ import Activate from './pages/Activate';
 import About from './pages/About';
 import ForgetPassword from './pages/ForgetPassword';
 import ResetPassword from './pages/ResetPassword';
-import CreateEvent from './pages/Create/CreateEvent';
 import Navbar from './components/Navbar/Navbar';
+import CreateEvent from './pages/Create/CreateEvent';
 import NetError from './components/NetError';
 import PrivateRoute from './routes/PrivateRoute';
 import PublicRoute from './routes/PublicRoute';
 import GlobalState from './context/GlobalState';
+import GenericSnackbar from './components/feedback/snackbar';
 import './App.css';
 
 import {
@@ -30,7 +31,11 @@ function App() {
     <div>
         <Router>
           <GlobalState>
+
+            <GenericSnackbar/>
+
             <Navbar/>
+
             <Switch>
               <Route exact path="/" component={Homepage}/>
               <Route exact path="/neterr" component={NetError} />
@@ -48,6 +53,7 @@ function App() {
                 <Redirect to="/" />
               </Route>
             </Switch>
+            
           </GlobalState>
         </Router>
     </div>

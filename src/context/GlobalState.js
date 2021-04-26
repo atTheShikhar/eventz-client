@@ -1,21 +1,25 @@
 import React,{useState,useEffect} from 'react'
-import { UserContext } from './UserContext';
+import { UserContext } from './Context';
 import { isAuth } from '../helpers/auth';
+import ComponentState from './ComponentState';
 
 function GlobalState(props) {
     const [user, setUser] = useState(null);
-    // const value = useMemo(() => ({ user, setUser }), [user, setUser]);
+
+    const value = {
+        user,
+        setUser,
+    }
 
     useEffect(() => {
         setUser(isAuth());
     }, [])
 
     return (
-        <UserContext.Provider value={{
-            user: user,
-            setUser: setUser
-        }}>
-            {props.children}
+        <UserContext.Provider value={value}>
+            <ComponentState>
+                {props.children}
+            </ComponentState>
         </UserContext.Provider>
     )
 }

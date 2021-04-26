@@ -14,6 +14,7 @@ function CreateEvent() {
         "Address Details",
         "Organiser Details"
     ];
+    const user = JSON.parse(localStorage.getItem("user"));
     let renderForm;
 
     //Hooks
@@ -37,9 +38,9 @@ function CreateEvent() {
         country: "India",
 
         //Organiser Details
-        organiserName: "",
+        organiserName: user?.name,
         phone: "",
-        email: "",
+        email: user?.email,
         organisationName: ""
     });
     const [step,setStep] = useState(0);

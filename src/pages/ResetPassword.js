@@ -1,21 +1,30 @@
 import { Box, Container, Paper, Typography } from '@material-ui/core';
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { ValidatorForm } from 'react-material-ui-form-validator';
+import jwt_decode from 'jwt-decode';
 import Textbox from '../components/Inputs/Textbox';
 import useStyles from './FormStyle';
 import { minSize, minSizeErr, reqErr,samePass,samePassErr } from '../helpers/validators';
 import SubmitButton from '../components/buttons/SubmitButton';
 import Copyright from '../components/Copyright';
+import { ComponentContext } from '../context/Context';
+import { resetPassword } from '../helpers/auth';
 
-function ResetPassword() {
+function ResetPassword({ match,history }) {
+    try {
+        jwt_decode(match.params.token);
+    } catch (err) {
+        history.replace('/')
+    }
 
     //Hooks
+    const { setFeedback,buttonFeedback } = useContext(ComponentContext);
     const classes = useStyles();
     const [values,setValues] = useState({
+        token: match.params.token,
         password: "",
         confirmPassword: ""
     });
-    const [isDisabled, setIsDisabled] = useState(false);
 
     //Functions
     const handleChange = (e) => {
@@ -27,14 +36,10 @@ function ResetPassword() {
     }
     const submitHandler = (e) => {
         e.preventDefault();
-
-        setIsDisabled(true);
-        setTimeout(() => {
-            setIsDisabled(false);
-        }, 1500);
+        buttonFeedback();
 
         //Handle Logic
-        console.log(values);
+        resetPassword(values,history,setFeedback);
     }
 
     //Calling custom validation rule
@@ -78,7 +83,6 @@ function ResetPassword() {
                         />
                         <SubmitButton
                             className={classes.submit}
-                            disabled={isDisabled}
                             size="large"
                         >
                             Reset Password

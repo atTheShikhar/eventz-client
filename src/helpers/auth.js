@@ -3,23 +3,16 @@ import Cookies from 'js-cookie';
 // const baseUrl = process.env.REACT_APP_BASE_URL;
 
 const successHandler = (response,history,setFeedback) => {
-    if (response.status === 200) {
-        setFeedback({
-            open: true,
-            severity: "success",
-            message: "Welcome " + response.data.user.name
-        });
-        //Redirect to homepage after 3 seconds
-        setTimeout(() => {
-            history.replace('/');
-        }, 3000);
-    }
+    setFeedback({
+        open: true,
+        severity: "success",
+        message: response.data.message
+    });        
+    history.replace('/');
 }
 
-const errorHandler = (err,history,setFeedback,timeout) => {
+const errorHandler = (err,history,setFeedback) => {
     if (err.message === "Network Error") {
-        //Clear timeout before pushing since this timeout changes the state
-        clearTimeout(timeout);
         history.push('/neterr');
     } else {
         const message = err.response?.data?.error ?? err.message;
@@ -43,32 +36,42 @@ export const isAuth = () => {
     return false;
 };
 
-export const login = async (formData,history,setUser,setFeedback,timeout) => {
+export const login = async (formData,history,setUser,setFeedback) => {
     try {
         const response = await axios.post(`/api/login`,formData);
         // Setting user info to localStorage 
-        const { user } = response.data;
+        const { user } = response?.data;
         setUser(user);
         localStorage.setItem("user",JSON.stringify(user));
+
         successHandler(response,history,setFeedback);
     } catch(err) { 
-        errorHandler(err, history, setFeedback,timeout);
+        errorHandler(err, history, setFeedback);
     }
 }
 
-export const logout = async (setUser,history) => {
+export const logout = (setUser,history) => {
     Cookies.remove('jwt');
     localStorage.removeItem('user');
     setUser(null);
     history.push('/');
 }
 
-export const register = async (formData, history, setFeedback,timeout) => {
+export const register = async (formData, history, setFeedback) => {
     try {
         const response = await axios.post(`/api/register`,formData);
         successHandler(response, history, setFeedback);
     } catch(err) {
-        errorHandler(err, history, setFeedback,timeout);
+        errorHandler(err, history, setFeedback);
+    }
+}
+
+export const forgetPassword = async (email, history,setFeedback) => {
+    try {
+        const response = await axios.post('/api/forgetpassword',{email});
+        successHandler(response,history,setFeedback);
+    } catch(err) {
+        errorHandler(err, history, setFeedback);
     }
 }
 
@@ -102,6 +105,15 @@ export const activateAccount = async (formData,setFormData,history) => {
             else
                 console.log(err);
         }
+    }
+}
+
+export const resetPassword = async (formData,history,setFeedback) => {
+    try {
+        const response = await axios.put('/api/resetpassword', formData);
+        successHandler(response,history,setFeedback);
+    } catch(err) {
+        errorHandler(err, history, setFeedback);
     }
 }
 

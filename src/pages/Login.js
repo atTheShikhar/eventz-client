@@ -20,12 +20,12 @@ import { ValidatorForm } from 'react-material-ui-form-validator'
 import {login} from '../helpers/auth';
 import {reqErr,emailErr, minSize,minSizeErr} from '../helpers/validators';
 import { useHistory } from 'react-router';
-import GenericSnackbar from '../components/feedback/snackbar';
-import { UserContext } from '../context/UserContext';
+import { ComponentContext, UserContext } from '../context/Context';
 
 export default function Login() {
     //Hooks
     const {setUser} = useContext(UserContext); 
+    const {setFeedback,buttonFeedback} = useContext(ComponentContext);
     const classes = useStyles();
     const history = useHistory();
     const [values,setValues] = useState({
@@ -33,13 +33,8 @@ export default function Login() {
         password: ""
     });
     const [passwordState,setPasswordState] = useState("password")
-    const [isDisabled, setIsDisabled] = useState(false);
-    const [feedback,setFeedback] = useState({
-        open: false,
-        severity: "",
-        message: ""
-    });
 
+    //Functions
     const handleChange = (e) => {
         setValues(
             values => ({
@@ -57,35 +52,14 @@ export default function Login() {
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        setIsDisabled(true);
-
-        const timeout = setTimeout(() => {
-            setIsDisabled(false);
-        }, 1500);
+        buttonFeedback();
         
-        login(values,history,setUser,setFeedback,timeout);
-    }
-    //Wrapper function to set the open value from the snackbar component
-    const setOpen = (isOpen) => {
-        setFeedback(feedback => ({
-            ...feedback,
-            open: isOpen
-        }))
+        login(values,history,setUser,setFeedback);
     }
 
     //Render Logic
     return (
         <div className={classes.page}>
-
-        {/*This component is for feedback*/}
-        <GenericSnackbar 
-            message={feedback.message}
-            severity={feedback.severity}
-            open={feedback.open}
-            setOpen={setOpen}
-        />
-
         <Container component="main" maxWidth="xs">
             <Paper className={classes.card}>
                 <Avatar className={classes.avatar}>
@@ -130,15 +104,18 @@ export default function Login() {
                         />
                     </Grid>
 
-                    <Link href="" variant="body2" onClick={() => {
-                        history.push('/user/forgetpassword');
-                    }}>
+                    <Link 
+                        variant="body2" 
+                        onClick={() => {
+                            history.push('/user/forgetpassword');
+                        }}
+                        className={classes.link}
+                    >
                         Forgot password?
                     </Link>
                     
                     <SubmitButton
                         className={classes.submit}   
-                        disabled={isDisabled} 
                     >
                         Log In
                     </SubmitButton>
@@ -154,11 +131,11 @@ export default function Login() {
                             </span>
 
                             <Link 
-                                href="" 
                                 variant="body2"
                                 onClick={() => {
                                     history.push('/Register')
                                 }}
+                                    className={classes.link}
                             >
                                 Sign Up
                             </Link>

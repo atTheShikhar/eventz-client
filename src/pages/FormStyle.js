@@ -23,6 +23,9 @@ const useStyles = makeStyles((theme) => ({
         width: '100%', // Fix IE 11 issue.
         marginTop: theme.spacing(1),
     },
+    link: {
+        cursor: 'pointer'
+    },
     submit: {
         margin: theme.spacing(2, 0, 2),
     },

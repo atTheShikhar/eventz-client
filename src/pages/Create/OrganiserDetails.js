@@ -4,7 +4,7 @@ import SubmitButton from '../../components/buttons/SubmitButton';
 import useStyles from './Styles';
 import Textbox from '../../components/Inputs/Textbox';
 import Submit from '@material-ui/icons/ArrowUpward'
-import React from 'react'
+import React, { useContext } from 'react'
 import {
     reqErr,
     maxSize,
@@ -16,11 +16,13 @@ import {
     exactDigitErr,
     emailErr
 } from '../../helpers/validators';
+import { ComponentContext } from '../../context/Context';
 
 function OrganiserDetails(props) {
     const {prevStep,details,handleChange} = props;
     //Hooks
     const classes = useStyles();
+    const { buttonFeedback } = useContext(ComponentContext);
 
     //Functions
     const backward = e => {
@@ -29,6 +31,7 @@ function OrganiserDetails(props) {
     }
     const submitHandler = e => {
         e.preventDefault();
+        buttonFeedback(2000);
         console.log(details);
     }
 
@@ -97,7 +100,10 @@ function OrganiserDetails(props) {
                                     onClick={backward}
                                 >Previous</Button>
 
-                                <SubmitButton fullWidth={false} endIcon={<Submit/>}>
+                                <SubmitButton 
+                                    fullWidth={false} 
+                                    endIcon={<Submit/>}
+                                >
                                     Submit
                                 </SubmitButton>
                             </Grid>

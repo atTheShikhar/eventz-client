@@ -5,7 +5,7 @@ import {
     NavLink
 } from 'react-router-dom';
 import { logout } from '../../helpers/auth';
-import { UserContext } from "../../context/UserContext";
+import { UserContext } from "../../context/Context";
 // import FlatButton from '../buttons/FlatButton';
 
 

@@ -1,30 +1,28 @@
 import { Box, Container, Paper, Typography } from '@material-ui/core';
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { ValidatorForm } from 'react-material-ui-form-validator';
 import Textbox from '../components/Inputs/Textbox';
 import useStyles from './FormStyle';
 import {reqErr,emailErr} from '../helpers/validators';
 import SubmitButton from '../components/buttons/SubmitButton';
 import Copyright from '../components/Copyright';
+import { ComponentContext } from '../context/Context';
+import { forgetPassword } from '../helpers/auth';
 
-function ForgetPassword() {
+function ForgetPassword({ history }) {
+    const { setFeedback,buttonFeedback } = useContext(ComponentContext);
     const classes = useStyles();
     const [email,setEmail] = useState("");
-    const [isDisabled,setIsDisabled] = useState(false);
 
     const handleChange = (e) => {
         setEmail(e.target.value);
     }
     const submitHandler = (e) => {
         e.preventDefault();
-
-        setIsDisabled(true);
-        setTimeout(() => {
-            setIsDisabled(false);
-        }, 1500);
+        buttonFeedback(4000);
 
         //Handle Logic
-        console.log(email);
+        forgetPassword(email,history,setFeedback);
     } 
 
     return (
@@ -57,7 +55,6 @@ function ForgetPassword() {
                         />
                         <SubmitButton
                             className={classes.submit}
-                            disabled={isDisabled}
                             size="large"
                         >
                             Send Reset Link

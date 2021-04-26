@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
     Avatar,
     FormControlLabel,
@@ -12,7 +12,6 @@ import {
 } from '@material-ui/core';
 
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import GenericSnackbar from '../components/feedback/snackbar';
 import Copyright from '../components/Copyright';
 import Textbox from '../components/Inputs/Textbox';
 import SubmitButton from '../components/buttons/SubmitButton'
@@ -24,9 +23,11 @@ import { reqErr, emailErr,
     minSize, minSizeErr,
     samePass, samePassErr } from '../helpers/validators';
 import { useHistory } from 'react-router';
+import { ComponentContext } from '../context/Context';
 
 export default function Register(props) {
     //Hooks
+    const {setFeedback,buttonFeedback} = useContext(ComponentContext);
     const classes = useStyles();
     const history = useHistory();
     const [values, setValues] = useState({
@@ -37,12 +38,6 @@ export default function Register(props) {
         confirmPassword: "",
     });
     const [passwordState, setPasswordState] = useState("password")
-    const [isDisabled, setIsDisabled] = useState(false);
-    const [feedback, setFeedback] = useState({
-        open: false,
-        severity: "",
-        message: ""
-    });
 
     //Functions
     const handleChange = (e) => {
@@ -60,22 +55,11 @@ export default function Register(props) {
             setPasswordState("password")
         }
     }
-    //Wrapper function to set the open value from the snackbar component
-    const setOpen = (isOpen) => {
-        setFeedback(feedback => ({
-            ...feedback,
-            open: isOpen
-        }))
-    }
     const handleSubmit = (e) => {
         e.preventDefault();
-        
-        setIsDisabled(true);
-        const timeout = setTimeout(() => {
-            setIsDisabled(false);
-        }, 1500);
+        buttonFeedback(3000);
 
-        register(values,history,setFeedback,timeout);
+        register(values,history,setFeedback);
     }
 
     //Calling custom validation rule
@@ -84,12 +68,6 @@ export default function Register(props) {
     //Render Logic
     return (
         <div className={classes.page}>
-            <GenericSnackbar
-                message={feedback.message}
-                severity={feedback.severity}
-                open={feedback.open}
-                setOpen={setOpen}
-            />
             <Container component="main" maxWidth="xs">
                 <Paper className={classes.card}>
                     <Avatar className={classes.avatar}>
@@ -161,7 +139,6 @@ export default function Register(props) {
 
                         <SubmitButton
                             className={classes.submit}
-                            disabled={isDisabled}
                         >
                             Sign Up
                         </SubmitButton>
@@ -177,11 +154,11 @@ export default function Register(props) {
                                 </span>
 
                                 <Link 
-                                    href="" 
                                     onClick={() => {
                                         history.push('/Login')
                                     }} 
                                     variant="body2"
+                                    className={classes.link}
                                 >
                                     Log In
                                 </Link>
