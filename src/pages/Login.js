@@ -21,7 +21,7 @@ import {login} from '../helpers/auth';
 import {reqErr,emailErr, minSize,minSizeErr} from '../helpers/validators';
 import { useHistory } from 'react-router';
 import GenericSnackbar from '../components/feedback/snackbar';
-import { UserContext } from '../UserContext';
+import { UserContext } from '../context/UserContext';
 
 export default function Login() {
     //Hooks

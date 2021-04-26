@@ -1,4 +1,4 @@
-import { Container, Button, Grid } from '@material-ui/core';
+import { Container, Button, Grid,Paper } from '@material-ui/core';
 import { ValidatorForm } from 'react-material-ui-form-validator';
 import SubmitButton from '../../components/buttons/SubmitButton';
 import useStyles from './Styles';
@@ -36,6 +36,7 @@ function OrganiserDetails(props) {
     return (
         <ValidatorForm onSubmit={submitHandler} instantValidate={true}>
             <Container maxWidth="xs" className={classes.containerStyles}>
+                <Paper className={classes.paperContainer}>
                 <Grid 
                     container 
                     spacing={1} 
@@ -102,8 +103,8 @@ function OrganiserDetails(props) {
                             </Grid>
                         </Grid>
                     </Grid>
-
                 </Grid>
+                </Paper>
             </Container>
         </ValidatorForm>
     )

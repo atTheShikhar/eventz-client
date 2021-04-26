@@ -4,13 +4,14 @@ import {
     useHistory,
     NavLink
 } from 'react-router-dom';
-import { UserContext } from "../../UserContext";
+import { logout } from '../../helpers/auth';
+import { UserContext } from "../../context/UserContext";
 // import FlatButton from '../buttons/FlatButton';
 
 
 function Navbar() {
     const history = useHistory();
-    const { user } = useContext(UserContext);
+    const { user,setUser } = useContext(UserContext);
 
     return (
         <>
@@ -19,12 +20,15 @@ function Navbar() {
                     <li>
                         <NavLink to="/">Home</NavLink>
                     </li>
-                    <li>
-                        <NavLink to="/Login">Login</NavLink>
-                    </li>
-                    <li>
-                        <NavLink to="/Register">Register</NavLink>
-                    </li>
+                        {
+                            user ? 
+                                (<div style={{display: "none"}}></div>) :
+                                (
+                                    <li>
+                                       <NavLink to = "/Register">Register</NavLink>
+                                    </li>
+                                )
+                        }
                     <li>
                         <NavLink to="/About">About</NavLink>
                     </li>
@@ -33,7 +37,16 @@ function Navbar() {
                 {
                     user ? 
                         (
-                            <div>{user.name}</div>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                onClick={() => {
+                                    logout(setUser,history)
+                                }}
+                                disableElevation
+                            >
+                                Logout {user.name}
+                            </Button>
                         ) :
                         (
                             <Button

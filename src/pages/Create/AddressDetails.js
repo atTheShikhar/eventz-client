@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Button, Grid,MenuItem } from '@material-ui/core';
+import { Container, Button, Grid,MenuItem,Paper } from '@material-ui/core';
 import { ValidatorForm } from 'react-material-ui-form-validator';
 import SubmitButton from '../../components/buttons/SubmitButton';
 import useStyles from './Styles';
@@ -36,7 +36,8 @@ function AddressDetails(props) {
     //Render Logic
     return (
         <ValidatorForm onSubmit={forward} instantValidate={true}>
-            <Container maxWidth="sm" className={classes.containerStyles}>
+            <Container maxWidth="sm">
+                <Paper className={classes.paperContainer}>
                 <Grid container spacing={1} className={classes.gridContainerStyles}>
                     <Grid item xs={12} sm={6}>
                         <Textbox
@@ -129,8 +130,8 @@ function AddressDetails(props) {
                             </Grid>
                         </Grid>
                     </Grid>
-
                 </Grid>
+                </Paper>
             </Container>
         </ValidatorForm>       
     )

@@ -1,4 +1,4 @@
-import { MenuItem,Grid,Container} from '@material-ui/core'
+import { MenuItem,Grid,Container,Paper } from '@material-ui/core'
 import React,{useEffect} from 'react'
 import { ValidatorForm } from 'react-material-ui-form-validator';
 import SubmitButton from '../../components/buttons/SubmitButton';
@@ -34,8 +34,9 @@ function EventDetails(props) {
     //Render Logic
     return (
     <ValidatorForm onSubmit={forward} instantValidate={true}>
-            <Container maxWidth="sm" className={classes.containerStyles}>
-                <Grid container spacing={1} className={classes.gridContainerStyles}>
+            <Container maxWidth="sm">
+                <Paper className={classes.paperContainer}>
+                <Grid container spacing={1}>
                     <Grid item xs={12} sm={6}>
                         <Textbox
                             label="Title"
@@ -136,6 +137,7 @@ function EventDetails(props) {
                         </Grid>
                     </Grid>
                 </Grid>
+                </Paper>
                </Container>
             </ValidatorForm>
     )

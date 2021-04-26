@@ -1,6 +1,5 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
-
 // const baseUrl = process.env.REACT_APP_BASE_URL;
 
 const successHandler = (response,history,setFeedback) => {
@@ -12,7 +11,7 @@ const successHandler = (response,history,setFeedback) => {
         });
         //Redirect to homepage after 3 seconds
         setTimeout(() => {
-            history.push('/');
+            history.replace('/');
         }, 3000);
     }
 }
@@ -32,6 +31,18 @@ const errorHandler = (err,history,setFeedback,timeout) => {
     }
 }
 
+//Auth
+export const isAuth = () => {
+    if (Cookies.get('jwt')) {
+        const user = localStorage.getItem('user');
+        const userObj = JSON.parse(user);
+        return userObj;
+    }
+    //Remove user info if cookie is not present
+    localStorage.removeItem('user');
+    return false;
+};
+
 export const login = async (formData,history,setUser,setFeedback,timeout) => {
     try {
         const response = await axios.post(`/api/login`,formData);
@@ -43,6 +54,13 @@ export const login = async (formData,history,setUser,setFeedback,timeout) => {
     } catch(err) { 
         errorHandler(err, history, setFeedback,timeout);
     }
+}
+
+export const logout = async (setUser,history) => {
+    Cookies.remove('jwt');
+    localStorage.removeItem('user');
+    setUser(null);
+    history.push('/');
 }
 
 export const register = async (formData, history, setFeedback,timeout) => {
@@ -88,17 +106,7 @@ export const activateAccount = async (formData,setFormData,history) => {
 }
 
 
-//Auth
-export const isAuth = () => {
-    if(Cookies.get('jwt')) {
-        const user = localStorage.getItem('user');
-        const userObj = JSON.parse(user);
-        return userObj;
-    }
-    //Remove user info if cookie is not present
-    localStorage.removeItem('user');
-    return false;
-};
+
 
 
 
