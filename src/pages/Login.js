@@ -25,7 +25,7 @@ import { ComponentContext, UserContext } from '../context/Context';
 export default function Login() {
     //Hooks
     const {setUser} = useContext(UserContext); 
-    const {setFeedback,buttonFeedback} = useContext(ComponentContext);
+    const {setFeedback} = useContext(ComponentContext);
     const classes = useStyles();
     const history = useHistory();
     const [values,setValues] = useState({
@@ -52,7 +52,6 @@ export default function Login() {
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        buttonFeedback();
         
         login(values,history,setUser,setFeedback);
     }

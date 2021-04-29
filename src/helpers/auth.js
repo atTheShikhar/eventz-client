@@ -1,28 +1,11 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import {
+    successHandler,
+    errorHandler
+} from './successAndErrorHandler';
 // const baseUrl = process.env.REACT_APP_BASE_URL;
 
-const successHandler = (response,history,setFeedback) => {
-    setFeedback({
-        open: true,
-        severity: "success",
-        message: response.data.message
-    });        
-    history.replace('/');
-}
-
-const errorHandler = (err,history,setFeedback) => {
-    if (err.message === "Network Error") {
-        history.push('/neterr');
-    } else {
-        const message = err.response?.data?.error ?? err.message;
-        setFeedback({
-            open: true,
-            severity: "error",
-            message: message
-        })
-    }
-}
 
 //Auth
 export const isAuth = () => {
@@ -43,8 +26,7 @@ export const login = async (formData,history,setUser,setFeedback) => {
         const { user } = response?.data;
         setUser(user);
         localStorage.setItem("user",JSON.stringify(user));
-
-        successHandler(response,history,setFeedback);
+        successHandler(response,setFeedback,() => {history.replace("/")});
     } catch(err) { 
         errorHandler(err, history, setFeedback);
     }
@@ -57,20 +39,30 @@ export const logout = (setUser,history) => {
     history.push('/');
 }
 
-export const register = async (formData, history, setFeedback) => {
+export const register = async (formData, history, setFeedback,setButtonDisabled) => {
     try {
+        setButtonDisabled(true);
         const response = await axios.post(`/api/register`,formData);
-        successHandler(response, history, setFeedback);
+        successHandler(response, setFeedback,() => {
+            setButtonDisabled(false);
+            history.replace('/')
+        });
     } catch(err) {
+        setButtonDisabled(false);
         errorHandler(err, history, setFeedback);
     }
 }
 
-export const forgetPassword = async (email, history,setFeedback) => {
+export const forgetPassword = async (email, history,setFeedback,setButtonDisabled) => {
     try {
+        setButtonDisabled(true);
         const response = await axios.post('/api/forgetpassword',{email});
-        successHandler(response,history,setFeedback);
+        successHandler(response,setFeedback,() => {
+            setButtonDisabled(false);
+            history.replace('/')
+        });
     } catch(err) {
+        setButtonDisabled(false);
         errorHandler(err, history, setFeedback);
     }
 }
@@ -108,11 +100,18 @@ export const activateAccount = async (formData,setFormData,history) => {
     }
 }
 
-export const resetPassword = async (formData,history,setFeedback) => {
+export const resetPassword = async (formData,history,setFeedback,setButtonDisabled) => {
     try {
+        setButtonDisabled(true);
         const response = await axios.put('/api/resetpassword', formData);
-        successHandler(response,history,setFeedback);
+        Cookies.remove("jwt");
+        localStorage.removeItem("user");
+        successHandler(response,setFeedback,() => {
+            setButtonDisabled(false);
+            history.replace("/")
+        });
     } catch(err) {
+        setButtonDisabled(false);
         errorHandler(err, history, setFeedback);
     }
 }

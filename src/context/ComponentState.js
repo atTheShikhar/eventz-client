@@ -11,19 +11,13 @@ function ComponentState(props) {
 
     //Controls button feedback
     const [buttonDisabled,setButtonDisabled] = useState(false);
-    const buttonFeedback = (ms) => {
-        setButtonDisabled(true);
-        const time = ms ?? 1500;
-        setTimeout(() => {
-            setButtonDisabled(false);
-        }, time);
-    }
+    
 
     const value = {
         feedback,
         setFeedback,
         buttonDisabled,
-        buttonFeedback
+        setButtonDisabled
     }
 
     return (

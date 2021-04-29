@@ -18,14 +18,13 @@ function ResetPassword({ match,history }) {
     }
 
     //Hooks
-    const { setFeedback,buttonFeedback } = useContext(ComponentContext);
+    const { setFeedback,setButtonDisabled} = useContext(ComponentContext);
     const classes = useStyles();
     const [values,setValues] = useState({
         token: match.params.token,
         password: "",
         confirmPassword: ""
-    });
-
+    })
     //Functions
     const handleChange = (e) => {
         setValues(values => ({
@@ -36,10 +35,9 @@ function ResetPassword({ match,history }) {
     }
     const submitHandler = (e) => {
         e.preventDefault();
-        buttonFeedback();
 
         //Handle Logic
-        resetPassword(values,history,setFeedback);
+        resetPassword(values,history,setFeedback,setButtonDisabled);
     }
 
     //Calling custom validation rule
@@ -85,7 +83,7 @@ function ResetPassword({ match,history }) {
                             className={classes.submit}
                             size="large"
                         >
-                            Reset Password
+                           Reset Password
                         </SubmitButton>
                     </ValidatorForm>
                 </Paper>

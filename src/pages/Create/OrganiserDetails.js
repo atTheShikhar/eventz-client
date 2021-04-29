@@ -5,6 +5,7 @@ import useStyles from './Styles';
 import Textbox from '../../components/Inputs/Textbox';
 import Submit from '@material-ui/icons/ArrowUpward'
 import React, { useContext } from 'react'
+import {useHistory} from 'react-router-dom';
 import {
     reqErr,
     maxSize,
@@ -17,12 +18,14 @@ import {
     emailErr
 } from '../../helpers/validators';
 import { ComponentContext } from '../../context/Context';
+import { createEvent } from '../../helpers/createEvent';
 
 function OrganiserDetails(props) {
     const {prevStep,details,handleChange} = props;
+    const history = useHistory();
     //Hooks
     const classes = useStyles();
-    const { buttonFeedback } = useContext(ComponentContext);
+    const { setButtonDisabled,setFeedback } = useContext(ComponentContext);
 
     //Functions
     const backward = e => {
@@ -31,9 +34,8 @@ function OrganiserDetails(props) {
     }
     const submitHandler = e => {
         e.preventDefault();
-        buttonFeedback(2000);
-        console.log(details);
-    }
+        createEvent(details,history,setFeedback,setButtonDisabled);
+   }
 
     //Render Logic
     return (
@@ -78,6 +80,7 @@ function OrganiserDetails(props) {
                             name="email"
                             validators={['required','isEmail']}
                             errorMessages={[reqErr,emailErr]}
+                            disabled={true}
                         />
                     </Grid>
 
@@ -87,8 +90,8 @@ function OrganiserDetails(props) {
                             value={details.organisationName}
                             onChange={handleChange("organisationName")}
                             name="organisationName"
-                            validators={['required', regexText, maxSize(100)]}
-                            errorMessages={[reqErr, textErr, maxSizeErr(100)]}
+                            validators={[regexText, maxSize(100)]}
+                            errorMessages={[textErr, maxSizeErr(100)]}
                         />
                     </Grid>
 

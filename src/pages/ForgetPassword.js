@@ -10,7 +10,7 @@ import { ComponentContext } from '../context/Context';
 import { forgetPassword } from '../helpers/auth';
 
 function ForgetPassword({ history }) {
-    const { setFeedback,buttonFeedback } = useContext(ComponentContext);
+    const { setFeedback,setButtonDisabled } = useContext(ComponentContext);
     const classes = useStyles();
     const [email,setEmail] = useState("");
 
@@ -19,10 +19,9 @@ function ForgetPassword({ history }) {
     }
     const submitHandler = (e) => {
         e.preventDefault();
-        buttonFeedback(4000);
 
         //Handle Logic
-        forgetPassword(email,history,setFeedback);
+        forgetPassword(email,history,setFeedback,setButtonDisabled);
     } 
 
     return (

@@ -27,7 +27,7 @@ import { ComponentContext } from '../context/Context';
 
 export default function Register(props) {
     //Hooks
-    const {setFeedback,buttonFeedback} = useContext(ComponentContext);
+    const {setFeedback,setButtonDisabled} = useContext(ComponentContext);
     const classes = useStyles();
     const history = useHistory();
     const [values, setValues] = useState({
@@ -57,9 +57,7 @@ export default function Register(props) {
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        buttonFeedback(3000);
-
-        register(values,history,setFeedback);
+        register(values,history,setFeedback,setButtonDisabled);
     }
 
     //Calling custom validation rule
