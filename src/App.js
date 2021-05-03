@@ -21,6 +21,7 @@ import {
   Switch
 } from 'react-router-dom'
 import axios from 'axios';
+import BrowseEvents from './pages/BrowseEvents';
 
 axios.defaults.withCredentials = true;
 
@@ -40,6 +41,7 @@ function App() {
               <Route exact path="/" component={Homepage}/>
               <Route exact path="/neterr" component={NetError} />
               <Route exact path="/about" component={About}/>
+              <Route exact path="/browse" component={BrowseEvents}/>
 
               <PublicRoute exact path="/user/activate/:token" component={Activate}/>
               <PublicRoute exact path="/login" component={Login} />

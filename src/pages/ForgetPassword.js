@@ -36,7 +36,7 @@ function ForgetPassword({ history }) {
                         <Container className={classes.container}>
                             <Typography
                                 align="center"
-                                color="primary"
+                                color="textPrimary"
                                 variant="h5"
                             >
                                 Forget Password

@@ -1,13 +1,31 @@
-import { Button } from '@material-ui/core';
+import { Button, makeStyles } from '@material-ui/core';
 import React from 'react'
 // import FlatButton from '../components/buttons/FlatButton';
 import heroImage from '../assets/events.svg';
 import "./Homepage.css"
 // import FilledButton from '../components/buttons/FilledButton';
 
+
+const useStyles = makeStyles(theme => ({
+    button: {
+        backgroundColor: "#20232a",
+        color: "white",
+        "&:hover": {
+            backgroundColor: theme.palette.grey[800]
+        }
+    },
+    buttonOutline: {
+        color: "#20232a",
+        borderColor: "#20232a",
+        "&:hover": {
+            borderColor: "#20232a",
+            backgroundColor: theme.palette.grey[300],
+        }
+    }
+}))
 function Homepage(props) {
     const {history} = props;
-    
+    const classes = useStyles();
     return (
         <div className="container">
             <div className="header">
@@ -26,11 +44,11 @@ function Homepage(props) {
                     <div className="buttonGroup">
                         <Button 
                             variant="contained" 
-                            color="primary" 
                             size="large"
                             onClick={() => {
                                 history.push('/create');
                             }}
+                            className={classes.button}
                         >
                             Create Event
                         </Button>
@@ -38,6 +56,7 @@ function Homepage(props) {
                             variant="outlined"
                             color="primary"
                             size="large"
+                            className={classes.buttonOutline}
                             style={{
                                 marginLeft: "2vmax"
                             }}

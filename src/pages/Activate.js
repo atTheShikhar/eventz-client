@@ -67,11 +67,15 @@ function Activate({match,history}) {
                         <Container className={classes.container}>
                             <Button
                                 fullWidth
-                                color="primary"
                                 variant="contained"
+                                color="inherit"
                                 onClick={confirmAccount}
                                 size="large"
                                 className={classes.submit}
+                                style={{
+                                    backgroundColor: "#20232a",
+                                    color: "white"
+                                }}
                             >
                                 Confirm Account
                             </Button>
