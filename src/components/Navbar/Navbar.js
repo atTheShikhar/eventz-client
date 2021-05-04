@@ -2,88 +2,34 @@ import {
     Button,
     AppBar,
     Toolbar,
-    makeStyles,
     IconButton,
     Typography,
     useScrollTrigger,
     Slide,
-    Hidden
+    Hidden,
+    Drawer,
 } from '@material-ui/core';
 import MenuButton from '@material-ui/icons/Menu';
 import Search from '@material-ui/icons/SearchOutlined';
 import PropTypes from 'prop-types';
-import React,{useContext} from 'react'
+import React,{
+    useState,
+    useContext
+} from 'react'
 import {
     Link,
     useHistory,
 } from 'react-router-dom';
 import { logout } from '../../helpers/auth';
+import useStyles from './useStyles';
 import { UserContext } from "../../context/Context";
+import NavList from './NavList';
 // import FlatButton from '../buttons/FlatButton';
 
-const useStyles = makeStyles(theme => ({
-    header: {
-        backgroundColor: "#20232a",
-        minHeight: "12vh"
-    },
-    toolbar: {
-        width: "100%",
-        maxWidth: theme.breakpoints.width("lg"),
-        margin: "auto",
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between"
-    },
-    itemsGroup: {
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "center",
-        "& > *": {
-            marginRight: "10px"
-        },
-        "& > *:last-child": {
-            marginRight: "0"
-        }
-    },
-    logoStyle: {
-        textDecoration: "none",
-        color: "white"
-    },
-    searchWrapper: {
-        width: "40%",
-        margin: "auto",
-    }, 
-    search: {
-        padding: theme.spacing(1.4, 2.5),
-        border: "none",
-        borderRadius: theme.spacing(0.7,0,0,0.7),
-        backgroundColor: "#798194",
-        width: "80%",
-        color: "white",
-        fontSize: "1rem",
-        "&::placeholder": {
-            color: "rgba(255,255,255,0.6)"
-        }
-    },
-    searchButton: {
-        width: "20%",
-        margin: "0",
-        padding: theme.spacing(1),
-        backgroundColor: theme.palette.grey[300],
-        borderRadius: theme.spacing(0,0.7,0.7,0),
-        "&:hover": {
-            backgroundColor: theme.palette.grey[400],
-        }
-    }
-}));
-
+//Hide navbar on scroll logic
 function HideOnScroll(props) {
-    const { children, window } = props;
-    // Note that you normally won't need to set the window ref as useScrollTrigger
-    // will default to window.
-    // This is only being set here because the demo is in an iframe.
-    const trigger = useScrollTrigger({ target: window ? window() : undefined });
+    const { children  } = props;
+    const trigger = useScrollTrigger({ target: window});
 
     return (
         <Slide appear={false} direction="down" in={!trigger}>
@@ -91,49 +37,63 @@ function HideOnScroll(props) {
         </Slide>
     );
 }
-
 HideOnScroll.propTypes = {
     children: PropTypes.element.isRequired,
-    /**
-     * Injected by the documentation to work in an iframe.
-     * You won't need it on your project.
-     */
-    window: PropTypes.func,
 };
 
 function Navbar(props) {
+    //Hooks
     const history = useHistory();
     const { user,setUser } = useContext(UserContext);
     const classes = useStyles();
+    const [open,setOpen] = useState(false);
+    //next is just an optional function
+    const toggleDrawer = (open) => (e) => {
+        setOpen(open);
+    }
+
+    //Navbar render logic
     return (
         <>
         <HideOnScroll {...props}>
             <AppBar position="sticky" className={`${classes.header}`}>
                 <Toolbar className={classes.toolbar}>
                     <div className={classes.itemsGroup}>
-                    <IconButton edge="start">
-                        <MenuButton style={{color: "white"}}/>
-                    </IconButton>
+                        <IconButton 
+                            edge="start"
+                            onClick={toggleDrawer(true)}
+                        >
+                            <MenuButton style={{color: "white"}}/>
+                        </IconButton>
 
-                    <Typography variant="h5">
-                        <Link to="/" className={classes.logoStyle}>
-                            Eventz
-                        </Link>
-                    </Typography>
+                        <Drawer anchor="left" open={open} onClose={toggleDrawer(false)}>
+                            <NavList
+                                classes={classes}
+                                toggleDrawer={toggleDrawer}
+                            />
+                        </Drawer>
+
+                        <Typography variant="h5">
+                            <Link to="/" className={classes.logoStyle}>
+                                Eventz
+                            </Link>
+                        </Typography>
+
+                        <Hidden xsDown>
+                            <div className={classes.searchWrapper}>
+                            <input 
+                                type="text" 
+                                placeholder="Search Events..."
+                                className={classes.search}
+                            />
+                            <IconButton className={classes.searchButton}>
+                                <Search/> 
+                            </IconButton>
+                            </div>
+                        </Hidden>
                     </div>
                     
-                    <Hidden xsdown>
-                        <div className={classes.searchWrapper}>
-                        <input 
-                            type="text" 
-                            placeholder="Search Events..."
-                            className={classes.search}
-                        />
-                        <IconButton className={classes.searchButton}>
-                            <Search/> 
-                        </IconButton>
-                        </div>
-                    </Hidden>
+                    <div className={classes.itemsGroup}>
                     {
                     user ?
                         (
@@ -149,12 +109,11 @@ function Navbar(props) {
                             </Button>
                         ) :
                         (<>  
-                        <div className={classes.itemsGroup}>
                             <Button
                                 color="inherit"
                                 onClick={() => history.push('/register')}
                             >
-                                Register
+                                SignUp
                             </Button>
                             <Button
                                 variant="contained"
@@ -162,10 +121,10 @@ function Navbar(props) {
                             >
                                 Login
                             </Button>
-                        </div>
                         </>
                         )
                     }
+                    </div>
                 </Toolbar>
            </AppBar>
         </HideOnScroll>
