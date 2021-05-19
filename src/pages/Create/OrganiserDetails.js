@@ -2,7 +2,7 @@ import { Container, Button, Grid,Paper } from '@material-ui/core';
 import { ValidatorForm } from 'react-material-ui-form-validator';
 import SubmitButton from '../../components/buttons/SubmitButton';
 import useStyles from './Styles';
-import Textbox from '../../components/Inputs/Textbox';
+import Textbox from '../../components/inputs/Textbox';
 import Submit from '@material-ui/icons/ArrowUpward'
 import React, { useContext } from 'react'
 import {useHistory} from 'react-router-dom';

@@ -11,6 +11,9 @@ const useStyles = makeStyles(theme => ({
     stepperStyles: {
         backgroundColor: theme.palette.background.default,
     },
+    stepperIcon: {
+        color: "black !important" 
+    },
     mainStyles: {
         backgroundColor: theme.palette.background.default,
         padding: theme.spacing(4),

@@ -15,7 +15,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import SubmitButton from '../components/buttons/SubmitButton';
 import Copyright from '../components/Copyright';
 import useStyles from './FormStyle';
-import Textbox from '../components/Inputs/Textbox'
+import Textbox from '../components/inputs/Textbox'
 import { ValidatorForm } from 'react-material-ui-form-validator'
 import {login} from '../helpers/auth';
 import {reqErr,emailErr, minSize,minSizeErr} from '../helpers/validators';

@@ -13,7 +13,7 @@ import {
 
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Copyright from '../components/Copyright';
-import Textbox from '../components/Inputs/Textbox';
+import Textbox from '../components/inputs/Textbox';
 import SubmitButton from '../components/buttons/SubmitButton'
 import useStyles from './FormStyle';
 import { ValidatorForm } from 'react-material-ui-form-validator';

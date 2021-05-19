@@ -5,7 +5,7 @@ import Activate from './pages/Activate';
 import About from './pages/About';
 import ForgetPassword from './pages/ForgetPassword';
 import ResetPassword from './pages/ResetPassword';
-import Navbar from './components/Navbar/Navbar';
+import Navbar from './components/navbar/Navbar';
 import CreateEvent from './pages/Create/CreateEvent';
 import NetError from './components/NetError';
 import PrivateRoute from './routes/PrivateRoute';

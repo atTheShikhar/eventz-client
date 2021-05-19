@@ -99,7 +99,15 @@ function CreateEvent() {
                             {
                                 formSteps.map(label =>
                                     <Step key={label}>
-                                        <StepLabel>{label}</StepLabel>
+                                        <StepLabel 
+                                            StepIconProps={{
+                                                classes: {
+                                                    active: classes.stepperIcon
+                                                }
+                                            }}
+                                        >
+                                            {label}
+                                        </StepLabel>
                                     </Step>
                                 )
                             }

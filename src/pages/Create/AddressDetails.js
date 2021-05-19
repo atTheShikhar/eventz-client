@@ -3,7 +3,7 @@ import { Container, Button, Grid,MenuItem,Paper } from '@material-ui/core';
 import { ValidatorForm } from 'react-material-ui-form-validator';
 import SubmitButton from '../../components/buttons/SubmitButton';
 import useStyles from './Styles';
-import Textbox from '../../components/Inputs/Textbox';
+import Textbox from '../../components/inputs/Textbox';
 import statesArray from '../../helpers/statesArray'
 import Forward from '@material-ui/icons/ArrowForwardIos'
 import {

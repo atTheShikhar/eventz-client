@@ -2,7 +2,7 @@ import { MenuItem,Grid,Container,Paper } from '@material-ui/core'
 import React,{useEffect} from 'react'
 import { ValidatorForm } from 'react-material-ui-form-validator';
 import SubmitButton from '../../components/buttons/SubmitButton';
-import Textbox from '../../components/Inputs/Textbox'
+import Textbox from '../../components/inputs/Textbox'
 import useStyles from './Styles'
 import Forward from '@material-ui/icons/ArrowForwardIos'
 import {

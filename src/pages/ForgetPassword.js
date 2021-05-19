@@ -1,7 +1,7 @@
 import { Box, Container, Paper, Typography } from '@material-ui/core';
 import React, { useContext, useState } from 'react'
 import { ValidatorForm } from 'react-material-ui-form-validator';
-import Textbox from '../components/Inputs/Textbox';
+import Textbox from '../components/inputs/Textbox';
 import useStyles from './FormStyle';
 import {reqErr,emailErr} from '../helpers/validators';
 import SubmitButton from '../components/buttons/SubmitButton';
