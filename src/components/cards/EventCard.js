@@ -12,6 +12,7 @@ import {
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
+import EventIcon from '@material-ui/icons/Event';
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import React from 'react'
 import noImage from '../../assets/no-image.jpg'
@@ -22,12 +23,13 @@ function EventCard(props) {
     const {
         genre,
         address,
-        date
+        date,
+        time
     } = props;
 
     let { heading } = props;
-    if(heading.length >= 22) {
-        heading = heading.substring(0,21) + "...";
+    if(heading.length >= 20) {
+        heading = heading.substring(0,19) + "...";
     }
 
     return (
@@ -57,16 +59,23 @@ function EventCard(props) {
                     </div>
 
                     <Chip 
-                        label={`${date}`} 
+                        label={`${time}`} 
                         icon={<ScheduleIcon/>} 
                         color="primary"
+                        className={classes.chip}
                     />
-
+                    <Chip 
+                        label={`${date}`}
+                        icon={<EventIcon/>}
+                        color="primary"
+                        className={classes.chip}
+                    />
+                    <br/>
                     <Chip 
                         label={`${address}`} 
                         color="primary" 
                         icon={<LocationOnIcon/>} 
-                        style={{marginTop: "5px"}}
+                        className={classes.chip}
                     />    
 
                 </CardContent>

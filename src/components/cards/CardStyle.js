@@ -1,7 +1,7 @@
 import {makeStyles} from '@material-ui/core';
 const useStyles = makeStyles(theme => ({
     card: {
-        maxWidth: "360px",
+        maxWidth: "100%",
         borderRadius: "10px"
     },
     heading: {
@@ -10,6 +10,9 @@ const useStyles = makeStyles(theme => ({
     },
     image: {
         height: "240px"
+    },
+    chip: {
+        margin: "5px"
     },
     flexRow: {
         display: "flex",
