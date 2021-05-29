@@ -32,13 +32,12 @@ function BrowseEvents(props) {
     ]
     return (
         <div>
-            <GridList spacing={2}>
-                {arr.map((elem) => {
-                    <GridListTile key={elem.key} cols={2} rows={3}>
-                        <EventCard heading={elem.title} body={elem.heading} />
-                    </GridListTile>
-                })}
-            </GridList>
+            <EventCard 
+                heading={"Sports Event that is"} 
+                genre={"Sports"} 
+                date={"21st June 2021"} 
+                address={"Andaman & Nicobar Islands"}
+            />
         </div>
     )
 }

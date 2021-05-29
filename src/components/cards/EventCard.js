@@ -1,12 +1,18 @@
 import { 
-    Button, 
     Card, 
     CardActionArea,
     CardActions, 
     CardContent, 
     CardMedia, 
+    Chip, 
+    Divider, 
+    IconButton, 
     Typography 
 } from '@material-ui/core'
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import ShareIcon from '@material-ui/icons/Share';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+import ScheduleIcon from '@material-ui/icons/Schedule';
 import React from 'react'
 import noImage from '../../assets/no-image.jpg'
 import useStyles from './CardStyle'
@@ -14,13 +20,22 @@ import useStyles from './CardStyle'
 function EventCard(props) {
     const classes = useStyles();
     const {
-        heading,
-        body
+        genre,
+        address,
+        date
     } = props;
+
+    let { heading } = props;
+    if(heading.length >= 22) {
+        heading = heading.substring(0,21) + "...";
+    }
+
     return (
         <Card 
             raised={false}
-            className={classes.card}>
+            variant="outlined"
+            className={classes.card}
+        >
             <CardActionArea>
                 <CardMedia
                     className={classes.image}
@@ -29,22 +44,49 @@ function EventCard(props) {
                     title="no image"
                 />
                 <CardContent>
-                    <Typography
-                        gutterBottom
-                        variant="h5"
-                        component="h2"
-                    >
-                        {heading}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        {body}
-                    </Typography>
+                    <div className={classes.flexRow} style={{marginBottom: "5px"}}>
+                        <Typography
+                            gutterBottom
+                            variant="h5"
+                            component="h2"
+                            className={classes.heading}
+                        >
+                            {heading}
+                        </Typography>
+                        <Chip label={`${genre}`} variant="outlined" color="secondary"/>
+                    </div>
+
+                    <Chip 
+                        label={`${date}`} 
+                        icon={<ScheduleIcon/>} 
+                        color="primary"
+                    />
+
+                    <Chip 
+                        label={`${address}`} 
+                        color="primary" 
+                        icon={<LocationOnIcon/>} 
+                        style={{marginTop: "5px"}}
+                    />    
+
                 </CardContent>
+
             </CardActionArea>
-            <CardActions>
-                <Button>
-                    Ok
-                </Button>
+
+            <Divider variant="middle"/>
+
+            <CardActions className={classes.flexRow}>
+                    <div>
+                        <IconButton aria-label="add to favorites" className={classes.favButton}>
+                            <FavoriteIcon />
+                        </IconButton>
+                        <IconButton aria-label="share" className={classes.shareButton}>
+                            <ShareIcon />
+                        </IconButton>
+                    </div>
+                    <strong className={classes.priceTag}>
+                        FREE
+                    </strong>                   
             </CardActions>
         </Card>
     )

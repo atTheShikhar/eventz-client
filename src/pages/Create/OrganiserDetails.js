@@ -99,7 +99,6 @@ function OrganiserDetails(props) {
                         <Grid container direction="row" justify="flex-end">
                             <Grid item>
                                 <Button
-                                    color="primary"
                                     onClick={backward}
                                 >Previous</Button>
 
