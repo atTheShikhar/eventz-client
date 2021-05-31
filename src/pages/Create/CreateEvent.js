@@ -24,6 +24,7 @@ function CreateEvent() {
         eventTitle: "",
         eventDescription: "",
         noOfPeople: "Upto 100",
+        duration: "1 Hr",
         // isPaid: false,
         eventDate: currentDate,
         eventTime: "12:00",

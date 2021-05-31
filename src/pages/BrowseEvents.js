@@ -7,11 +7,11 @@ import { Link } from 'react-router-dom'
 import EventCard from '../components/cards/EventCard'
 
 const useStyles = makeStyles((theme) => ({
-    grid: {
-        margin: "35px auto"
+    vmargin: {
+        marginTop: "30px",
+        marginBottom: "30px"
     },
     pagination: {
-        margin: "35px auto",
         "&.MuiPagination-root .Mui-selected": {
             color: "white",
             backgroundColor: "#20232a"
@@ -52,8 +52,8 @@ function BrowseEvents(props) {
     
 
     return (
-        <Container maxWidth="lg" >
-            <Grid container spacing={2} className={classes.grid}>
+        <Container maxWidth="lg" className={classes.vmargin}>
+            <Grid container spacing={2} >
                 {
                     events.map((item) => {
                         return (
@@ -65,11 +65,7 @@ function BrowseEvents(props) {
                                 md={4} 
                             >
                                 <EventCard
-                                    heading={item.eventDetails.title}
-                                    genre={item.eventDetails.genre}
-                                    date={new Date(item.eventDetails.dateAndTime).toDateString()}
-                                    time={new Date(item.eventDetails.dateAndTime).toLocaleTimeString()}
-                                    address={item.eventAddress.stateName}
+                                    eventData={item}
                                 />
                             </Grid>
                         );
@@ -77,7 +73,7 @@ function BrowseEvents(props) {
                 }
             </Grid>
 
-            <Divider variant="middle"/>
+            <Divider variant="middle" className={classes.vmargin}/>
 
             <div className={classes.divContainer}>
                 <Pagination 

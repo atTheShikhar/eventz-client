@@ -1,4 +1,4 @@
-import { MenuItem,Grid,Container,Paper } from '@material-ui/core'
+import { MenuItem,Grid,Container,Paper,Button, Input, InputLabel, FormControl } from '@material-ui/core'
 import React,{useEffect} from 'react'
 import { ValidatorForm } from 'react-material-ui-form-validator';
 import SubmitButton from '../../components/buttons/SubmitButton';
@@ -18,6 +18,7 @@ import {
 function EventDetails(props) {
     const {details,nextStep,handleChange} = props;
     const num = ["Upto 100", "Upto 500", "Upto 1000", "More than 1000"];
+    const timeLimits = ["< 1 Hr","1 Hr","1 Hr 30 Mins","2 Hrs","> 2 Hrs"];
 
     //Hooks
     const classes = useStyles();
@@ -107,9 +108,45 @@ function EventDetails(props) {
                         />
                     </Grid>
 
-                    {/* <Grid item xs={12} sm={6}>
-                        
-                    </Grid> */}
+                    <Grid item xs={12} sm={6}>
+                        <Textbox
+                            label="Duration"
+                            select
+                            value={details.duration}
+                            onChange={handleChange('duration')}
+                            name="duration"
+                        >
+                            {
+                                timeLimits.map( option => (
+                                        <MenuItem key={option} value={option}>
+                                            {option}
+                                        </MenuItem>
+                                    )
+                                )
+                            }
+                        </Textbox>
+                    </Grid>
+
+                    <Grid item xs={12}>
+                        <FormControl fullWidth={true}>
+                            <InputLabel
+                                variant="standard"
+                                shrink={true}
+                            >
+                                Upload Event Poster
+                            </InputLabel>
+
+                            <Input
+                                inputProps={{accept: "image/*"}}
+                                type="file"
+                                fullWidth={true}
+                                disableUnderline={true}
+                                className={classes.imageInput}
+                                //TODO: Handle Upload
+                                onChange={uploadHandler}
+                            />
+                        </FormControl>
+                    </Grid>
                     
                     <Grid item xs={12}>
                         <Textbox

@@ -17,19 +17,24 @@ import ScheduleIcon from '@material-ui/icons/Schedule';
 import React from 'react'
 import noImage from '../../assets/no-image.jpg'
 import useStyles from './CardStyle'
+import { useHistory } from 'react-router';
 
 function EventCard(props) {
     const classes = useStyles();
-    const {
-        genre,
-        address,
-        date,
-        time
-    } = props;
+    const history = useHistory();
 
-    let { heading } = props;
+    const { title,genre,dateAndTime } = props.eventData.eventDetails;
+    const { stateName } = props.eventData.eventAddress;
+    const { _id } = props.eventData;
+    const date = new Date(dateAndTime).toDateString();
+    const time = new Date(dateAndTime).toLocaleTimeString();
+    let heading = title;
     if(heading.length >= 20) {
         heading = heading.substring(0,19) + "...";
+    }
+
+    const cardClickHandler = (ev) => {
+        history.push(`/event/${_id}`,{eventData: props.eventData, date: date, time: time});
     }
 
     return (
@@ -38,7 +43,7 @@ function EventCard(props) {
             variant="outlined"
             className={classes.card}
         >
-            <CardActionArea>
+            <CardActionArea onClick={cardClickHandler}> 
                 <CardMedia
                     className={classes.image}
                     component="img"
@@ -72,7 +77,7 @@ function EventCard(props) {
                     />
                     <br/>
                     <Chip 
-                        label={`${address}`} 
+                        label={`${stateName}`} 
                         color="primary" 
                         icon={<LocationOnIcon/>} 
                         className={classes.chip}

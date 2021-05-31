@@ -22,6 +22,7 @@ import {
 } from 'react-router-dom'
 import axios from 'axios';
 import BrowseEvents from './pages/BrowseEvents';
+import EventPage from './pages/EventPage';
 
 axios.defaults.withCredentials = true;
 
@@ -42,6 +43,7 @@ function App() {
               <Route exact path="/neterr" component={NetError} />
               <Route exact path="/about" component={About}/>
               <Route path="/browse" component={BrowseEvents}/>
+              <Route path="/event/:id" component={EventPage} />
 
               <PublicRoute exact path="/user/activate/:token" component={Activate}/>
               <PublicRoute exact path="/login" component={Login} />

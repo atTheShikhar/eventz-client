@@ -17,6 +17,8 @@ const useStyles = makeStyles(theme => ({
     mainStyles: {
         backgroundColor: theme.palette.background.default,
         padding: theme.spacing(4),
+    },
+    imageInput: {
     }
 }));
 
