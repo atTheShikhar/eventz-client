@@ -31,7 +31,9 @@ export const createEvent = async (formData,history,setFeedback,setButtonDisabled
         const response = await axios.post('/api/create-event',reqBody);
         successHandler(response,setFeedback,() => {
             setButtonDisabled(false);
-            history.replace('/')
+            // console.log(response.data.eventData);
+            const eventId = response.data.eventData._id;
+            history.replace(`/user/myevents/uploadposter/${eventId}`)
         });
     } catch (err) {
         setButtonDisabled(false);

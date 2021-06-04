@@ -23,6 +23,12 @@ import {
 import axios from 'axios';
 import BrowseEvents from './pages/BrowseEvents';
 import EventPage from './pages/EventPage';
+import UploadEventPoster from './pages/UploadEventPoster';
+import MyEvents from './pages/user/MyEvents';
+import Profile from './pages/user/Profile';
+import BookEvents from './pages/BookEvents';
+import MyTickets from './pages/user/MyTickets';
+import Tickets from './pages/user/Tickets';
 
 axios.defaults.withCredentials = true;
 
@@ -42,8 +48,8 @@ function App() {
               <Route exact path="/" component={Homepage}/>
               <Route exact path="/neterr" component={NetError} />
               <Route exact path="/about" component={About}/>
-              <Route path="/browse" component={BrowseEvents}/>
-              <Route path="/event/:id" component={EventPage} />
+              <Route exact path="/browse" component={BrowseEvents}/>
+              <Route exact path="/event/:id" component={EventPage} />
 
               <PublicRoute exact path="/user/activate/:token" component={Activate}/>
               <PublicRoute exact path="/login" component={Login} />
@@ -52,6 +58,12 @@ function App() {
               <PublicRoute exact path="/user/resetpassword/:token" component={ResetPassword} />
 
               <PrivateRoute exact path="/create" component={CreateEvent}/>
+              <PrivateRoute exact path="/book/:id" component={BookEvents}/>
+              <PrivateRoute exact path="/user/myevents/uploadposter/:id" component={UploadEventPoster} />
+              <PrivateRoute exact path="/user/myevents" component={MyEvents}/>
+              <PrivateRoute exact path="/user/profile" component={Profile}/>
+              <PrivateRoute exact path="/user/mybookings" component={MyTickets}/>
+              <PrivateRoute exact path="/tickets" component={Tickets}/>
 
               <Route exact path="*" >
                 <Redirect to="/" />

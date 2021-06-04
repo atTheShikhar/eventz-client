@@ -1,4 +1,4 @@
-import { MenuItem,Grid,Container,Paper,Button, Input, InputLabel, FormControl } from '@material-ui/core'
+import { MenuItem,Grid,Container,Paper } from '@material-ui/core'
 import React,{useEffect} from 'react'
 import { ValidatorForm } from 'react-material-ui-form-validator';
 import SubmitButton from '../../components/buttons/SubmitButton';
@@ -127,27 +127,6 @@ function EventDetails(props) {
                         </Textbox>
                     </Grid>
 
-                    <Grid item xs={12}>
-                        <FormControl fullWidth={true}>
-                            <InputLabel
-                                variant="standard"
-                                shrink={true}
-                            >
-                                Upload Event Poster
-                            </InputLabel>
-
-                            <Input
-                                inputProps={{accept: "image/*"}}
-                                type="file"
-                                fullWidth={true}
-                                disableUnderline={true}
-                                className={classes.imageInput}
-                                //TODO: Handle Upload
-                                onChange={uploadHandler}
-                            />
-                        </FormControl>
-                    </Grid>
-                    
                     <Grid item xs={12}>
                         <Textbox
                             label="Description (2000 letters max)"

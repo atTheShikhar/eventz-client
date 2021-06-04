@@ -26,15 +26,15 @@ function EventPage(props) {
 
     const {
         date,
-        time
+        time,
+        imgLink
     } = props.location.state;
 
     const {
-        eventOrganiser
-    } = eventData;
-
-    const {
-        eventAddress
+        eventOrganiser,
+        eventAddress,
+        createdBy,
+        _id
     } = eventData;
 
     return (
@@ -48,23 +48,26 @@ function EventPage(props) {
                         duration="1 Hour"
                         date={date} 
                         time={time}
+                        imgLink={imgLink}
                         noOfPeople={noOfPeople}
                         price="FREE"
+                        createdBy={createdBy}
+                        eventId={_id}
                     />            
                 </Grid>
-                <Grid item md={4} sm={12} xs={12}>
+                <Grid item md={6} sm={6} xs={12}>
                     <Organiser
                         organiserDetails={eventOrganiser}
                     />
                 </Grid>
-                <Grid item md={8} sm={6} xs={12}>
-                    <Description
-                        description={description}
-                    />
-                </Grid>
-                <Grid item md={4} sm={6} xs={12}>
+                <Grid item md={6} sm={6} xs={12}>
                     <Address
                         address={eventAddress}
+                    />
+                </Grid>
+                <Grid item md={12} sm={12} xs={12}>
+                    <Description
+                        description={description}
                     />
                 </Grid>
             </Grid>

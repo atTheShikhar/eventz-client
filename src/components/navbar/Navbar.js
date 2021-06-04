@@ -20,11 +20,10 @@ import {
     Link,
     useHistory,
 } from 'react-router-dom';
-import { logout } from '../../helpers/auth';
 import useStyles from './useStyles';
 import { UserContext } from "../../context/Context";
 import NavList from './NavList';
-// import FlatButton from '../buttons/FlatButton';
+import UserMenu from './UserMenu';
 
 //Hide navbar on scroll logic
 function HideOnScroll(props) {
@@ -44,9 +43,10 @@ HideOnScroll.propTypes = {
 function Navbar(props) {
     //Hooks
     const history = useHistory();
-    const { user,setUser } = useContext(UserContext);
+    const { user } = useContext(UserContext);
     const classes = useStyles();
     const [open,setOpen] = useState(false);
+
     //next is just an optional function
     const toggleDrawer = (open) => (e) => {
         setOpen(open);
@@ -97,16 +97,7 @@ function Navbar(props) {
                     {
                     user ?
                         (
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                onClick={() => {
-                                    logout(setUser,history)
-                                }}
-                                disableElevation
-                            >
-                                Logout {user.name}
-                            </Button>
+                            <UserMenu/>
                         ) :
                         (<>  
                             <Button

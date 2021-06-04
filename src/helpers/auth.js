@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import jwt_decode from 'jwt-decode';
 import {
     successHandler,
     errorHandler
@@ -11,7 +12,9 @@ import {
 export const isAuth = () => {
     if (Cookies.get('jwt')) {
         const user = localStorage.getItem('user');
-        const userObj = JSON.parse(user);
+        const userData = JSON.parse(user);
+        const decoded = jwt_decode(Cookies.get('jwt'));
+        const userObj = {email: userData?.email, name: userData?.name,id: decoded._id}
         return userObj;
     }
     //Remove user info if cookie is not present

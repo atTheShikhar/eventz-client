@@ -2,11 +2,18 @@ import { Container, Divider, Grid, makeStyles} from '@material-ui/core'
 import { Pagination, PaginationItem } from '@material-ui/lab'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { useHistory, useLocation } from 'react-router'
+import { useLocation } from 'react-router'
 import { Link } from 'react-router-dom'
 import EventCard from '../components/cards/EventCard'
 
 const useStyles = makeStyles((theme) => ({
+    bgGrey: {
+        backgroundColor: "#fafafa"
+    },
+    vpadding: {
+        paddingTop: "30px",
+        paddingBottom: "30px"
+    },
     vmargin: {
         marginTop: "30px",
         marginBottom: "30px"
@@ -27,8 +34,7 @@ const useStyles = makeStyles((theme) => ({
 function BrowseEvents(props) {
     const classes = useStyles();
     const { search } = useLocation(); //Gets query parameters from the link
-    // const history = useHistory();
-    const [events,setEvents] = useState([]);
+    const [events,setEvents] = useState(null);
     const [pageData,setPageData] = useState({});
     const [load,setLoad] = useState(false);
 
@@ -50,50 +56,62 @@ function BrowseEvents(props) {
         fetchEvents();
     },[load])
     
-
     return (
-        <Container maxWidth="lg" className={classes.vmargin}>
-            <Grid container spacing={2} >
-                {
-                    events.map((item) => {
-                        return (
-                            <Grid 
-                                key={item._id} 
-                                item 
-                                xs={12} 
-                                sm={6} 
-                                md={4} 
-                            >
-                                <EventCard
-                                    eventData={item}
-                                />
-                            </Grid>
-                        );
-                    })
-                }
-            </Grid>
+        <div className={classes.bgGrey}>
+        <Container maxWidth="lg" className={classes.vpadding}>
+            {
+                events ? 
+                (
+                    <>
+                        <Grid container spacing={2} >
+                            {
+                                events.map((item) => {
+                                    return (
+                                        <Grid 
+                                            key={item._id} 
+                                            item 
+                                            xs={12} 
+                                            sm={6} 
+                                            md={4} 
+                                        >
+                                            <EventCard
+                                                eventData={item}
+                                                clickRoute={`/event/${item._id}`}
+                                            />
+                                        </Grid>
+                                    );
+                                })
+                            }
+                        </Grid>
 
-            <Divider variant="middle" className={classes.vmargin}/>
+                        <Divider variant="middle" className={classes.vmargin}/>
 
-            <div className={classes.divContainer}>
-                <Pagination 
-                    className={classes.pagination}
-                    count={pageData.totalPages}      
-                    onChange={(e,page) => {
-                        setLoad(load => !load);
-                    }}
-                    renderItem={(item) => (
-                        <PaginationItem
-                            component={Link}
-                            to={`/browse?page=${item.page}`}
-                            {...item}
-                        />
-                    )}
-                    shape="rounded"
-                    size="large"
-                />
-            </div>
+                        <div className={classes.divContainer}>
+                            <Pagination 
+                                className={classes.pagination}
+                                count={pageData.totalPages}      
+                                onChange={(e,page) => {
+                                    setLoad(load => !load);
+                                }}
+                                renderItem={(item) => (
+                                    <PaginationItem
+                                        component={Link}
+                                        to={`/browse?page=${item.page}`}
+                                        {...item}
+                                    />
+                                )}
+                                shape="rounded"
+                                size="large"
+                            />
+                        </div>
+                    </>
+                ) :
+                (
+                    <div>No Events available</div>
+                )
+            }
         </Container>
+        </div>
     )
 }
 

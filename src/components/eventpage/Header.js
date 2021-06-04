@@ -5,16 +5,23 @@ import { Button,
     Container,
     Divider, 
 } from '@material-ui/core'
-import React from 'react'
+import {useHistory} from 'react-router'
+import React, { useContext } from 'react'
 import useStyles from './Styles';
-import noImage from '../../assets/no-image.jpg'
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import EventIcon from '@material-ui/icons/Event';
 import PeopleIcon from '@material-ui/icons/People';
+import { UserContext } from '../../context/Context';
 
 function Header(props) {
     const classes = useStyles();
-    const { imgLink,title,genre,noOfPeople,duration,date,time,price } = props;
+    const history = useHistory();
+    const { user } = useContext(UserContext);
+
+    const { imgLink,title,genre,
+        noOfPeople,duration,date,
+        time,price,createdBy,eventId 
+    } = props;
 
     return (
         <Container className={classes.container}>
@@ -23,10 +30,10 @@ function Header(props) {
                 raised={false}
             >
                 <CardMedia
-                    title={imgLink ? props.title : "No Image"}
+                    title={"Event Poster"}
                     component="img"
                     className={classes.cardMedia}
-                    src={imgLink ?? noImage}
+                    src={imgLink}
                 />
 
                 <CardContent>
@@ -40,14 +47,30 @@ function Header(props) {
                             </div>
                         </div>
                         <div>
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                size="large"
-                                className={classes.button}
-                            >
-                                Book
-                            </Button>                            
+                            {
+                                (user?.id == createdBy) ?
+                                (<>
+                                    <Button 
+                                        variant="contained"
+                                        color="secondary"
+                                        size="large"
+                                        className={classes.button}
+                                    >
+                                        Edit Details
+                                    </Button>
+                                </>) :
+                                (<>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        size="large"
+                                        className={classes.button}
+                                        onClick={() => history.push(`/book/${eventId}`)}
+                                    >
+                                        Book
+                                    </Button>                            
+                                </>)
+                            }
                         </div> 
                     </div>
                     <Divider variant="middle" className={classes.vmargin}/>

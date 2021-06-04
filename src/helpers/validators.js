@@ -16,6 +16,14 @@ export const minSizeErr = (field,len) => `${field} should be more than ${len-1} 
 export const exactDigit = len => `matchRegexp:^\\d{${len}}$`
 export const exactDigitErr = len => `Exactly ${len} digits allowed`
 
+//Rule to allow only images (jpg,png,webp) 
+export const onlyImage = 'allowedExtensions:image/png,image/webp';
+export const imageErr = 'Only .png/.jpeg/.webp images are allowed!'
+
+//Rule to allow files of certain size
+export const maxSizeMB = len => `maxFileSize:${len*1024*1024}`;
+export const maxSizeMBErr = len => `File size can't be more than ${len}MB !`
+
 //Custom Rule to allow only future dates
 export function futureDateValidator() {
     ValidatorForm.addValidationRule('futureDate',(selectedDate) => {

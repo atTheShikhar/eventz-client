@@ -14,18 +14,16 @@ import ShareIcon from '@material-ui/icons/Share';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import EventIcon from '@material-ui/icons/Event';
 import ScheduleIcon from '@material-ui/icons/Schedule';
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import noImage from '../../assets/no-image.jpg'
 import useStyles from './CardStyle'
 import { useHistory } from 'react-router';
 
 function EventCard(props) {
-    const classes = useStyles();
-    const history = useHistory();
-
     const { title,genre,dateAndTime } = props.eventData.eventDetails;
     const { stateName } = props.eventData.eventAddress;
-    const { _id } = props.eventData;
+    const { imageLocation } = props.eventData;
+    const { clickRoute } = props;
     const date = new Date(dateAndTime).toDateString();
     const time = new Date(dateAndTime).toLocaleTimeString();
     let heading = title;
@@ -33,8 +31,17 @@ function EventCard(props) {
         heading = heading.substring(0,19) + "...";
     }
 
+    const classes = useStyles();
+    const history = useHistory();
+    const [image,setImage] = useState(noImage);    
+    useEffect(() => {
+        if(imageLocation !== undefined) {
+            setImage(process.env.REACT_APP_BASE_URL+imageLocation);
+        }
+    },[])
+
     const cardClickHandler = (ev) => {
-        history.push(`/event/${_id}`,{eventData: props.eventData, date: date, time: time});
+        history.push(clickRoute,{eventData: props.eventData, date: date, time: time, imgLink: image});
     }
 
     return (
@@ -47,8 +54,8 @@ function EventCard(props) {
                 <CardMedia
                     className={classes.image}
                     component="img"
-                    src={noImage}
-                    title="no image"
+                    src={image}
+                    title="Event Poster"
                 />
                 <CardContent>
                     <div className={classes.flexRow} style={{marginBottom: "5px"}}>
