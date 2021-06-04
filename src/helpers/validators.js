@@ -29,12 +29,12 @@ export function futureDateValidator() {
     ValidatorForm.addValidationRule('futureDate',(selectedDate) => {
         const date = new Date(selectedDate).setHours(0,0,0,0);
         const today = new Date().setHours(0,0,0,0);
-        if(date < today) 
+        if(date <= today) 
             return false;
         return true;
     });
 }
-export const pastDateErr = "Date cannot be in past"; 
+export const pastDateErr = "Can't create events for today or in past"; 
 
 //Custom Rule to confirm password
 export function samePass(pass) {

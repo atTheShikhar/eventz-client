@@ -48,7 +48,7 @@ function Header(props) {
                         </div>
                         <div>
                             {
-                                (user?.id == createdBy) ?
+                                (user?.id === createdBy) ?
                                 (<>
                                     <Button 
                                         variant="contained"

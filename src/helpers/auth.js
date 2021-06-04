@@ -1,6 +1,5 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import jwt_decode from 'jwt-decode';
 import {
     successHandler,
     errorHandler
@@ -13,23 +12,21 @@ export const isAuth = () => {
     if (Cookies.get('jwt')) {
         const user = localStorage.getItem('user');
         const userData = JSON.parse(user);
-        const decoded = jwt_decode(Cookies.get('jwt'));
-        const userObj = {email: userData?.email, name: userData?.name,id: decoded._id}
-        return userObj;
+        return userData;
     }
     //Remove user info if cookie is not present
     localStorage.removeItem('user');
     return false;
 };
 
-export const login = async (formData,history,setUser,setFeedback) => {
+export const login = async (formData,history,setUser,setFeedback,routes) => {
     try {
-        const response = await axios.post(`/api/login`,formData);
+        const response = await axios.post(routes.hit,formData);
         // Setting user info to localStorage 
         const { user } = response?.data;
         setUser(user);
         localStorage.setItem("user",JSON.stringify(user));
-        successHandler(response,setFeedback,() => {history.replace("/")});
+        successHandler(response,setFeedback,() => {history.replace(routes.redirect)});
     } catch(err) { 
         errorHandler(err, history, setFeedback);
     }

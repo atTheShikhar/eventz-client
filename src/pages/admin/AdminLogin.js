@@ -1,9 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React,{useState,useContext} from 'react'
 import {
     Avatar,
     FormControlLabel,
     Checkbox,
-    Link,
     Grid,
     Box,
     Typography,
@@ -12,24 +11,24 @@ import {
 } from '@material-ui/core';
 
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import SubmitButton from '../components/buttons/SubmitButton';
-import Copyright from '../components/Copyright';
-import useStyles from './FormStyle';
-import Textbox from '../components/inputs/Textbox'
+import SubmitButton from '../../components/buttons/SubmitButton';
+import Copyright from '../../components/Copyright';
+import useStyles from '../FormStyle';
+import Textbox from '../../components/inputs/Textbox'
 import { ValidatorForm } from 'react-material-ui-form-validator'
-import {login} from '../helpers/auth';
-import {reqErr,emailErr, minSize,minSizeErr} from '../helpers/validators';
+import {login} from '../../helpers/auth';
+import {reqErr} from '../../helpers/validators';
 import { useHistory } from 'react-router';
-import { ComponentContext, UserContext } from '../context/Context';
+import { ComponentContext, UserContext } from '../../context/Context';
 
-export default function Login() {
+function AdminLogin(props) {
     //Hooks
     const {setUser} = useContext(UserContext); 
     const {setFeedback} = useContext(ComponentContext);
     const classes = useStyles();
     const history = useHistory();
     const [values,setValues] = useState({
-        email: "",
+        username: "",
         password: ""
     });
     const [passwordState,setPasswordState] = useState("password")
@@ -52,20 +51,17 @@ export default function Login() {
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        
-        login(values,history,setUser,setFeedback,{hit: "/api/login", redirect: "/"});
+        login(values,history,setUser,setFeedback,{hit: '/api/admin/login', redirect: "/admin/events"});
     }
-
-    //Render Logic
     return (
-        <div className={classes.page}>
-        <Container component="main" maxWidth="xs">
+        <div>
+            <Container component="main" maxWidth="xs">
             <Paper className={classes.card}>
                 <Avatar className={classes.avatar}>
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Log In
+                    Admin Log In
                 </Typography>
                 
                     <ValidatorForm 
@@ -74,13 +70,13 @@ export default function Login() {
                         instantValidate={true}
                     >
                     <Textbox
-                        label="Email Address"
-                        name="email"
+                        label="Username"
+                        name="username"
                         autoFocus
-                        value={values.email}
+                        value={values.username}
                         onChange={handleChange}
-                        validators={['required', 'isEmail']}
-                        errorMessages={[reqErr,emailErr]}
+                        validators={['required']}
+                        errorMessages={[reqErr]}
                     />
                     <Textbox
                         name="password"
@@ -88,8 +84,8 @@ export default function Login() {
                         type={passwordState}
                         value={values.password}
                         onChange={handleChange}
-                        validators={['required',minSize(6)]}
-                        errorMessages={[reqErr,minSizeErr("Password",6)]}
+                        validators={['required']}
+                        errorMessages={[reqErr]}
                     />
                     
                     <Grid item>
@@ -103,49 +99,19 @@ export default function Login() {
                         />
                     </Grid>
 
-                    <Link 
-                        variant="body2" 
-                        onClick={() => {
-                            history.push('/user/forgetpassword');
-                        }}
-                        className={classes.link}
-                    >
-                        Forgot password?
-                    </Link>
-                    
                     <SubmitButton
                         className={classes.submit}   
                     >
                         Log In
                     </SubmitButton>
-
-                    <Grid container direction="column">
-                        
-                        <Grid item>
-                            <span style={{
-                                color: "grey",
-                                paddingRight: "8px"
-                            }}>
-                                Don't have an account?
-                            </span>
-
-                            <Link 
-                                variant="body2"
-                                onClick={() => {
-                                    history.push('/Register')
-                                }}
-                                    className={classes.link}
-                            >
-                                Sign Up
-                            </Link>
-                        </Grid>
-                    </Grid>
                 </ValidatorForm>
             </Paper>
             <Box mt={5}>
                 <Copyright />
             </Box>
-        </Container>
+            </Container>
         </div>
-    );
+    )
 }
+
+export default AdminLogin

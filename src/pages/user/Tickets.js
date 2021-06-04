@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function Tickets(props) {
-    const {count,tickets} = props.location.state;
+    const {tickets} = props.location.state;
     const classes = useStyles()
     return (
         <div className={`${classes.bgGrey} ${classes.vpadding}`}>

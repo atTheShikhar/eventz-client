@@ -1,5 +1,5 @@
 import { MenuItem,Grid,Container,Paper } from '@material-ui/core'
-import React,{useEffect} from 'react'
+import React,{useEffect, useState} from 'react'
 import { ValidatorForm } from 'react-material-ui-form-validator';
 import SubmitButton from '../../components/buttons/SubmitButton';
 import Textbox from '../../components/inputs/Textbox'
@@ -14,16 +14,31 @@ import {
     futureDateValidator, 
     pastDateErr
 } from '../../helpers/validators';
+import axios from 'axios';
 
 function EventDetails(props) {
     const {details,nextStep,handleChange} = props;
-    const num = ["Upto 100", "Upto 500", "Upto 1000", "More than 1000"];
-    const timeLimits = ["< 1 Hr","1 Hr","1 Hr 30 Mins","2 Hrs","> 2 Hrs"];
-
+    const [genre,setGenre] = useState([]); 
+    const [num,setNum] = useState([]);
+    const [timeLimits, setTimeLimits] = useState([]); 
     //Hooks
     const classes = useStyles();
     useEffect(() => {
         futureDateValidator();
+        const getMetadata = async () => {
+            try {
+                const response = await axios.get('/api/events-metadata');
+                console.log(response)
+                setNum(response.data.noOfPeople);
+                setTimeLimits(response.data.timeLimits)
+                setGenre(response.data.genre);
+            } catch(e) {
+                console.log(e);
+            }
+        }
+    
+        getMetadata();
+
     }, []);
 
     //Functions
@@ -53,12 +68,21 @@ function EventDetails(props) {
                     <Grid item xs={12} sm={6}>
                         <Textbox
                             label="Genre"
+                            select
                             value={details.eventGenre}
                             onChange={handleChange('eventGenre')}
                             name="eventGenre"
-                            validators={['required', maxSize(50), regexText]}
-                            errorMessages={[reqErr, maxSizeErr(50), textErr]}
-                        />
+                            // validators={['required', maxSize(50), regexText]}
+                            // errorMessages={[reqErr, maxSizeErr(50), textErr]}
+                        >
+                            {
+                                genre.map(option => (
+                                    <MenuItem key={option} value ={option}>
+                                        {option}
+                                    </MenuItem>
+                                ))
+                            }
+                        </Textbox>
                     </Grid>
 
                     <Grid item xs={12} sm={6}>

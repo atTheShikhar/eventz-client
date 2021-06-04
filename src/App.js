@@ -29,6 +29,9 @@ import Profile from './pages/user/Profile';
 import BookEvents from './pages/BookEvents';
 import MyTickets from './pages/user/MyTickets';
 import Tickets from './pages/user/Tickets';
+import AdminRoute from './routes/AdminRoute';
+import AdminLogin from './pages/admin/AdminLogin';
+import MonitorEvents from './pages/admin/MonitorEvents';
 
 axios.defaults.withCredentials = true;
 
@@ -56,6 +59,7 @@ function App() {
               <PublicRoute exact path="/register" component={Register} />
               <PublicRoute exact path="/user/forgetpassword" component={ForgetPassword}/>
               <PublicRoute exact path="/user/resetpassword/:token" component={ResetPassword} />
+              <PublicRoute exact path='/admin/login' component={AdminLogin}/> 
 
               <PrivateRoute exact path="/create" component={CreateEvent}/>
               <PrivateRoute exact path="/book/:id" component={BookEvents}/>
@@ -64,6 +68,8 @@ function App() {
               <PrivateRoute exact path="/user/profile" component={Profile}/>
               <PrivateRoute exact path="/user/mybookings" component={MyTickets}/>
               <PrivateRoute exact path="/tickets" component={Tickets}/>
+
+              <AdminRoute exact path="/admin/events" component={MonitorEvents}/>
 
               <Route exact path="*" >
                 <Redirect to="/" />

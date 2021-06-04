@@ -28,7 +28,7 @@ function CreateEvent() {
         // isPaid: false,
         eventDate: currentDate,
         eventTime: "12:00",
-        eventGenre: "",
+        eventGenre: "Seminars",
 
         //Address Details
         apartment: "",

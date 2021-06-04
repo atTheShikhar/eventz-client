@@ -1,29 +1,18 @@
 import { 
-    Button,
-    AppBar,
-    Toolbar,
-    IconButton,
-    Typography,
-    useScrollTrigger,
-    Slide,
-    Hidden,
-    Drawer,
+    Button,AppBar,Toolbar,
+    IconButton,Typography,useScrollTrigger,
+    Slide,Hidden,Drawer,
 } from '@material-ui/core';
 import MenuButton from '@material-ui/icons/Menu';
 import Search from '@material-ui/icons/SearchOutlined';
 import PropTypes from 'prop-types';
-import React,{
-    useState,
-    useContext
-} from 'react'
-import {
-    Link,
-    useHistory,
-} from 'react-router-dom';
+import React,{ useState,useContext } from 'react'
+import { Link,useHistory } from 'react-router-dom';
 import useStyles from './useStyles';
 import { UserContext } from "../../context/Context";
 import NavList from './NavList';
 import UserMenu from './UserMenu';
+import { logout } from '../../helpers/auth';
 
 //Hide navbar on scroll logic
 function HideOnScroll(props) {
@@ -43,7 +32,7 @@ HideOnScroll.propTypes = {
 function Navbar(props) {
     //Hooks
     const history = useHistory();
-    const { user } = useContext(UserContext);
+    const { user,setUser } = useContext(UserContext);
     const classes = useStyles();
     const [open,setOpen] = useState(false);
 
@@ -68,37 +57,60 @@ function Navbar(props) {
 
                         <Drawer anchor="left" open={open} onClose={toggleDrawer(false)}>
                             <NavList
+                                menuType={user?.type}
                                 classes={classes}
                                 toggleDrawer={toggleDrawer}
                             />
                         </Drawer>
 
                         <Typography variant="h5">
-                            <Link to="/" className={classes.logoStyle}>
-                                Eventz
-                            </Link>
+                            {
+                                (user?.type === "admin") ?
+                                (<>Eventz Admin Panel</>) :
+                                (
+                                    <Link to="/" className={classes.logoStyle}>
+                                        Eventz
+                                    </Link>
+                                )
+                            }
                         </Typography>
 
-                        <Hidden xsDown>
-                            <div className={classes.searchWrapper}>
-                            <input 
-                                type="text" 
-                                placeholder="Search Events..."
-                                className={classes.search}
-                            />
-                            <IconButton className={classes.searchButton}>
-                                <Search/> 
-                            </IconButton>
-                            </div>
-                        </Hidden>
+                        {
+                            (user?.type === "admin") ? 
+                            (<></>) : 
+                            (
+                                <Hidden xsDown>
+                                    <div className={classes.searchWrapper}>
+                                    <input 
+                                        type="text" 
+                                        placeholder="Search Events..."
+                                        className={classes.search}
+                                    />
+                                    <IconButton className={classes.searchButton}>
+                                        <Search/> 
+                                    </IconButton>
+                                    </div>
+                                </Hidden>
+                            )
+                        }
                     </div>
                     
                     <div className={classes.itemsGroup}>
                     {
                     user ?
+                        (user?.type === "admin") ?
+                        (
+                            <Button 
+                                variant="contained" 
+                                onClick={() => logout(setUser,history)}
+                            >
+                                Log Out
+                            </Button>
+                        ) :
                         (
                             <UserMenu/>
-                        ) :
+                        )
+                         :
                         (<>  
                             <Button
                                 color="inherit"

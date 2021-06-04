@@ -6,7 +6,7 @@ import {
     Explore,
 } from '@material-ui/icons'
 //List for navigation drawer
-export const menuItem = [
+export const usermenu = [
     {
         name: "Home",
         route: "/",
@@ -32,4 +32,12 @@ export const menuItem = [
         route: "/help",
         icon: <Help/>
     },
+]
+
+export const adminmenu = [
+    {
+        name: "Events",
+        route: "/admin/events",
+        icon: <Explore/>
+    }
 ]

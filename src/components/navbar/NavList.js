@@ -1,4 +1,4 @@
-import { menuItem } from './menuItems'
+import { usermenu,adminmenu } from './menuItems'
 import {
     List,
     ListItem,
@@ -10,6 +10,12 @@ import { useHistory } from 'react-router';
 const NavList = (props) => {
     const {classes,toggleDrawer} = props;
     const history = useHistory();
+    let menuItem;
+    if(props.menuType === "admin") {
+        menuItem = adminmenu;
+    } else {
+        menuItem = usermenu;
+    }
     return (<div
         className={classes.list}
         role="presentation"
