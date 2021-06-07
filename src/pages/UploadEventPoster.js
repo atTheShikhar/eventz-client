@@ -6,7 +6,7 @@ import { useHistory } from 'react-router';
 import SubmitButton from '../components/buttons/SubmitButton';
 import { ComponentContext } from '../context/Context';
 import { onlyImage,imageErr,maxSizeMB,maxSizeMBErr } from '../helpers/validators';
-import {successHandler,errorHandler} from "../helpers/successAndErrorHandler";
+import {successHandler,errorHandler} from "../helpers/feedbackHandler";
 
 const useStyles = makeStyles(theme => ({
     div: {

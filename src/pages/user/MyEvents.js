@@ -4,11 +4,12 @@ import CustomSelect from '../../components/inputs/CustomSelect'
 import { EventDataContext } from '../../context/Context';
 import EventCard from '../../components/cards/EventCard';
 import useStyles from './Styles'
+import { fetchEventsAuth } from '../../helpers/fetchEvents';
 
 function MyEvents(props) {
     const classes = useStyles();
     const {eventData,setEventData} = useContext(EventDataContext);
-    const selectData = ["Upcoming","Past"]
+    const selectData = ["upcoming","past"]
     const events = eventData?.events;
 
     return (
@@ -16,7 +17,12 @@ function MyEvents(props) {
             <Container maxWidth="lg" className={`${classes.vpadding}`}>
                 <h1>My Events</h1>
                 <div className={`${classes.flex}`}>
-                    <CustomSelect selectData={selectData} selectHandler={setEventData} label="Type"/>
+                    <CustomSelect 
+                        selectData={selectData} 
+                        selectHandler={setEventData} 
+                        label="Type"
+                        dataHandler={fetchEventsAuth}
+                    />
                 </div>
             </Container>
 

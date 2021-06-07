@@ -35,6 +35,7 @@ function OrganiserDetails(props) {
     const submitHandler = e => {
         e.preventDefault();
         createEvent(details,history,setFeedback,setButtonDisabled);
+        // console.log(details)
    }
 
     //Render Logic

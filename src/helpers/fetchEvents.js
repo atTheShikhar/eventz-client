@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {errorHandler } from './successAndErrorHandler';
+import {errorHandler } from './feedbackHandler';
 
 export const fetchEventsAuth = async (pastOrUpcoming,page,successHandler,setFeedback,history) => {
     try {

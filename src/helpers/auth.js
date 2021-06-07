@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 import {
     successHandler,
     errorHandler
-} from './successAndErrorHandler';
+} from './feedbackHandler';
 // const baseUrl = process.env.REACT_APP_BASE_URL;
 
 

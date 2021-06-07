@@ -12,15 +12,17 @@ import {
     regexText, 
     textErr, 
     futureDateValidator, 
-    pastDateErr
+    pastDateErr,
+    numErr
 } from '../../helpers/validators';
 import axios from 'axios';
 
 function EventDetails(props) {
     const {details,nextStep,handleChange} = props;
-    const [genre,setGenre] = useState([]); 
-    const [num,setNum] = useState([]);
-    const [timeLimits, setTimeLimits] = useState([]); 
+    const [genre,setGenre] = useState([details.eventGenre]); 
+    const [num,setNum] = useState([details.noOfPeople]);
+    const [timeLimits, setTimeLimits] = useState([details.duration]);
+    const isFreeOptions = ["Yes","No"]; 
     //Hooks
     const classes = useStyles();
     useEffect(() => {
@@ -28,7 +30,7 @@ function EventDetails(props) {
         const getMetadata = async () => {
             try {
                 const response = await axios.get('/api/events-metadata');
-                console.log(response)
+                // console.log(response)
                 setNum(response.data.noOfPeople);
                 setTimeLimits(response.data.timeLimits)
                 setGenre(response.data.genre);
@@ -72,8 +74,6 @@ function EventDetails(props) {
                             value={details.eventGenre}
                             onChange={handleChange('eventGenre')}
                             name="eventGenre"
-                            // validators={['required', maxSize(50), regexText]}
-                            // errorMessages={[reqErr, maxSizeErr(50), textErr]}
                         >
                             {
                                 genre.map(option => (
@@ -149,6 +149,37 @@ function EventDetails(props) {
                                 )
                             }
                         </Textbox>
+                    </Grid>
+
+                    <Grid item xs={12} sm={6}>
+                        <Textbox
+                            label="Free Event ?"
+                            select
+                            value={details.isFree}
+                            onChange={handleChange('isFree')}
+                            name="isFree"
+                        >
+                            {
+                                isFreeOptions.map( option => (
+                                        <MenuItem key={option} value={option}>
+                                            {option}
+                                        </MenuItem>
+                                    )
+                                )
+                            }
+                        </Textbox>
+                    </Grid>
+
+                    <Grid item xs={12} sm={6}>
+                        <Textbox
+                            label="Ticket Price (Rupee)"
+                            value={details.price}
+                            onChange={handleChange('price')}
+                            name="price"
+                            disabled={details.isFree === "Yes"}
+                            validators={['isFloat']}
+                            errorMessages={[numErr]}
+                        />
                     </Grid>
 
                     <Grid item xs={12}>

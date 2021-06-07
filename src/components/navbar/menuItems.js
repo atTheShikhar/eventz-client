@@ -28,8 +28,8 @@ export const usermenu = [
         icon: <Info/>
     },
     {
-        name: "Help",
-        route: "/help",
+        name: "Contact Us",
+        route: "/contactus",
         icon: <Help/>
     },
 ]

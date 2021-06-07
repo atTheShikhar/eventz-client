@@ -4,7 +4,7 @@ const useStyles = makeStyles((theme) => ({
     page: {
         backgroundColor: theme.palette.background.default,
         border: "solid 1px white",
-        minHeight: "80vh"
+        minHeight: "90vh",
     },
     card: {
         marginTop: theme.spacing(8),
@@ -51,6 +51,32 @@ const useStyles = makeStyles((theme) => ({
     },
     successColor: {
         color: theme.palette.success.dark
+    },
+    image: {
+        display:"block",
+        maxWidth: "90%",
+        height: "auto"
+    },
+    parent: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: "30px 0"
+    },
+    vmargin: {
+        margin: "10px auto 20px auto"
+    },
+    content: {
+        borderRadius: "15px",
+        backgroundColor: "white"
+    },
+    heading: {
+        textDecoration: "underline",
+        color: "#555"
+    },
+    para: {
+        color: "#444"
     }
 }));
 

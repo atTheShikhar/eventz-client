@@ -1,17 +1,15 @@
-import React from 'react'
+import axios from 'axios'
+import React, { useEffect,useState } from 'react'
 import { Container, Button, Grid,MenuItem,Paper } from '@material-ui/core';
 import { ValidatorForm } from 'react-material-ui-form-validator';
 import SubmitButton from '../../components/buttons/SubmitButton';
 import useStyles from './Styles';
 import Textbox from '../../components/inputs/Textbox';
-import statesArray from '../../helpers/statesArray'
 import Forward from '@material-ui/icons/ArrowForwardIos'
 import {
     reqErr,
     maxSize,
     maxSizeErr,
-    regexText,
-    textErr,
     numErr,
     exactDigit,
     exactDigitErr
@@ -19,9 +17,26 @@ import {
 
 function AddressDetails(props) {
     const {details,prevStep,nextStep,handleChange} = props;    
-
+    
     //Hooks
     const classes = useStyles();
+    const [stateData,setStateData] = useState([{state_name: details.countryStateName,state_id: ""}]);
+    const [district,setDistrict] = useState([
+        {district_name: details.district},
+        {district_name: "North and Middle Andaman"},
+        {district_name: "South Andaman"}
+    ]);
+    useEffect(() => {
+        const getStateData = async () => {
+            try {
+                const response = await axios.get('/api/address-metadata?get=states');
+                setStateData(response.data.states);
+            } catch (e) {
+                console.log(e);                
+            }
+        }
+        getStateData()
+    },[])
 
     //Functions
     const forward = e => {
@@ -31,6 +46,26 @@ function AddressDetails(props) {
     const backward = e => {
         e.preventDefault();
         prevStep();
+    }
+    const handleStateChange = (e) => {
+        handleChange('countryStateName')(e)
+        const s = e.target.value
+
+        //Gets state_id corresponding to the state_name
+        const id = stateData
+            .filter(item => item.state_name === s)
+            .reduce((total,item) => total + item.state_id,0)
+
+        const getDistrictData = async () => {
+            try {
+                const response = await axios
+                    .get(`/api/address-metadata?get=district&state_id=${id}`);
+                setDistrict(response.data.districts)
+            } catch(e) {
+                console.log(e);
+            }
+        }
+        getDistrictData();
     }
 
     //Render Logic
@@ -64,13 +99,38 @@ function AddressDetails(props) {
 
                     <Grid item xs={12} sm={6}>
                         <Textbox
-                            label="City/District"
-                            value={details.city}
-                            onChange={handleChange('city')}
-                            name="city"
-                            validators={['required',maxSize(40),regexText]}
-                            errorMessages={[reqErr,maxSizeErr(40),textErr]}
-                        />
+                            label="States/UT"
+                            select
+                            value={details.countryStateName}
+                            onChange={handleStateChange}
+                            name="countryStateName"
+                        >
+                            {
+                                stateData.map(option => (
+                                    <MenuItem key={option.state_id} value={option.state_name}>
+                                        {option.state_name}
+                                    </MenuItem>
+                                ))
+                            }
+                        </Textbox>
+                    </Grid>
+
+                    <Grid item xs={12} sm={6}>
+                        <Textbox
+                            label="District"
+                            select
+                            value={details.district}
+                            onChange={handleChange('district')}
+                            name="district"
+                        >
+                            {
+                                district.map(option => (
+                                    <MenuItem key={option.district_name} value={option.district_name}>
+                                        {option.district_name}
+                                    </MenuItem>
+                                ))
+                            }
+                        </Textbox>
                     </Grid>
 
                     <Grid item xs={12} sm={6}>
@@ -82,25 +142,6 @@ function AddressDetails(props) {
                             validators={['required','isNumber',exactDigit(6)]}
                             errorMessages={[reqErr,numErr,exactDigitErr(6)]}
                         />
-                    </Grid>
-
-                    <Grid item xs={12} sm={6}>
-                        <Textbox
-                            label="States/UT"
-                            select
-                            value={details.stateName}
-                            onChange={handleChange('stateName')}
-                            name="stateName"
-                        >
-                            {
-                                statesArray.map(option => (
-                                    <MenuItem key={option} value={option}>
-                                        {option}
-                                    </MenuItem>
-                                )
-                                )
-                            }
-                        </Textbox>
                     </Grid>
 
                     <Grid item xs={12} sm={6}>
@@ -137,3 +178,4 @@ function AddressDetails(props) {
 }
 
 export default AddressDetails
+

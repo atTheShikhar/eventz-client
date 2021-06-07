@@ -32,6 +32,7 @@ import Tickets from './pages/user/Tickets';
 import AdminRoute from './routes/AdminRoute';
 import AdminLogin from './pages/admin/AdminLogin';
 import MonitorEvents from './pages/admin/MonitorEvents';
+import ContactUs from './pages/ContactUs';
 
 axios.defaults.withCredentials = true;
 
@@ -53,6 +54,7 @@ function App() {
               <Route exact path="/about" component={About}/>
               <Route exact path="/browse" component={BrowseEvents}/>
               <Route exact path="/event/:id" component={EventPage} />
+              <Route exact path="/contactus" component={ContactUs} />
 
               <PublicRoute exact path="/user/activate/:token" component={Activate}/>
               <PublicRoute exact path="/login" component={Login} />

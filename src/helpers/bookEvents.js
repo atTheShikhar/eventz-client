@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {successHandler,errorHandler} from './successAndErrorHandler';
+import {successHandler,errorHandler} from './feedbackHandler';
 
 export const bookEvents = async (data,history,setFeedback,setButtonDisabled) => {
     try {

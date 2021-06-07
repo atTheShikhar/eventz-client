@@ -25,7 +25,8 @@ function CreateEvent() {
         eventDescription: "",
         noOfPeople: "Upto 100",
         duration: "1 Hr",
-        // isPaid: false,
+        isFree: "Yes",
+        price: "",
         eventDate: currentDate,
         eventTime: "12:00",
         eventGenre: "Seminars",
@@ -34,8 +35,8 @@ function CreateEvent() {
         apartment: "",
         street: "",
         pinCode: "",
-        city: "",
-        stateName: "Andaman and Nicobar Islands",
+        district: "Nicobar",
+        countryStateName: "Andaman and Nicobar Islands",
         country: "India",
 
         //Organiser Details
