@@ -33,6 +33,8 @@ import AdminRoute from './routes/AdminRoute';
 import AdminLogin from './pages/admin/AdminLogin';
 import MonitorEvents from './pages/admin/MonitorEvents';
 import ContactUs from './pages/ContactUs';
+import Messages from './pages/admin/Messages';
+import MessagePage from './pages/admin/MessagePage';
 
 axios.defaults.withCredentials = true;
 
@@ -71,7 +73,9 @@ function App() {
               <PrivateRoute exact path="/user/mybookings" component={MyTickets}/>
               <PrivateRoute exact path="/tickets" component={Tickets}/>
 
-              <AdminRoute exact path="/admin/events" component={MonitorEvents}/>
+              <AdminRoute exact path="/admin/events" component={MonitorEvents} />
+              <AdminRoute exact path="/admin/messages" component={Messages} /> 
+              <AdminRoute exact path="/admin/message/:id" component={MessagePage} /> 
 
               <Route exact path="*" >
                 <Redirect to="/" />

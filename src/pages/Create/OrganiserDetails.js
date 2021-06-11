@@ -79,8 +79,8 @@ function OrganiserDetails(props) {
                             value={details.email}
                             onChange={handleChange('email')}
                             name="email"
-                            validators={['required','isEmail']}
-                            errorMessages={[reqErr,emailErr]}
+                            validators={['isEmail']}
+                            errorMessages={[emailErr]}
                             disabled={true}
                         />
                     </Grid>

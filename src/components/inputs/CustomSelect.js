@@ -1,17 +1,26 @@
-import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
+import { FormControl, InputLabel, makeStyles, MenuItem, Select } from '@material-ui/core';
 import React, { useEffect, useState, useContext} from 'react'
 import {useHistory} from 'react-router'
 import { ComponentContext } from '../../context/Context';
-// import { fetchEventsAuth } from '../../helpers/fetchEvents';
+
+const useStyles = makeStyles(theme => ({
+    minWidth: {
+        minWidth: "150px"
+    }
+}))
 
 function CustomSelect(props) {
-    const {selectData,selectHandler,dataHandler} = props;
+    const {selectData,selectHandler,dataHandler,url,page} = props;
     const [state,setState] = useState(selectData[0]);
     const {setFeedback} = useContext(ComponentContext);
+    const classes = useStyles();
     const history = useHistory();
     useEffect(() => {
-        //TODO: Pagination
-        dataHandler(state.toLowerCase(),1,selectHandler,setFeedback,history);
+        let fetchUrl = `${url}?type=${state}&page=${page}`
+        dataHandler(fetchUrl,selectHandler,setFeedback,history);
+        return function setDataToNull() {
+            selectHandler(null)
+        }
     },[state])
 
     const changeHandler = (e) => {
@@ -19,7 +28,7 @@ function CustomSelect(props) {
     }
 
     return (
-        <FormControl variant="outlined">
+        <FormControl variant="outlined" className={classes.minWidth}>
             <InputLabel htmlFor="outlined-select-control">{props.label}</InputLabel>
             <Select
                 label={props.label}
@@ -29,7 +38,7 @@ function CustomSelect(props) {
                     id: 'outlined-select-control'
                 }}
             >
-                {selectData.map((item) => (<MenuItem key={item} value={item.toLowerCase()}>{item}</MenuItem>))}
+                {selectData.map((item) => (<MenuItem key={item} value={item}>{item}</MenuItem>))}
             </Select>
         </FormControl>
     )

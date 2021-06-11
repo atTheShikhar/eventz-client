@@ -21,7 +21,9 @@ function EventPage(props) {
         title,
         description,
         noOfPeople,
-        genre
+        genre,
+        price,
+        isFree
     } = eventData.eventDetails;
 
     const {
@@ -50,7 +52,8 @@ function EventPage(props) {
                         time={time}
                         imgLink={imgLink}
                         noOfPeople={noOfPeople}
-                        price="FREE"
+                        isFree={isFree}
+                        price={price}
                         createdBy={createdBy}
                         eventId={_id}
                     />            

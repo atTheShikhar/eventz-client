@@ -49,7 +49,7 @@ function ContactUs(props) {
                 <Grid container spacing={2} className={classes.parent}>
 
                     <Grid item xs={12} md={6}>
-                        <img className={classes.image} src={contactUsImg} alt="Contact Us Image"/>
+                        <img className={classes.image} src={contactUsImg} alt="Message Box"/>
                     </Grid>
 
                     <Grid item xs={12} md={6}>

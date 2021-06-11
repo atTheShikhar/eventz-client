@@ -2,7 +2,7 @@ import React,{useState,useEffect} from 'react'
 import { UserContext } from './Context';
 import { isAuth } from '../helpers/auth';
 import ComponentState from './ComponentState';
-import EventDataState from './EventDataState';
+import DataState from './DataState';
 function GlobalState(props) {
     const [user, setUser] = useState(null);
 
@@ -17,11 +17,11 @@ function GlobalState(props) {
 
     return (
         <UserContext.Provider value={value}>
-            <EventDataState>
+            <DataState>
                 <ComponentState>
                     {props.children}
                 </ComponentState>
-            </EventDataState>
+            </DataState>
         </UserContext.Provider>
     )
 }

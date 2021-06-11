@@ -20,7 +20,7 @@ import useStyles from './CardStyle'
 import { useHistory } from 'react-router';
 
 function EventCard(props) {
-    const { title,genre,dateAndTime } = props.eventData.eventDetails;
+    const { title,genre,dateAndTime,isFree,price } = props.eventData.eventDetails;
     const { stateName } = props.eventData.eventAddress;
     const { imageLocation } = props.eventData;
     const { clickRoute } = props;
@@ -106,7 +106,13 @@ function EventCard(props) {
                         </IconButton>
                     </div>
                     <strong className={classes.priceTag}>
-                        FREE
+                        {
+                            (isFree === "No") ?
+                            (<>
+                                Rs: {price}
+                            </>) : 
+                            (<>FREE</>)
+                        }
                     </strong>                   
             </CardActions>
         </Card>

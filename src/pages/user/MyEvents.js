@@ -1,16 +1,16 @@
 import { Container, Divider, Grid } from '@material-ui/core'
 import React, { useContext } from 'react'
 import CustomSelect from '../../components/inputs/CustomSelect'
-import { EventDataContext } from '../../context/Context';
+import { DataContext } from '../../context/Context';
 import EventCard from '../../components/cards/EventCard';
 import useStyles from './Styles'
-import { fetchEventsAuth } from '../../helpers/fetchEvents';
+import { fetchDataAuth } from '../../helpers/fetchData';
 
 function MyEvents(props) {
     const classes = useStyles();
-    const {eventData,setEventData} = useContext(EventDataContext);
-    const selectData = ["upcoming","past"]
-    const events = eventData?.events;
+    const {data,setData} = useContext(DataContext);
+    const selectData = ["upcoming","past","pending"]
+    const events = data?.events;
 
     return (
         <div className={classes.bgColor}>
@@ -18,10 +18,12 @@ function MyEvents(props) {
                 <h1>My Events</h1>
                 <div className={`${classes.flex}`}>
                     <CustomSelect 
+                        page={1}
+                        url={"/api/get-events-auth"}
                         selectData={selectData} 
-                        selectHandler={setEventData} 
+                        selectHandler={setData} 
                         label="Type"
-                        dataHandler={fetchEventsAuth}
+                        dataHandler={fetchDataAuth}
                     />
                 </div>
             </Container>

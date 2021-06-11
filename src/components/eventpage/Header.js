@@ -20,7 +20,7 @@ function Header(props) {
 
     const { imgLink,title,genre,
         noOfPeople,duration,date,
-        time,price,createdBy,eventId 
+        time,isFree,price,createdBy,eventId 
     } = props;
 
     return (
@@ -92,7 +92,15 @@ function Header(props) {
                         <span className={classes.flexRow}>
                             <AttachMoneyIcon color="secondary" className={classes.hmargin}/> 
                             <strong>
-                                {price}
+                                {
+                                    (isFree === "No")?
+                                    (
+                                        <>Rs: {price}</>
+                                    ) :
+                                    (
+                                        <>FREE</>
+                                    )
+                                }
                             </strong>
                         </span>
                     </div>
