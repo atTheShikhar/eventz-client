@@ -63,7 +63,6 @@ function UploadEventPoster({match}) {
     }
 
     const changeHandler = (e) => {
-        // console.log(e.target.files[0]);
         setImage(e.target.files[0]);
     }
 
