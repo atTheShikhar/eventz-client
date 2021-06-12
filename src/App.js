@@ -35,6 +35,7 @@ import MonitorEvents from './pages/admin/MonitorEvents';
 import ContactUs from './pages/ContactUs';
 import Messages from './pages/admin/Messages';
 import MessagePage from './pages/admin/MessagePage';
+import ChangePassword from './pages/user/ChangePassword';
 
 axios.defaults.withCredentials = true;
 
@@ -70,6 +71,7 @@ function App() {
               <PrivateRoute exact path="/user/myevents/uploadposter/:id" component={UploadEventPoster} />
               <PrivateRoute exact path="/user/myevents" component={MyEvents}/>
               <PrivateRoute exact path="/user/profile" component={Profile}/>
+              <PrivateRoute exact path="/user/changepassword" component={ChangePassword}/>
               <PrivateRoute exact path="/user/mybookings" component={MyTickets}/>
               <PrivateRoute exact path="/tickets" component={Tickets}/>
 

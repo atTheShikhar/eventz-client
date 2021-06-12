@@ -36,7 +36,8 @@ export const logout = (setUser,history) => {
     Cookies.remove('jwt');
     localStorage.removeItem('user');
     setUser(null);
-    history.push('/');
+    if(history !== null)
+        history.push('/');
 }
 
 export const register = async (formData, history, setFeedback,setButtonDisabled) => {
@@ -116,7 +117,22 @@ export const resetPassword = async (formData,history,setFeedback,setButtonDisabl
     }
 }
 
-
+// setUser(user);
+// localStorage.setItem("user",JSON.stringify(user));
+export const changePassword = async (formData,history,setFeedback,setButtonDisabled) => {
+    try {
+        setButtonDisabled(true);
+        const response = await axios.post('/api/user/changepassword',formData);
+        // logout(setUser,null);
+        successHandler(response,setFeedback,() => {
+            setButtonDisabled(false);
+            history.goBack();
+        })
+    } catch(err) {
+        setButtonDisabled(false);
+        errorHandler(err,history,setFeedback);
+    }
+}
 
 
 

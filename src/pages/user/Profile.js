@@ -183,6 +183,7 @@ function Profile(props) {
                             <Button onClick={() => {}} 
                                 color="primary"
                                 className={classes.button}
+                                onClick={() => {history.push("/user/changepassword")}}
                             >
                                 Change Password
                             </Button>
