@@ -4,7 +4,6 @@ import {
     Slide,Hidden,Drawer,
 } from '@material-ui/core';
 import MenuButton from '@material-ui/icons/Menu';
-import Search from '@material-ui/icons/SearchOutlined';
 import PropTypes from 'prop-types';
 import React,{ useState,useContext } from 'react'
 import { Link,useHistory } from 'react-router-dom';
@@ -13,6 +12,7 @@ import { UserContext } from "../../context/Context";
 import NavList from './NavList';
 import UserMenu from './UserMenu';
 import { logout } from '../../helpers/auth';
+import SearchBar from './SearchBar';
 
 //Hide navbar on scroll logic
 function HideOnScroll(props) {
@@ -44,7 +44,7 @@ function Navbar(props) {
     //Navbar render logic
     return (
         <>
-        <HideOnScroll {...props}>
+        {/* <HideOnScroll {...props}> */}
             <AppBar position="sticky" className={`${classes.header}`}>
                 <Toolbar className={classes.toolbar}>
                     <div className={classes.itemsGroup}>
@@ -80,16 +80,7 @@ function Navbar(props) {
                             (<></>) : 
                             (
                                 <Hidden xsDown>
-                                    <div className={classes.searchWrapper}>
-                                    <input 
-                                        type="text" 
-                                        placeholder="Search Events..."
-                                        className={classes.search}
-                                    />
-                                    <IconButton className={classes.searchButton}>
-                                        <Search/> 
-                                    </IconButton>
-                                    </div>
+                                    <SearchBar/>
                                 </Hidden>
                             )
                         }
@@ -130,7 +121,7 @@ function Navbar(props) {
                     </div>
                 </Toolbar>
            </AppBar>
-        </HideOnScroll>
+        {/* </HideOnScroll> */}
         </>
     )
 }

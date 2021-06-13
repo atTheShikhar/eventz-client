@@ -7,6 +7,7 @@ import { fetchDataAuth } from '../../helpers/fetchData';
 import CustomTable from '../../components/dataDisplay/CustomTable'
 import { useHistory } from 'react-router';
 import { submitFormdata } from '../../helpers/submitFormdata';
+import NotFound from '../../components/NotFound';
 
 const headerArray = [
     { id: 'name', label: 'Name' },
@@ -38,14 +39,16 @@ function Messages() {
 
         if(status === "success")
         {
-            const newData = messages.messages.filter(msg => (msg._id !== item._id))
-            setMessages({length: newData.length, messages: newData});
+            const newData = messages.filter(msg => (msg._id !== item._id))
+            setMessages(newData);
         }
     }
     const viewHandler = (item) => {
         history.push(`/admin/message/${item._id}`,item) 
     }
-
+    const setMessageData = (data) => {
+        setMessages(data.messages);
+    }
     return (
         <div className={classes.bgColor}>
             <Container maxWidth="lg" className={`${classes.vpadding}`}>
@@ -54,7 +57,7 @@ function Messages() {
                     <CustomSelect 
                         page={1}
                         selectData={selectData} 
-                        selectHandler={setMessages} 
+                        selectHandler={setMessageData} 
                         label="Message Type"
                         url={"/api/admin/messages"}
                         dataHandler={fetchDataAuth}
@@ -66,11 +69,11 @@ function Messages() {
             
             <Container maxWidth="lg">
             {
-                messages!==null ? 
+                (messages!==null && messages.length!==0 )? 
                 (<CustomTable 
                     headerArray={headerArray}
                     dataNameArray={dataNameArray}
-                    dataArray={messages.messages}
+                    dataArray={messages}
                     actions={[
                         {
                             name: "View",
@@ -82,9 +85,9 @@ function Messages() {
                         }
                     ]}
                 />) :
-                (<div>
-                        No Data
-                </div>)
+                (
+                    <NotFound/>
+                )
             }        
             </Container>
         </div>

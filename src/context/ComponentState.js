@@ -13,11 +13,12 @@ function ComponentState(props) {
     const [buttonDisabled,setButtonDisabled] = useState(false);
     
 
+    const [load,setLoad] = useState(false);
+
     const value = {
-        feedback,
-        setFeedback,
-        buttonDisabled,
-        setButtonDisabled
+        feedback,setFeedback,
+        buttonDisabled,setButtonDisabled,
+        load,setLoad
     }
 
     return (

@@ -6,7 +6,7 @@ import { useHistory } from 'react-router';
 const useStyles = makeStyles(theme => ({
     parent: {
         backgroundColor: theme.palette.info.light,
-        minHeight: "10vh",
+        minHeight: "9vh",
         display: "flex",
         flexDirection: "row",
         alignItems: "center"

@@ -65,7 +65,11 @@ function Header(props) {
                                         color="primary"
                                         size="large"
                                         className={classes.button}
-                                        onClick={() => history.push(`/book/${eventId}`)}
+                                        onClick={() => history.push(
+                                            `/book/${eventId}`,
+                                            {isFree, price, title, timing: `${date} at ${time}` }
+                                            )
+                                        }
                                     >
                                         Book
                                     </Button>                            

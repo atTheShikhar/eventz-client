@@ -1,16 +1,25 @@
 import { Container, Divider, Grid } from '@material-ui/core'
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import CustomSelect from '../../components/inputs/CustomSelect'
 import { DataContext } from '../../context/Context';
 import EventCard from '../../components/cards/EventCard';
 import useStyles from './Styles'
 import { fetchDataAuth } from '../../helpers/fetchData';
+import NotFound from '../../components/NotFound';
 
 function MyEvents(props) {
     const classes = useStyles();
-    const {data,setData} = useContext(DataContext);
+    const {events,setEvents} = useContext(DataContext);
     const selectData = ["upcoming","past","pending"]
-    const events = data?.events;
+
+    useEffect(() => {
+        return function() {
+            setEvents(null);
+        }
+    },[])
+    const setEventData = (data) => {
+        setEvents(data.events)
+    }
 
     return (
         <div className={classes.bgColor}>
@@ -21,7 +30,7 @@ function MyEvents(props) {
                         page={1}
                         url={"/api/get-events-auth"}
                         selectData={selectData} 
-                        selectHandler={setData} 
+                        selectHandler={setEventData} 
                         label="Type"
                         dataHandler={fetchDataAuth}
                     />
@@ -32,7 +41,7 @@ function MyEvents(props) {
 
             <Container maxWidth="lg" className={classes.flex}>
                 {
-                    events ? 
+                    (events!==null && events?.length !== 0) ? 
                     (
                         <>
                             <Grid container spacing={2}>
@@ -59,7 +68,7 @@ function MyEvents(props) {
                     ) :
                     (
                         <>
-                            <div>No Events</div>
+                            <NotFound/>
                         </>
                     )
                 }

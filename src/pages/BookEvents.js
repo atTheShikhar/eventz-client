@@ -1,4 +1,4 @@
-import { Card, CardContent, Container, IconButton, makeStyles } from '@material-ui/core'
+import { Card, CardContent, Container, Divider, IconButton, makeStyles } from '@material-ui/core'
 import React, { useContext, useState } from 'react'
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
@@ -9,6 +9,7 @@ import { numErr, reqErr } from '../helpers/validators';
 import { bookEvents } from '../helpers/bookEvents';
 import { useHistory } from 'react-router';
 import { ComponentContext } from '../context/Context';
+import SubNav from '../components/navbar/SubNav';
 
 const useStyles = makeStyles(theme => ({
     flexRow: {
@@ -36,6 +37,10 @@ function BookEvents(props) {
     const classes = useStyles();
     const history = useHistory();
     const {setFeedback,setButtonDisabled} = useContext(ComponentContext);
+    const {title,isFree,price,timing} = props?.location?.state;
+    
+    const priceInt = parseInt(price);
+    let totalPrice = priceInt * count;
 
     const changeHandler = (e) => {
         setCount(e.target.value);
@@ -56,12 +61,17 @@ function BookEvents(props) {
     }
 
     return (
+        <>        
+        <SubNav title="Book Event" />
         <div className={`${classes.vpadding} ${classes.bgGrey}`}>
             <Container maxWidth="sm">
                 <Card variant="outlined" raised={false}>
                 <CardContent>
                     <h2>Select ticket count</h2>
-                   <ValidatorForm instantValidate={true} onSubmit={submitHandler}>
+                    <Divider variant="middle" className={classes.vmargin}/>
+                    <h3>Title: {title}</h3>
+                    <div>Timing: {timing}</div>
+                    <ValidatorForm instantValidate={true} onSubmit={submitHandler}>
                         <div className={`${classes.flexRow} ${classes.vmargin}`}>
                         <IconButton onClick={decrement}>
                             <RemoveIcon/>
@@ -81,13 +91,18 @@ function BookEvents(props) {
                         </div>
 
                         <SubmitButton>
-                            Book
+                            {
+                                (isFree === "No") ?
+                                (<>{`Pay Rs:${totalPrice}`}</>) : 
+                                (<>{`Book Free`}</>)
+                            }
                         </SubmitButton>
                    </ValidatorForm> 
                 </CardContent>
                 </Card>
             </Container>
         </div>
+        </>
     )
 }
 

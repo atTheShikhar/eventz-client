@@ -5,10 +5,8 @@ import ComponentState from './ComponentState';
 import DataState from './DataState';
 function GlobalState(props) {
     const [user, setUser] = useState(null);
-
     const value = {
-        user,
-        setUser,
+        user,setUser,
     }
 
     useEffect(() => {

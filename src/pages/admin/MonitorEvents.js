@@ -7,6 +7,7 @@ import CustomSelect from '../../components/inputs/CustomSelect';
 import CustomTable from '../../components/dataDisplay/CustomTable'
 import { submitFormdata } from '../../helpers/submitFormdata';
 import { useHistory } from 'react-router';
+import NotFound from '../../components/NotFound';
 
 const headerArray = [
     { id: 'title', label: 'Title' },
@@ -43,13 +44,13 @@ function MonitorEvents() {
 
         if(status === "success")
         {
-            const newData = events.events.map(msg => {
+            const newData = events.map(msg => {
                 if(msg._id === item._id) 
                     return {...msg,status: "approved"}
                 else 
                     return msg;
             })
-            setEvents({length: newData.length, events: newData});
+            setEvents(newData);
         }
     }
 
@@ -62,11 +63,14 @@ function MonitorEvents() {
 
         if(status === "success")
         {
-            const newData = events.events.filter(msg => (msg._id !== item._id))
-            setEvents({length: newData.length, events: newData});
+            const newData = events.filter(msg => (msg._id !== item._id))
+            setEvents(newData);
         }
     }
 
+    const setEventData = (data) => {
+        setEvents(data.events)
+    }
     return (
         <div className={classes.bgColor}>
             <Container maxWidth="lg" className={classes.vpadding}>
@@ -75,7 +79,7 @@ function MonitorEvents() {
                     <CustomSelect 
                         page={1}
                         selectData={selectData} 
-                        selectHandler={setEvents} 
+                        selectHandler={setEventData} 
                         label="Event Type"
                         url={"/api/admin/events"}
                         dataHandler={fetchDataAuth}
@@ -87,11 +91,11 @@ function MonitorEvents() {
 
             <Container className={classes.widthScreen}>
                 {
-                    events!==null ?
+                    (events!==null && events.length!==0) ?
                     (<CustomTable
                         headerArray={headerArray}
                         dataNameArray={dataNameArray}
-                        dataArray={events.events}
+                        dataArray={events}
                         actions={[
                             {
                                 name: "Approve",
@@ -107,9 +111,9 @@ function MonitorEvents() {
                             }
                         ]}
                     />) :
-                    (<div>
-                        No Data
-                    </div>)
+                    (
+                        <NotFound/>
+                    )
                 }
             </Container>
         </div>

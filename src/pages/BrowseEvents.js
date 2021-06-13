@@ -1,10 +1,12 @@
 import { Container, Divider, Grid, makeStyles} from '@material-ui/core'
 import { Pagination, PaginationItem } from '@material-ui/lab'
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router'
+import React, { useContext, useEffect, useState } from 'react'
+import { useHistory, useLocation } from 'react-router'
 import { Link } from 'react-router-dom'
 import EventCard from '../components/cards/EventCard'
+import NotFound from '../components/NotFound'
+import { ComponentContext, DataContext } from '../context/Context'
+import { fetchData } from '../helpers/fetchData'
 
 const useStyles = makeStyles((theme) => ({
     bgGrey: {
@@ -33,25 +35,27 @@ const useStyles = makeStyles((theme) => ({
 
 function BrowseEvents(props) {
     const classes = useStyles();
-    const { search } = useLocation(); //Gets query parameters from the link
-    const [events,setEvents] = useState(null);
+
+    //Gets query parameters from the link
+    //This just gets the page num, 
+    //actual search query comes from passed state with history.push() by search button
+    const { search } = useLocation(); 
+
+    const {setFeedback,load,setLoad} = useContext(ComponentContext);
+    const history = useHistory();
+    const {events,setEvents} = useContext(DataContext);
     const [pageData,setPageData] = useState({});
-    const [load,setLoad] = useState(false);
 
     useEffect(() => {
-        const endpoint = `/api/get-events${search}`;
+        const url = `/api/get-events${search}`;
         async function fetchEvents() {
-            try {
-                const res = await axios.get(endpoint);
-                setEvents(res.data.events);
-                setPageData({
-                    currentPage: res.data.currentPage,
-                    totalPages: res.data.totalPages,
-                    eventCount: res.data.eventCount
-                })
-            } catch(e) {
-                console.log(e);
-            }
+            const data = await fetchData(url,setFeedback,history);
+            setEvents(data.events);
+            setPageData({
+                currentPage: data.currentPage,
+                totalPages: data.totalPages,
+                eventCount: data.eventCount
+            })
         }
         fetchEvents();
     },[load])
@@ -60,7 +64,7 @@ function BrowseEvents(props) {
         <div className={classes.bgGrey}>
         <Container maxWidth="lg" className={classes.vpadding}>
             {
-                events ? 
+                (events!==null && events?.length !== 0) ? 
                 (
                     <>
                         <Grid container spacing={2} >
@@ -107,7 +111,7 @@ function BrowseEvents(props) {
                     </>
                 ) :
                 (
-                    <div>No Events available</div>
+                    <NotFound/>
                 )
             }
         </Container>

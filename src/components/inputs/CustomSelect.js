@@ -17,10 +17,11 @@ function CustomSelect(props) {
     const history = useHistory();
     useEffect(() => {
         let fetchUrl = `${url}?type=${state}&page=${page}`
-        dataHandler(fetchUrl,selectHandler,setFeedback,history);
-        return function setDataToNull() {
-            selectHandler(null)
+        const getData = async () => {
+            const data = await dataHandler(fetchUrl,setFeedback,history);
+            selectHandler(data);
         }
+        getData();
     },[state])
 
     const changeHandler = (e) => {

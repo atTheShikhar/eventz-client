@@ -1,9 +1,7 @@
 import { Button, makeStyles } from '@material-ui/core';
 import React from 'react'
-// import FlatButton from '../components/buttons/FlatButton';
 import heroImage from '../assets/events.svg';
 import "./Homepage.css"
-// import FilledButton from '../components/buttons/FilledButton';
 
 
 const useStyles = makeStyles(theme => ({
@@ -60,16 +58,12 @@ function Homepage(props) {
                             style={{
                                 marginLeft: "2vmax"
                             }}
-                            // onClick={() => {
-                            //     history.push('/book')
-                            // }}
+                            onClick={() => {
+                                history.push('/browse')
+                            }}
                         >
                             Book Event
                         </Button>
-                        {/* <FilledButton name="Create Event" className="bigButton" onClick={() => {
-                            history.push('/create')
-                        }}></FilledButton>
-                        <FlatButton name="Book Event" className="bigButton book"></FlatButton> */}
                     </div>
                 </div>
                 
