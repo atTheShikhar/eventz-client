@@ -8,8 +8,11 @@ import Textbox from '../components/inputs/Textbox';
 import { numErr, reqErr } from '../helpers/validators';
 import { bookEvents } from '../helpers/bookEvents';
 import { useHistory } from 'react-router';
-import { ComponentContext } from '../context/Context';
+import { ComponentContext, UserContext } from '../context/Context';
 import SubNav from '../components/navbar/SubNav';
+import axios from 'axios';
+import { fetchDataAuth } from '../helpers/fetchData';
+// import { showRazorpay } from '../helpers/payments';
 
 const useStyles = makeStyles(theme => ({
     flexRow: {
@@ -32,11 +35,26 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
+function loadRazorpay() {
+    return new Promise(resolve => {
+        const script = document.createElement('script');
+        script.src = "https://checkout.razorpay.com/v1/checkout.js"
+        script.onload = () => {
+            resolve(true);
+        }
+        script.onerror = () => {
+            resolve(false)
+        }
+        document.body.appendChild(script)
+    })
+}
+
 function BookEvents(props) {
     const [count,setCount] = useState(1);
     const classes = useStyles();
     const history = useHistory();
     const {setFeedback,setButtonDisabled} = useContext(ComponentContext);
+    const {user} = useContext(UserContext);
     const {title,isFree,price,timing} = props?.location?.state;
     
     const priceInt = parseInt(price);
@@ -55,9 +73,75 @@ function BookEvents(props) {
             setCount(count => --count)
     }
 
+    async function displayRazorpay(requestData) {
+        const res = await loadRazorpay();
+
+        if(!res) {
+            alert("Failed to load Razorpay sdk");
+            return
+        }
+        
+        const data = await fetchDataAuth("/api/book-tickets",setFeedback,history,requestData);
+        console.log(data);
+
+        if(data === null || data === undefined) {
+            return
+        }
+
+        const options = {
+            "key": "rzp_test_2bBYbszoIaNmM3", // Enter the Key ID generated from the Dashboard
+            "order_id": data.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+            "amount": data.amount.toString(), 
+            "currency": data.currency,
+            "description": data.description,
+            "name": "Eventz",
+            "image": "http://localhost:8000/logo.png",
+            "handler": async function (response) {
+                const { razorpay_payment_id,razorpay_order_id } = response;
+                const reqData = {
+                    payment_id: razorpay_payment_id,
+                    order_id: razorpay_order_id,
+                    amount: data.amount,
+                    status: "captured"
+                }
+                const resData = await fetchDataAuth("/api/verify-payments",setFeedback,history,reqData);
+                setFeedback({
+                    open: true,
+                    severity: "success",
+                    message: resData.message
+                });
+                history.push('/tickets',{tickets: resData.createdTickets});
+            },
+            "prefill": {
+                "name": user.name,
+                "email": user.email,
+            }
+        };
+
+        const paymentObject = new window.Razorpay(options);
+
+        paymentObject.open();
+
+        paymentObject.on("payment.failed",async function (response) {
+            const { order_id,payment_id } = response.error.metadata;
+            const reqData = {
+                order_id,
+                payment_id,
+                amount: data.amount,
+                status: "failed"
+            }
+            await fetchDataAuth("/api/verify-payments",setFeedback,history,reqData);
+            // console.log(resData)
+        })
+    }
+
     const submitHandler = (e) => {
         const requestData = { ticketCount: count, eventId:  props.match.params.id };
-        bookEvents(requestData,history,setFeedback,setButtonDisabled);
+        if(isFree === "No") {
+            displayRazorpay(requestData)
+        } else {
+            bookEvents(requestData,history,setFeedback,setButtonDisabled);
+        } 
     }
 
     return (
