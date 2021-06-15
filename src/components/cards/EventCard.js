@@ -36,7 +36,7 @@ function EventCard(props) {
     const [image,setImage] = useState(noImage);    
     useEffect(() => {
         if(imageLocation !== undefined) {
-            setImage(process.env.REACT_APP_BASE_URL+imageLocation);
+            setImage(imageLocation);
         }
     },[])
 
@@ -105,13 +105,13 @@ function EventCard(props) {
                             <ShareIcon />
                         </IconButton>
                     </div>
-                    <strong className={classes.priceTag}>
+                    <strong >
                         {
                             (isFree === "No") ?
-                            (<>
+                            (<span className={classes.priceTag}>
                                 Rs: {price}
-                            </>) : 
-                            (<>FREE</>)
+                            </span>) : 
+                            (<span className={classes.priceFreeTag}>FREE</span>)
                         }
                     </strong>                   
             </CardActions>

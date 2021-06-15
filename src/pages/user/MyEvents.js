@@ -24,6 +24,7 @@ function MyEvents(props) {
     return (
         <div className={classes.bgColor}>
             <Container maxWidth="lg" className={`${classes.vpadding}`}>
+                <Grid container direction="row" justify="space-between" alignItems="center">
                 <h1>My Events</h1>
                 <div className={`${classes.flex}`}>
                     <CustomSelect 
@@ -33,8 +34,9 @@ function MyEvents(props) {
                         selectHandler={setEventData} 
                         label="Type"
                         dataHandler={fetchDataAuth}
-                    />
+                        />
                 </div>
+                </Grid>
             </Container>
 
             <Divider variant="middle" className={classes.vmargin} />

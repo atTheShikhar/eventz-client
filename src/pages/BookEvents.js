@@ -10,9 +10,7 @@ import { bookEvents } from '../helpers/bookEvents';
 import { useHistory } from 'react-router';
 import { ComponentContext, UserContext } from '../context/Context';
 import SubNav from '../components/navbar/SubNav';
-import axios from 'axios';
 import { fetchDataAuth } from '../helpers/fetchData';
-// import { showRazorpay } from '../helpers/payments';
 
 const useStyles = makeStyles(theme => ({
     flexRow: {
@@ -89,8 +87,8 @@ function BookEvents(props) {
         }
 
         const options = {
-            "key": "rzp_test_2bBYbszoIaNmM3", // Enter the Key ID generated from the Dashboard
-            "order_id": data.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+            "key": "rzp_test_2bBYbszoIaNmM3", 
+            "order_id": data.id, 
             "amount": data.amount.toString(), 
             "currency": data.currency,
             "description": data.description,
@@ -131,7 +129,6 @@ function BookEvents(props) {
                 status: "failed"
             }
             await fetchDataAuth("/api/verify-payments",setFeedback,history,reqData);
-            // console.log(resData)
         })
     }
 

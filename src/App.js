@@ -28,7 +28,7 @@ import MyEvents from './pages/user/MyEvents';
 import Profile from './pages/user/Profile';
 import BookEvents from './pages/BookEvents';
 import MyTickets from './pages/user/MyTickets';
-import Tickets from './pages/user/Tickets';
+import TicketPage from './pages/user/TicketPage';
 import AdminRoute from './routes/AdminRoute';
 import AdminLogin from './pages/admin/AdminLogin';
 import MonitorEvents from './pages/admin/MonitorEvents';
@@ -73,7 +73,7 @@ function App() {
               <PrivateRoute exact path="/user/profile" component={Profile}/>
               <PrivateRoute exact path="/user/changepassword" component={ChangePassword}/>
               <PrivateRoute exact path="/user/mybookings" component={MyTickets}/>
-              <PrivateRoute exact path="/tickets" component={Tickets}/>
+              <PrivateRoute exact path="/user/tickets/:id" component={TicketPage}/>
 
               <AdminRoute exact path="/admin/events" component={MonitorEvents} />
               <AdminRoute exact path="/admin/messages" component={Messages} /> 

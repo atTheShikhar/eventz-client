@@ -10,6 +10,7 @@ function Address(props) {
     const {
         apartment,
         street,
+        district,
         stateName,
         pincode,
         country
@@ -31,13 +32,13 @@ function Address(props) {
                         <div className={classes.flexRow}>
                             <LocationCityIcon color="primary"/>
                             <span className={classes.hmargin}>
-                                {apartment}
+                                {apartment}, {street}
                             </span>
                         </div>
                         <div className={`${classes.flexRow} ${classes.vmargin}`}>
                             <LocationOnIcon color="primary"/>
                             <span className={classes.hmargin}>
-                                {street}, {stateName}
+                                {district}, {stateName}
                             </span>
                         </div>
                         <div className={classes.flexRow}>
