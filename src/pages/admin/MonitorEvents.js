@@ -1,4 +1,4 @@
-import { Container,Divider } from '@material-ui/core';
+import { Container,Divider, Grid } from '@material-ui/core';
 import React, { useContext, useEffect, } from 'react'
 import { ComponentContext, DataContext } from '../../context/Context';
 import useStyles from './Styles';
@@ -26,7 +26,7 @@ const dataNameArray = headerArray
 function MonitorEvents() {
     const classes = useStyles();
     const {events,setEvents} = useContext(DataContext);
-    const {setFeedback,setButtonDisabled} = useContext(ComponentContext);
+    const {setDialog,setFeedback,setButtonDisabled} = useContext(ComponentContext);
     const history = useHistory();
     const selectData = ["Pending","Approved","All"];
 
@@ -35,37 +35,60 @@ function MonitorEvents() {
             setEvents(null);
         }
     },[]);
+
     const approveHandler = async (item) => {
-        const url = "/api/admin/approve/event"
-
-        const status = await submitFormdata({id: item._id, action: "Approve"},
-            history,setFeedback,setButtonDisabled,url,null
-        ) 
-
-        if(status === "success")
-        {
-            const newData = events.map(msg => {
-                if(msg._id === item._id) 
-                    return {...msg,status: "approved"}
-                else 
-                    return msg;
-            })
-            setEvents(newData);
+        async function actionYes() {
+            const url = "/api/admin/approve/event"
+    
+            const status = await submitFormdata({id: item._id, action: "Approve"},
+                history,setFeedback,setButtonDisabled,url,null
+            ) 
+    
+            if(status === "success")
+            {
+                const newData = events.map(msg => {
+                    if(msg._id === item._id) 
+                        return {...msg,status: "approved"}
+                    else 
+                        return msg;
+                })
+                setEvents(newData);
+            }
         }
+
+        setDialog({
+            open: true,
+            title: "Confirm Approval",
+            message: "Are you sure you want to approve this event?",
+            actionYes: actionYes,
+            actionNo: function() {
+            }
+        });
     }
 
     const deleteHandler = async (item) => {
-        const url = "/api/admin/delete/event"
-
-        const status = await submitFormdata({id: item._id, action: "Delete"},
-            history,setFeedback,setButtonDisabled,url,null
-        ) 
-
-        if(status === "success")
-        {
-            const newData = events.filter(msg => (msg._id !== item._id))
-            setEvents(newData);
+        async function actionYes() {
+            const url = "/api/admin/delete/event"
+    
+            const status = await submitFormdata({id: item._id, action: "Delete"},
+                history,setFeedback,setButtonDisabled,url,null
+            ) 
+    
+            if(status === "success")
+            {
+                const newData = events.filter(msg => (msg._id !== item._id))
+                setEvents(newData);
+            }
         }
+
+        setDialog({
+            open: true,
+            title: "Confirm Deletion",
+            message: "Are you sure you want to delete this event?",
+            actionYes: actionYes,
+            actionNo: function() {
+            }
+        });
     }
 
     const setEventData = (data) => {
@@ -74,6 +97,8 @@ function MonitorEvents() {
     return (
         <div className={classes.bgColor}>
             <Container maxWidth="lg" className={classes.vpadding}>
+                <Grid container direction="row" justify="space-between" alignItems="center">
+
                 <h1>Events</h1>
                 <div className={`${classes.flex}`}>
                     <CustomSelect 
@@ -83,8 +108,9 @@ function MonitorEvents() {
                         label="Event Type"
                         url={"/api/admin/events"}
                         dataHandler={fetchDataAuth}
-                    />
+                        />
                 </div>
+                </Grid>
             </Container>
 
             <Divider variant="middle" className={classes.vmargin} />

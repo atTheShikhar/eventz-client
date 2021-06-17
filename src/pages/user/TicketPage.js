@@ -1,12 +1,12 @@
 import { Button, Box, Card, CardContent, Container, Grid, makeStyles } from '@material-ui/core';
-import React,{useContext, useState} from 'react'
-import QRCode from 'react-qr-code'
+import React,{useContext} from 'react'
 import { useParams } from 'react-router';
+import QRCode from 'qrcode.react';
+import html2canvas from 'html2canvas';
 import Address from '../../components/eventpage/Address';
 import Organiser from '../../components/eventpage/Organiser';
 import NotFound from '../../components/NotFound';
 import { DataContext } from '../../context/Context';
-import html2canvas from 'html2canvas';
 
 const useStyles = makeStyles(theme => ({
     bgGrey: {
@@ -61,12 +61,22 @@ function TicketPage(props) {
             .toLocaleTimeString('en-US',{hour: 'numeric', hour12: true})
     }
 
-    const downloadTicket = (ticketId) => e => {
-        //TODO: make ticket downloadable
-        console.log(ticketId)
-        // html2canvas(document.querySelector(ticketId)).then(canvas => {
-        //     document.body.appendChild(canvas);
-        // })
+    const downloadTicket = (ticketId) => async (e) => {
+        try {
+
+            const canvas = await html2canvas(document.querySelector(`#${ticketId}`))
+            const pngUrl = canvas
+                .toDataURL("image/png")
+                .replace("image/png", "image/octet-stream");
+            let downloadLink = document.createElement("a");
+            downloadLink.href = pngUrl;
+            downloadLink.download = `${ticketId}.png`;
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        } catch(e) {
+            console.log(e);
+        }
     }
 
     return (
@@ -110,19 +120,27 @@ function TicketPage(props) {
                                                         <CardContent
                                                             className={classes.flex}
                                                         >
-                                                            <Box id={"item_"+item._id} maxWidth="100%">
-                                                                <QRCode value={item._id}/>
+                                                            <Box
+                                                                id={"ticket_"+item.ticketId} 
+                                                                style={{padding: "10px"}}
+                                                                className={classes.flex}
+                                                            >
+                                                                <QRCode 
+                                                                    value={item.ticketId}
+                                                                    size={256}
+                                                                    level={'H'}
+                                                                    style={{padding: "10px"}}
+                                                                />
                                                                 <h2 className={classes.textGrey}>
                                                                     Ticket ID:
                                                                 </h2>
                                                                 <div>
-                                                                    {item._id}
+                                                                    {item.ticketId}
                                                                 </div>
                                                             </Box>
-                                                            <br/>
                                                             <Button 
                                                                 variant="contained"
-                                                                onClick={downloadTicket("item_"+item._id)}
+                                                                onClick={downloadTicket("ticket_"+item.ticketId)}
                                                                 fullWidth
                                                                 className={classes.button}
                                                             >

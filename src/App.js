@@ -36,6 +36,8 @@ import ContactUs from './pages/ContactUs';
 import Messages from './pages/admin/Messages';
 import MessagePage from './pages/admin/MessagePage';
 import ChangePassword from './pages/user/ChangePassword';
+import MonitorUsers from './pages/admin/MonitorUsers';
+import CustomDialog from './components/feedback/CustomDialog';
 
 axios.defaults.withCredentials = true;
 
@@ -48,7 +50,7 @@ function App() {
           <GlobalState>
 
             <GenericSnackbar/>
-
+            <CustomDialog/>
             <Navbar/>
 
             <Switch>
@@ -78,6 +80,7 @@ function App() {
               <AdminRoute exact path="/admin/events" component={MonitorEvents} />
               <AdminRoute exact path="/admin/messages" component={Messages} /> 
               <AdminRoute exact path="/admin/message/:id" component={MessagePage} /> 
+              <AdminRoute exact path="/admin/users" component={MonitorUsers} /> 
 
               <Route exact path="*" >
                 <Redirect to="/" />

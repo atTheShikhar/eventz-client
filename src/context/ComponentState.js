@@ -11,14 +11,23 @@ function ComponentState(props) {
 
     //Controls button feedback
     const [buttonDisabled,setButtonDisabled] = useState(false);
-    
+
+    //Controls dialog box 
+    const [dialog,setDialog] = useState({
+        open: false,
+        title: "",
+        message: "",
+        actionYes: () => {},
+        actionNo: () => {}  
+    });
 
     const [load,setLoad] = useState(false);
 
     const value = {
         feedback,setFeedback,
         buttonDisabled,setButtonDisabled,
-        load,setLoad
+        load,setLoad,
+        dialog,setDialog
     }
 
     return (
