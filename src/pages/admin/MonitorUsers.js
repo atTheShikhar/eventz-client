@@ -13,8 +13,8 @@ const headerArray = [
     { id: 'name', label: 'Name' },
     { id: 'email', label: 'Email' },
     { id: 'createdAt', label: 'Created At' },
-    { id: 'createdEvents', label: 'Events Created'},
-    { id: 'bookedEvents', label: 'Events Booked'},
+    { id: 'createdEventsCount', label: 'Events Created'},
+    { id: 'bookedEventsCount', label: 'Events Booked'},
     { id: 'actions', label: 'Actions' },
 ];
 const dataNameArray = headerArray
@@ -23,42 +23,46 @@ const dataNameArray = headerArray
 
 function MonitorUsers() {
     const [userdata,setUserdata] = useState(null);
-    const {setFeedback,setDialog} = useContext(ComponentContext);
+    const {setFeedback,setDialog,setButtonDisabled} = useContext(ComponentContext);
     const classes = useStyles();
     const history = useHistory();
     useEffect(() => {
         const getUsers = async () => {
             const url = '/api/admin/users';
             const data = await fetchDataAuth(url,setFeedback,history,null);
-            setUserdata(data.users);
+            const usr = data.users.map(item => ({
+                ...item,
+                createdEventsCount: item.createdEvents.length,
+                bookedEventsCount: item.bookedEvents.length
+            }))
+            setUserdata(usr);
         }
         getUsers();
     },[])
         
     const deleteHandler = async (item) => {
-        // const url = "/api/admin/delete/message"
-        // const status = await submitFormdata({id: item._id},
-        //     history,setFeedback,setButtonDisabled,url,null
-        // ) 
+        async function actionYes() {
+            const url = "/api/admin/delete/user"
+            const status = await submitFormdata({id: item._id},
+                history,setFeedback,setButtonDisabled,url,null
+            ) 
+            if(status === "success")
+            {
+                const updatedUserdata = userdata.filter(user => item._id !== user._id);
+                setUserdata(updatedUserdata);         
+            }
+        }
         setDialog({
             open: true,
             title: "Comfirm Deletion",
-            message: "Are you sure you want to delete this?",
-            actionYes: function() {
-                console.log('yes')
-            },
+            message: "Are you sure you want to delete this user?",
+            actionYes: actionYes,
             actionNo: function() {
-                console.log("No")
             }
         });
-        // if(status === "success")
-        // {
-        //     const newData = messages.filter(msg => (msg._id !== item._id))
-        //     setMessages(newData);
-        // }
     }
     const viewHandler = (item) => {
-        // history.push(`/admin/message/${item._id}`,item) 
+        history.push(`/admin/user/${item._id}`,item) 
     }
 
     return (

@@ -38,6 +38,7 @@ import MessagePage from './pages/admin/MessagePage';
 import ChangePassword from './pages/user/ChangePassword';
 import MonitorUsers from './pages/admin/MonitorUsers';
 import CustomDialog from './components/feedback/CustomDialog';
+import UserPage from './pages/admin/UserPage';
 
 axios.defaults.withCredentials = true;
 
@@ -81,6 +82,7 @@ function App() {
               <AdminRoute exact path="/admin/messages" component={Messages} /> 
               <AdminRoute exact path="/admin/message/:id" component={MessagePage} /> 
               <AdminRoute exact path="/admin/users" component={MonitorUsers} /> 
+              <AdminRoute exact path="/admin/user/:id" component={UserPage} /> 
 
               <Route exact path="*" >
                 <Redirect to="/" />

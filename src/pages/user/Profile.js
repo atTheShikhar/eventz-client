@@ -180,7 +180,7 @@ function Profile(props) {
                             disableElevation
                             className={classes.vmargin}
                         >
-                            <Button onClick={() => {}} 
+                            <Button  
                                 color="primary"
                                 className={classes.button}
                                 onClick={() => {history.push("/user/changepassword")}}
