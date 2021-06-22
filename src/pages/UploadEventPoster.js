@@ -54,7 +54,7 @@ function UploadEventPoster({match}) {
             });
             successHandler(response,setFeedback,() => {
                 setButtonDisabled(false);
-                history.replace('/');
+                history.push('/user/myevents');
             })
         } catch(err) {
             setButtonDisabled(false);

@@ -5,7 +5,7 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: "#fafafa"
     },
     pageHeight: {
-        minHeight: "80vh"
+        minHeight: "90vh"
     },
     headingText: {
         color: theme.palette.grey[800]

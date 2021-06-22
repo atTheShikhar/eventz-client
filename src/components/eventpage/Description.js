@@ -8,7 +8,6 @@ function Description(props) {
         <Container className={classes.container}>
             <Card
                 variant="outlined"
-                elevation={false}
             >
                 <CardContent>
                     <h3>Event Description</h3>

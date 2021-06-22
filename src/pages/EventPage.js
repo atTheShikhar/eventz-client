@@ -15,35 +15,30 @@ const useStyles = makeStyles(theme => ({
 }))
 function EventPage(props) {
     const classes = useStyles();
-    const { eventData }= props.location.state;
-    // console.log(eventData);
+    const { eventData,date,time,imgLink }= props.location.state;
+
     const {
         title,
         description,
         noOfPeople,
         genre,
         price,
-        isFree
+        isFree,
     } = eventData.eventDetails;
-
-    const {
-        date,
-        time,
-        imgLink
-    } = props.location.state;
 
     const {
         eventOrganiser,
         eventAddress,
         createdBy,
-        _id
+        _id,
+        totalTickets,bookedTickets
     } = eventData;
 
     return (
         <div className={classes.bgGrey}>
         <Container maxWidth="md" className={classes.container}>
             <Grid container spacing={2}>
-                <Grid item md={12} md={12} xs={12}>
+                <Grid item md={12} xs={12}>
                     <Header
                         title={title}
                         genre={genre}
@@ -56,6 +51,8 @@ function EventPage(props) {
                         price={price}
                         createdBy={createdBy}
                         eventId={_id}
+                        totalTickets={totalTickets}
+                        bookedTickets={bookedTickets}
                     />            
                 </Grid>
                 <Grid item md={6} sm={6} xs={12}>

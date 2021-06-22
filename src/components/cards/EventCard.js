@@ -6,11 +6,9 @@ import {
     CardMedia, 
     Chip, 
     Divider, 
-    IconButton, 
-    Typography 
+    Typography,
+    Grid
 } from '@material-ui/core'
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import EventIcon from '@material-ui/icons/Event';
 import ScheduleIcon from '@material-ui/icons/Schedule';
@@ -18,11 +16,12 @@ import React,{useState,useEffect} from 'react'
 import noImage from '../../assets/no-image.jpg'
 import useStyles from './CardStyle'
 import { useHistory } from 'react-router';
+import ProgressBar from '../dataDisplay/ProgressBar';
 
 function EventCard(props) {
     const { title,genre,dateAndTime,isFree,price } = props.eventData.eventDetails;
     const { stateName } = props.eventData.eventAddress;
-    const { imageLocation } = props.eventData;
+    const { imageLocation,totalTickets,bookedTickets } = props.eventData;
     const { clickRoute } = props;
     const date = new Date(dateAndTime).toDateString();
     const time = new Date(dateAndTime).toLocaleTimeString();
@@ -97,13 +96,21 @@ function EventCard(props) {
             <Divider variant="middle"/>
 
             <CardActions className={classes.flexRow}>
-                    <div>
-                        <IconButton aria-label="add to favorites" className={classes.favButton}>
-                            <FavoriteIcon />
-                        </IconButton>
-                        <IconButton aria-label="share" className={classes.shareButton}>
-                            <ShareIcon />
-                        </IconButton>
+                    <div
+                        style={{width: "80%", padding: "10px"}}
+                    >
+                        <Grid container direction="row" justify="space-between" >
+                            <Grid item className={classes.subheading}>
+                                Tickets Booked: 
+                            </Grid>
+                            <Grid item className={classes.subheading}>
+                                {bookedTickets} of {totalTickets}
+                            </Grid>
+                        </Grid>
+
+                        <ProgressBar
+                            value={(bookedTickets/totalTickets) * 100}
+                        />
                     </div>
                     <strong >
                         {

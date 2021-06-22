@@ -44,6 +44,6 @@ const useStyles = makeStyles(theme => ({
     priceFreeTag: {
         paddingRight: "10px",
         color: theme.palette.success.main
-    }
+    },
 }))
 export default useStyles;

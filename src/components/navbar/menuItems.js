@@ -7,6 +7,7 @@ import {
     Event,
     Message,
     People,
+    Email
 } from '@material-ui/icons'
 //List for navigation drawer
 export const usermenu = [
@@ -53,4 +54,9 @@ export const adminmenu = [
         route: "/admin/messages",
         icon: <Message/>
     },
+    {
+        name: "Send Emails",
+        route: "/admin/sendemail",
+        icon: <Email/>
+    }
 ]

@@ -91,6 +91,10 @@ function MonitorEvents() {
         });
     }
 
+    const viewHandler = (item) => {
+        history.push(`/admin/event/${item._id}`)
+    }
+
     const setEventData = (data) => {
         setEvents(data.events)
     }
@@ -129,7 +133,7 @@ function MonitorEvents() {
                             },
                             {
                                 name: "View",
-                                clickHandler: () => {}
+                                clickHandler: viewHandler
                             },
                             {
                                 name: "Delete",

@@ -50,6 +50,7 @@ function BrowseEvents(props) {
         const url = `/api/get-events${search}`;
         async function fetchEvents() {
             const data = await fetchData(url,setFeedback,history);
+            // console.log(data);
             setEvents(data.events);
             setPageData({
                 currentPage: data.currentPage,
@@ -58,8 +59,11 @@ function BrowseEvents(props) {
             })
         }
         fetchEvents();
+        return function() {
+            setEvents(null);
+        }
     },[load])
-    
+
     return (
         <div className={classes.bgGrey}>
         <Container maxWidth="lg" className={classes.vpadding}>

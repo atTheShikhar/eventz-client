@@ -25,7 +25,7 @@ export default function MyTickets(props) {
     
     return (
         <>
-        <div className={`${classes.bgColor} ${classes.vpadding}`}>
+        <div className={`${classes.bgColor} ${classes.vpadding} ${classes.pageHeight}`}>
             <Container maxWidth="lg">
                 <h1>My Bookings</h1>
             </Container>
@@ -36,7 +36,7 @@ export default function MyTickets(props) {
 
             <Grid container spacing={2}>
                 {
-                    (ticketData !== null) ?
+                    (ticketData !== null && ticketData?.length !==0) ?
                     (<>
                         {
                             ticketData.map(ticketItem => {

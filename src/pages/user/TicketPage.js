@@ -132,11 +132,13 @@ function TicketPage(props) {
                                                                     style={{padding: "10px"}}
                                                                 />
                                                                 <h2 className={classes.textGrey}>
-                                                                    Ticket ID:
+                                                                    Ticket ID:{" "}
+                                                                    <span style={{
+                                                                        fontWeight: "normal"
+                                                                    }}>
+                                                                        {item.ticketId}
+                                                                    </span>
                                                                 </h2>
-                                                                <div>
-                                                                    {item.ticketId}
-                                                                </div>
                                                             </Box>
                                                             <Button 
                                                                 variant="contained"

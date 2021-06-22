@@ -39,6 +39,9 @@ import ChangePassword from './pages/user/ChangePassword';
 import MonitorUsers from './pages/admin/MonitorUsers';
 import CustomDialog from './components/feedback/CustomDialog';
 import UserPage from './pages/admin/UserPage';
+import SendEmail from './pages/admin/SendEmail';
+import EventInfoPage from './pages/user/EventInfoPage';
+import AdminEventPage from './pages/admin/AdminEventPage';
 
 axios.defaults.withCredentials = true;
 
@@ -73,16 +76,19 @@ function App() {
               <PrivateRoute exact path="/book/:id" component={BookEvents}/>
               <PrivateRoute exact path="/user/myevents/uploadposter/:id" component={UploadEventPoster} />
               <PrivateRoute exact path="/user/myevents" component={MyEvents}/>
+              <PrivateRoute exact path="/user/myevents/:id" component={EventInfoPage}/>
               <PrivateRoute exact path="/user/profile" component={Profile}/>
               <PrivateRoute exact path="/user/changepassword" component={ChangePassword}/>
               <PrivateRoute exact path="/user/mybookings" component={MyTickets}/>
               <PrivateRoute exact path="/user/tickets/:id" component={TicketPage}/>
 
               <AdminRoute exact path="/admin/events" component={MonitorEvents} />
+              <AdminRoute exact path="/admin/event/:id" component={AdminEventPage} />
               <AdminRoute exact path="/admin/messages" component={Messages} /> 
               <AdminRoute exact path="/admin/message/:id" component={MessagePage} /> 
               <AdminRoute exact path="/admin/users" component={MonitorUsers} /> 
               <AdminRoute exact path="/admin/user/:id" component={UserPage} /> 
+              <AdminRoute exact path="/admin/sendemail" component={SendEmail} /> 
 
               <Route exact path="*" >
                 <Redirect to="/" />

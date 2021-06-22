@@ -14,7 +14,7 @@ const createdHeaderArray = [
     { id: 'title', label: 'Title' },
     { id: 'organiserContact', label: 'Contact' },
     { id: 'createdAt', label: 'Created At'},
-    { id: 'status', label: 'Status'},
+    { id: 'price', label: 'Price'},
     { id: 'actions', label: 'Actions' },
 ];
 const dataNameArray = createdHeaderArray
@@ -46,6 +46,7 @@ function UserPage(props) {
         const getData = async () => {
             const url = "/api/admin/events";
             const userInfo = { userId: `${id}` }
+
             const eventsByUser = await fetchDataAuth(url,setFeedback,history,userInfo);
 
             let bookedEventsByUser = [];
@@ -62,15 +63,14 @@ function UserPage(props) {
             }
             if(bookedEventsByUser.length > 0)
                 setBookedEventsData(bookedEventsByUser)
-            console.table(bookedEventsByUser)
+
             setCreatedEventsData(eventsByUser.events);
-            console.table(eventsByUser.events)
         }
         getData();
     },[])
 
     return (
-        <div className={`${classes.bgColor} ${classes.vpadding}`}>
+        <div className={`${classes.bgColor} ${classes.vpadding} ${classes.pageHeight}`}>
             
             <Container maxWidth="xl">
             <Grid container direction="row" spacing={2}>
@@ -84,13 +84,13 @@ function UserPage(props) {
                                     className={classes.imageAvatar}
                                 />
 
-                                <h1 className={classes.heading}>
+                                <h1 className={classes.headingText}>
                                     {name}
                                 </h1>
-                                <div className={classes.subHeading}>
+                                <div className={classes.subHeadingText}>
                                     {email}
                                 </div>
-                                <div className={classes.subHeading}>
+                                <div className={classes.subHeadingText}>
                                     Joined on: {createdAt.split(',')[0]}
                                 </div>
                         </CardContent>
@@ -99,51 +99,61 @@ function UserPage(props) {
 
                 <Grid item xs={9}>
                     <Grid container direction="column" spacing={2}>
-
-                        <Grid item>
+                            <Grid item>
+                            <h2>Events created by {name}</h2>
                             {
                                 createdEventsData!==null && createdEventsData.length!==0 ?
                                 <>
-                                    <div>Events created by {name}</div>
                                     <CustomTable
                                         headerArray={createdHeaderArray}
                                         dataNameArray={dataNameArray}
                                         dataArray={createdEventsData}
                                         actions={[
                                             {
-                                                name: "View",
+                                                name: "Show",
+                                                //TODO: Push to the events page
                                                 clickHandler: () => {}
                                             }
                                         ]}
-                                    />
+                                        />
                                 </> : 
                                 <>
+                                    <Card>
+                                        <CardContent className={classes.flex}>
+                                            <div className={classes.subHeadingText}>No Events</div>
+                                        </CardContent>
+                                    </Card>
                                 </>
                             }
-                        </Grid>
+                            </Grid>
 
-                        <Grid item>
+                            <Grid item>
+                            <h2>Events booked by {name}</h2>
                             {
                                 bookedEventsData!==null && bookedEventsData.length!==0 ?
                                 <>
-                                    <div>Events booked by {name}</div>
                                     <CustomTable
                                         headerArray={bookedHeaderArray}
                                         dataNameArray={dataNameArray1}
                                         dataArray={bookedEventsData}
                                         actions={[
                                             {
-                                                name: "View",
+                                                name: "Show",
+                                                //TODO: Push to the events page
                                                 clickHandler: () => {}
                                             }
                                         ]}
                                     />
                                 </> : 
                                 <>
+                                    <Card>
+                                        <CardContent className={classes.flex}>
+                                            <div className={classes.subHeadingText}>No Events</div>
+                                        </CardContent>
+                                    </Card>
                                 </>
                             }
-                        </Grid>
-
+                            </Grid>
                     </Grid>
                 </Grid>
 

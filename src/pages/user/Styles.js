@@ -4,6 +4,9 @@ const useStyles = makeStyles(theme => ({
     bgColor: {
         backgroundColor: "#fafafa"
     },
+    pageHeight: {
+        minHeight: "90vh"
+    },
     flex: {
         display: "flex",
         flexDirection: "row",

@@ -44,7 +44,7 @@ function Navbar(props) {
     //Navbar render logic
     return (
         <>
-        {/* <HideOnScroll {...props}> */}
+        <HideOnScroll {...props}>
             <AppBar position="sticky" className={`${classes.header}`}>
                 <Toolbar className={classes.toolbar}>
                     <div className={classes.itemsGroup}>
@@ -121,7 +121,7 @@ function Navbar(props) {
                     </div>
                 </Toolbar>
            </AppBar>
-        {/* </HideOnScroll> */}
+        </HideOnScroll>
         </>
     )
 }

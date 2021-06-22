@@ -1,4 +1,5 @@
 import { Button, 
+    ButtonGroup, 
     Card, 
     CardContent, 
     CardMedia, 
@@ -12,6 +13,7 @@ import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import EventIcon from '@material-ui/icons/Event';
 import PeopleIcon from '@material-ui/icons/People';
 import { UserContext } from '../../context/Context';
+import ProgressBar from '../dataDisplay/ProgressBar';
 
 function Header(props) {
     const classes = useStyles();
@@ -20,7 +22,8 @@ function Header(props) {
 
     const { imgLink,title,genre,
         noOfPeople,duration,date,
-        time,isFree,price,createdBy,eventId 
+        time,isFree,price,createdBy,eventId,
+        bookedTickets,totalTickets
     } = props;
 
     return (
@@ -50,14 +53,21 @@ function Header(props) {
                             {
                                 (user?.id === createdBy) ?
                                 (<>
+                                <ButtonGroup>
                                     <Button 
                                         variant="contained"
                                         color="secondary"
-                                        size="large"
                                         className={classes.button}
+                                        onClick={() => history.push('/contactus')}
                                     >
-                                        Edit Details
+                                        Request Update
                                     </Button>
+                                    <Button
+                                        onClick={() => history.push(`/user/myevents/uploadposter/${eventId}`)}
+                                    >
+                                        Update Poster
+                                    </Button>
+                                </ButtonGroup>
                                 </>) :
                                 (<>
                                     <Button
@@ -77,7 +87,18 @@ function Header(props) {
                             }
                         </div> 
                     </div>
+
                     <Divider variant="middle" className={classes.vmargin}/>
+
+                    <div className={`${classes.flexRow} ${classes.spaceBetween}`}>
+                        <div>Tickets Booked: {bookedTickets} of {totalTickets}</div>
+                        <div style={{width: '50%'}}>
+                            <ProgressBar value={(bookedTickets/totalTickets) * 100}/>
+                        </div>
+                    </div>
+                    
+                    <Divider variant="middle" className={classes.vmargin}/>
+
                     <div className={classes.flexRow}>
                         <span className={classes.flexRow}>
                             <EventIcon color="primary" className={classes.hmargin}/>
@@ -107,7 +128,10 @@ function Header(props) {
                                 }
                             </strong>
                         </span>
+                        <span>
+                        </span>
                     </div>
+
                 </CardContent>
             </Card>
         </Container>

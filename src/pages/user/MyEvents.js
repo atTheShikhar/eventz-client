@@ -59,7 +59,7 @@ function MyEvents(props) {
                                         >
                                             <EventCard
                                                 eventData={item}
-                                                clickRoute={`/event/${item._id}`}
+                                                clickRoute={`/user/myevents/${item._id}`}
                                             />
                                         </Grid>
                                     );

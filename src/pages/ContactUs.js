@@ -29,7 +29,6 @@ function ContactUs(props) {
             ...formData,
             [name]: e.target.value
         })        
-        // console.log(e.target.value);
     }
 
     const submitHandler = e => {
