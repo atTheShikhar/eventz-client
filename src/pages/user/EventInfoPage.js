@@ -93,13 +93,7 @@ function EventInfoPage(props) {
                             totalTickets={totalTickets}
                             bookedTickets={bookedTickets}
                         />            
-                    </Grid>
-
-                    <Grid item xs={4}>
-
-                    </Grid>
-
-                    <Grid item xs={8}>
+                        <br/>
                         <h3>All Bookings</h3>
                         {
                             (userdata !== null && userdata?.length !== 0) ?

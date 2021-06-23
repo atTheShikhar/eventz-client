@@ -2,28 +2,18 @@ import { Container, Button, Grid,Paper } from '@material-ui/core';
 import { ValidatorForm } from 'react-material-ui-form-validator';
 import SubmitButton from '../../components/buttons/SubmitButton';
 import useStyles from './Styles';
-import Textbox from '../../components/inputs/Textbox';
 import Submit from '@material-ui/icons/ArrowUpward'
 import React, { useContext } from 'react'
 import {useHistory} from 'react-router-dom';
-import {
-    reqErr,
-    maxSize,
-    maxSizeErr,
-    regexText,
-    textErr,
-    numErr,
-    exactDigit,
-    exactDigitErr,
-    emailErr
-} from '../../helpers/validators';
 import { ComponentContext } from '../../context/Context';
-import { createEvent } from '../../helpers/createEvent';
+import { createEvent } from '../../helpers/manageEvent';
+import OrganiserDetailsInputs from '../../components/createEvents/OrganiserDetailsInputs';
 
 function OrganiserDetails(props) {
     const {prevStep,details,handleChange} = props;
-    const history = useHistory();
+
     //Hooks
+    const history = useHistory();
     const classes = useStyles();
     const { setButtonDisabled,setFeedback } = useContext(ComponentContext);
 
@@ -50,51 +40,10 @@ function OrganiserDetails(props) {
                     className={classes.gridContainerStyles}
                 >
 
-                    <Grid item>
-                        <Textbox
-                            label="Organiser Name"
-                            value={details.organiserName}
-                            onChange={handleChange('organiserName')}
-                            name="organiserName"
-                            autoFocus
-                            validators={['required',regexText,maxSize(40)]}
-                            errorMessages={[reqErr,textErr,maxSizeErr(40)]}
-                        />
-                    </Grid>
-
-                    <Grid item>
-                        <Textbox
-                            label="Phone No."
-                            value={details.phone}
-                            onChange={handleChange('phone')}
-                            name="phone"
-                            validators={['required','isNumber',exactDigit(10)]}
-                            errorMessages={[reqErr,numErr,exactDigitErr(10)]}
-                        />
-                    </Grid>
-
-                    <Grid item>
-                        <Textbox
-                            label="Email"
-                            value={details.email}
-                            onChange={handleChange('email')}
-                            name="email"
-                            validators={['isEmail']}
-                            errorMessages={[emailErr]}
-                            disabled={true}
-                        />
-                    </Grid>
-
-                    <Grid item>
-                        <Textbox
-                            label="Organisation/Company/Institute Name"
-                            value={details.organisationName}
-                            onChange={handleChange("organisationName")}
-                            name="organisationName"
-                            validators={[regexText, maxSize(100)]}
-                            errorMessages={[textErr, maxSizeErr(100)]}
-                        />
-                    </Grid>
+                    <OrganiserDetailsInputs
+                        details={details}
+                        handleChange={handleChange}
+                    />
 
                     <Grid item>
                         <Grid container direction="row" justify="flex-end">

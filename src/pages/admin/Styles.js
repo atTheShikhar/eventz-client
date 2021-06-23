@@ -27,12 +27,12 @@ const useStyles = makeStyles(theme => ({
         alignItems: "center"
     },
     vmargin: {
-        marginTop: "10px",
-        marginBottom: "10px"
+        marginTop: "20px",
+        marginBottom: "20px"
     },
     vpadding: {
-        paddingTop: "10px",
-        paddingBottom: "10px"
+        paddingTop: "20px",
+        paddingBottom: "20px"
     },
     flexColumn: {
         display: "flex",

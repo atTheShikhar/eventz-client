@@ -90,6 +90,9 @@ function App() {
               <AdminRoute exact path="/admin/user/:id" component={UserPage} /> 
               <AdminRoute exact path="/admin/sendemail" component={SendEmail} /> 
 
+              <Route exact path="/deleted-event">
+                <Redirect to="/admin/events" /> 
+              </Route>
               <Route exact path="*" >
                 <Redirect to="/" />
               </Route>

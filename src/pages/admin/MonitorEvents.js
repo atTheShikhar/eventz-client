@@ -5,9 +5,9 @@ import useStyles from './Styles';
 import { fetchDataAuth } from '../../helpers/fetchData';
 import CustomSelect from '../../components/inputs/CustomSelect';
 import CustomTable from '../../components/dataDisplay/CustomTable'
-import { submitFormdata } from '../../helpers/submitFormdata';
 import { useHistory } from 'react-router';
 import NotFound from '../../components/NotFound';
+import { approveDeleteEvent } from '../../helpers/manageEvent';
 
 const headerArray = [
     { id: 'title', label: 'Title' },
@@ -28,7 +28,7 @@ function MonitorEvents() {
     const {events,setEvents} = useContext(DataContext);
     const {setDialog,setFeedback,setButtonDisabled} = useContext(ComponentContext);
     const history = useHistory();
-    const selectData = ["Pending","Approved","All"];
+    const selectData = ["All","Approved","Pending"];
 
     useEffect(() => {
         return function() {
@@ -37,58 +37,23 @@ function MonitorEvents() {
     },[]);
 
     const approveHandler = async (item) => {
-        async function actionYes() {
-            const url = "/api/admin/approve/event"
-    
-            const status = await submitFormdata({id: item._id, action: "Approve"},
-                history,setFeedback,setButtonDisabled,url,null
-            ) 
-    
-            if(status === "success")
-            {
-                const newData = events.map(msg => {
-                    if(msg._id === item._id) 
-                        return {...msg,status: "approved"}
-                    else 
-                        return msg;
-                })
-                setEvents(newData);
-            }
-        }
-
-        setDialog({
-            open: true,
-            title: "Confirm Approval",
-            message: "Are you sure you want to approve this event?",
-            actionYes: actionYes,
-            actionNo: function() {
-            }
-        });
+        const updateList = {
+            events: events,
+            setEvents: setEvents
+        };
+        await approveDeleteEvent(item._id,history,setFeedback,setButtonDisabled,
+            setDialog,"approve",updateList
+        )
     }
 
     const deleteHandler = async (item) => {
-        async function actionYes() {
-            const url = "/api/admin/delete/event"
-    
-            const status = await submitFormdata({id: item._id, action: "Delete"},
-                history,setFeedback,setButtonDisabled,url,null
-            ) 
-    
-            if(status === "success")
-            {
-                const newData = events.filter(msg => (msg._id !== item._id))
-                setEvents(newData);
-            }
-        }
-
-        setDialog({
-            open: true,
-            title: "Confirm Deletion",
-            message: "Are you sure you want to delete this event?",
-            actionYes: actionYes,
-            actionNo: function() {
-            }
-        });
+        const updateList = {
+            events: events,
+            setEvents: setEvents
+        };
+        await approveDeleteEvent(item._id,history,setFeedback,
+            setButtonDisabled,setDialog,"delete",updateList
+        )
     }
 
     const viewHandler = (item) => {
