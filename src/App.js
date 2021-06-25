@@ -10,7 +10,6 @@ import CreateEvent from './pages/Create/CreateEvent';
 import NetError from './components/NetError';
 import PrivateRoute from './routes/PrivateRoute';
 import PublicRoute from './routes/PublicRoute';
-import GlobalState from './context/GlobalState';
 import GenericSnackbar from './components/feedback/snackbar';
 import './App.css';
 
@@ -43,17 +42,18 @@ import SendEmail from './pages/admin/SendEmail';
 import EventInfoPage from './pages/user/EventInfoPage';
 import AdminEventPage from './pages/admin/AdminEventPage';
 import MonitorPayments from './pages/admin/MonitorPayments';
+import { useContext } from 'react';
+import { UserContext } from './context/Context';
+import PaymentDetailsPage from './pages/admin/PaymentDetailsPage';
 
 axios.defaults.withCredentials = true;
 
 function App() {
-  
+  const {user} = useContext(UserContext);
 
   return (
     <div>
         <Router>
-          <GlobalState>
-
             <GenericSnackbar/>
             <CustomDialog/>
             <Navbar/>
@@ -90,17 +90,21 @@ function App() {
               <AdminRoute exact path="/admin/users" component={MonitorUsers} /> 
               <AdminRoute exact path="/admin/user/:id" component={UserPage} /> 
               <AdminRoute exact path="/admin/payments" component={MonitorPayments} /> 
+              <AdminRoute exact path="/admin/payment/details" component={PaymentDetailsPage} /> 
               <AdminRoute exact path="/admin/sendemail" component={SendEmail} /> 
 
-              <Route exact path="/deleted-event">
-                <Redirect to="/admin/events" /> 
-              </Route>
-              <Route exact path="*" >
-                <Redirect to="/" />
-              </Route>
+                {
+                  //TODO: Not working, fix it
+                (user?.type === 'admin') ? 
+                  (<Route exact path="*" >
+                    <Redirect to="/admin/events"/>
+                  </Route>) :
+                  (<Route exact path="*">
+                    <Redirect to="/" />
+                  </Route>)  
+                }
+
             </Switch>
-            
-          </GlobalState>
         </Router>
     </div>
   );

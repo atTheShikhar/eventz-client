@@ -1,13 +1,13 @@
 import React, { useContext, useEffect,useState } from 'react'
-import { Avatar, Button, ButtonGroup, Card, 
-    CardContent, Collapse, Container,Badge, Grid   
+import {  Card, CardContent, Collapse, 
+    Container,Grid   
 } from '@material-ui/core'
 import { useHistory, useParams } from 'react-router'
 import { ComponentContext } from '../../context/Context';
 import { fetchDataAuth } from '../../helpers/fetchData';
-import personImage from '../../assets/person.png';
 import useStyles from './Styles';
 import CustomTable from '../../components/dataDisplay/CustomTable';
+import UserCard from '../../components/cards/UserCard';
 
 
 const createdHeaderArray = [
@@ -38,7 +38,7 @@ function UserPage(props) {
         bookedEvents,imageLocation
     } = props.location.state;
 
-    const profileImage = imageLocation ?? personImage;
+    // const profileImage = imageLocation ?? personImage;
     const [createdEventsData,setCreatedEventsData] = useState(null);
     const [bookedEventsData,setBookedEventsData] = useState(null);
 
@@ -80,25 +80,13 @@ function UserPage(props) {
             <Grid container direction="row" spacing={2}>
 
                 <Grid item xs={3}>
-                    <Card variant="outlined" raised={false} className={classes.roundedCard}>
-                        <CardContent className={classes.flexColumn}>
-                                <Avatar 
-                                    src={profileImage} 
-                                    alt="My Profile Picture"
-                                    className={classes.imageAvatar}
-                                />
-
-                                <h1 className={classes.headingText}>
-                                    {name}
-                                </h1>
-                                <div className={classes.subHeadingText}>
-                                    {email}
-                                </div>
-                                <div className={classes.subHeadingText}>
-                                    Joined on: {createdAt.split(',')[0]}
-                                </div>
-                        </CardContent>
-                    </Card>
+                    <UserCard
+                        classes={classes}
+                        imageLocation={imageLocation}
+                        name={name}
+                        email={email}
+                        joinedOn={createdAt.split(',')[0]}                        
+                    />
                 </Grid>
 
                 <Grid item xs={9}>

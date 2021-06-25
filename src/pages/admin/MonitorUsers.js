@@ -7,12 +7,11 @@ import CustomTable from '../../components/dataDisplay/CustomTable'
 import { useHistory } from 'react-router';
 import { submitFormdata } from '../../helpers/submitFormdata';
 import NotFound from '../../components/NotFound';
-import CustomDialog from '../../components/feedback/CustomDialog';
 
 const headerArray = [
     { id: 'name', label: 'Name' },
     { id: 'email', label: 'Email' },
-    { id: 'createdAt', label: 'Created At' },
+    { id: 'createdAt', label: 'Joined on' },
     { id: 'createdEventsCount', label: 'Events Created'},
     { id: 'bookedEventsCount', label: 'Events Booked'},
     { id: 'actions', label: 'Actions' },
