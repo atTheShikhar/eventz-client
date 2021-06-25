@@ -1,13 +1,6 @@
 import {
-    Info,
-    Help,
-    Home,
-    Create,
-    Explore,
-    Event,
-    Message,
-    People,
-    Email
+    Info,Help,Home,Create,Explore,
+    Event,Message,People,Email,Receipt,
 } from '@material-ui/icons'
 //List for navigation drawer
 export const usermenu = [
@@ -48,6 +41,11 @@ export const adminmenu = [
         name: "Users",
         route: "/admin/users",
         icon: <People/>
+    },
+    {
+        name: "Payments",
+        route: "/admin/payments",
+        icon: <Receipt/> 
     },
     {
         name: "Messages",

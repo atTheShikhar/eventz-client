@@ -87,7 +87,7 @@ function BookEvents(props) {
         }
 
         const options = {
-            "key": "rzp_test_2bBYbszoIaNmM3", 
+            "key": process.env.REACT_APP_RAZORPAY_KEY, 
             "order_id": data.id, 
             "amount": data.amount.toString(), 
             "currency": data.currency,

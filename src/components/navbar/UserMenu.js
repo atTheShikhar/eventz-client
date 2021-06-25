@@ -1,11 +1,12 @@
 import React, { useState,useContext } from 'react'
 import { UserContext } from '../../context/Context';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import { logout } from '../../helpers/auth';
+import personImage from '../../assets/person.png';
 import {
     Menu,
     MenuItem,
-    IconButton
+    IconButton,
+    Avatar
 } from '@material-ui/core';
 import { useHistory } from 'react-router';
 
@@ -13,7 +14,7 @@ import { useHistory } from 'react-router';
 function UserMenu(props) {
 
     const [anchorEl, setAnchorEl] = useState(null);
-    const { setUser } = useContext(UserContext);
+    const { user,setUser } = useContext(UserContext);
     const history = useHistory();
 
     const handleMenu = (event) => {
@@ -32,7 +33,7 @@ function UserMenu(props) {
                 onClick={handleMenu}
                 color="inherit"
             >
-                <AccountCircle />
+                <Avatar alt="profile" src={user?.imageLocation || personImage} />
             </IconButton>
             <Menu
                 id="menu-appbar"

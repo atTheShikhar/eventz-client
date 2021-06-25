@@ -42,6 +42,7 @@ import UserPage from './pages/admin/UserPage';
 import SendEmail from './pages/admin/SendEmail';
 import EventInfoPage from './pages/user/EventInfoPage';
 import AdminEventPage from './pages/admin/AdminEventPage';
+import MonitorPayments from './pages/admin/MonitorPayments';
 
 axios.defaults.withCredentials = true;
 
@@ -88,6 +89,7 @@ function App() {
               <AdminRoute exact path="/admin/message/:id" component={MessagePage} /> 
               <AdminRoute exact path="/admin/users" component={MonitorUsers} /> 
               <AdminRoute exact path="/admin/user/:id" component={UserPage} /> 
+              <AdminRoute exact path="/admin/payments" component={MonitorPayments} /> 
               <AdminRoute exact path="/admin/sendemail" component={SendEmail} /> 
 
               <Route exact path="/deleted-event">

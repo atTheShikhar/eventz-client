@@ -69,6 +69,10 @@ function UserPage(props) {
         getData();
     },[])
 
+    const showEventdataHandler = (item) => {
+        history.push(`/admin/event/${item._id}`)
+    }
+
     return (
         <div className={`${classes.bgColor} ${classes.vpadding} ${classes.pageHeight}`}>
             
@@ -112,7 +116,7 @@ function UserPage(props) {
                                             {
                                                 name: "Show",
                                                 //TODO: Push to the events page
-                                                clickHandler: () => {}
+                                                clickHandler: showEventdataHandler
                                             }
                                         ]}
                                         />
@@ -140,7 +144,7 @@ function UserPage(props) {
                                             {
                                                 name: "Show",
                                                 //TODO: Push to the events page
-                                                clickHandler: () => {}
+                                                clickHandler: showEventdataHandler
                                             }
                                         ]}
                                     />
