@@ -31,7 +31,7 @@ function MonitorPayments() {
     const [payments,setPayments] = useState([]);
 
     const setPaymentData = (item) => {
-        const paymentData = item.map(item => ({
+        const paymentData = item?.map(item => ({
             ...item,
             updated_at: new Date(item.updated_at).toLocaleString(),
             created_at: new Date(item.created_at).toLocaleString(),
@@ -44,16 +44,12 @@ function MonitorPayments() {
         history.push('/admin/payment/details',item);
     }
 
-    // const deleteHandler = (item) => {
-
-    // }
-
     return (
         <div className={classes.bgColor}>
             <Container maxWidth="lg" className={classes.vpadding}>
                 <Grid container direction="row" justify="space-between" alignItems="center">
 
-                <h1>Payments</h1>
+                <h1 className={classes.headingText}>Payments</h1>
                 <div className={`${classes.flex}`}>
                     <CustomSelect 
                         page={1}
@@ -62,7 +58,7 @@ function MonitorPayments() {
                         label="Payment Type"
                         url={"/api/admin/payments"}
                         dataHandler={fetchData}
-                        />
+                    />
                 </div>
                 </Grid>
             </Container>
@@ -81,10 +77,6 @@ function MonitorPayments() {
                                 name: "View",
                                 clickHandler: viewHandler
                             },
-                            // {
-                            //     name: "Delete",
-                            //     clickHandler: deleteHandler
-                            // }
                         ]}
                     />) :
                     (

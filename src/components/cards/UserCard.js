@@ -1,11 +1,14 @@
 import React from 'react'
 import {
-    Card,CardContent,Avatar
+    Card,CardContent,Avatar, CardActions, Grid, Button, ButtonGroup
 } from '@material-ui/core';
 import personImage from '../../assets/person.png'
 
 function UserCard(props) {
-    const {classes,imageLocation,name,email,joinedOn} = props;
+    const {classes,imageLocation,name,
+        email,joinedOn,actions
+    } = props;
+
     const image = imageLocation ?? personImage;
     return (
         <>
@@ -27,6 +30,32 @@ function UserCard(props) {
                             Joined on: {joinedOn}
                         </div>
                 </CardContent>
+
+                {(actions) ? 
+                    (<>
+                        <CardActions>
+                            <Grid container direction="row" justify="center" alignItems="center">
+                                <Grid item>
+                                    <ButtonGroup variant="contained" disableElevation>
+                                        {
+                                            actions.map((item,idx) => (
+                                                <Button 
+                                                    key={item.name} 
+                                                    onClick={item.clickHandler} 
+                                                    color={item?.color ?? 'primary'}
+                                                >
+                                                    {item.name}
+                                                </Button>  
+                                            ))
+                                        }
+                                    </ButtonGroup>
+                                </Grid>
+                            </Grid>
+                        </CardActions>
+                    </>) :
+                    (<></>)                
+                }
+            
             </Card>
         </>
     )
