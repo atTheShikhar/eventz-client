@@ -1,12 +1,13 @@
 import React, { useContext,useEffect, useState } from 'react'
 import { ComponentContext } from '../../context/Context'
 import useStyles from './Styles';
-import {Container,Divider} from '@material-ui/core';
-import { fetchDataAuth } from '../../helpers/fetchData';
+import {Container,Divider,Grid} from '@material-ui/core';
+import { fetchData } from '../../helpers/fetchData';
 import CustomTable from '../../components/dataDisplay/CustomTable'
 import { useHistory } from 'react-router';
 import { submitFormdata } from '../../helpers/submitFormdata';
 import NotFound from '../../components/NotFound';
+import SearchBar from '../../components/inputs/SearchBar';
 
 const headerArray = [
     { id: 'name', label: 'Name' },
@@ -22,13 +23,14 @@ const dataNameArray = headerArray
 
 function MonitorUsers() {
     const [userdata,setUserdata] = useState(null);
+    const [search,setSearch] = useState("");
     const {setFeedback,setDialog,setButtonDisabled} = useContext(ComponentContext);
     const classes = useStyles();
     const history = useHistory();
     useEffect(() => {
         const getUsers = async () => {
-            const url = '/api/admin/users';
-            const data = await fetchDataAuth(url,setFeedback,history,null);
+            const url = `/api/admin/users?search=${search}`;
+            const data = await fetchData(url,setFeedback,history);
             const usr = data.users.map(item => ({
                 ...item,
                 createdEventsCount: item.createdEvents.length,
@@ -37,7 +39,7 @@ function MonitorUsers() {
             setUserdata(usr);
         }
         getUsers();
-    },[])
+    },[search])
         
     const deleteHandler = async (item) => {
         async function actionYes() {
@@ -64,10 +66,19 @@ function MonitorUsers() {
         history.push(`/admin/user/${item._id}`,item) 
     }
 
+    const searchHandler = (query) => {
+        setSearch(query);
+    }
+
     return (
         <div className={classes.bgColor}>
             <Container maxWidth="lg" className={`${classes.vpadding}`}>
-                <h1>Users</h1>
+                <Grid container direction="row" alignItems="center" justify="space-between">
+                    <h1 className={classes.headingText}>Users</h1>
+                    <SearchBar
+                        submitHandler={searchHandler}
+                    />
+                </Grid>
             </Container>
 
             <Divider variant="middle" className={classes.vmargin} />

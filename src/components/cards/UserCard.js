@@ -1,6 +1,6 @@
-import React from 'react'
 import {
-    Card,CardContent,Avatar, CardActions, Grid, Button, ButtonGroup
+    Card,CardContent,Avatar, CardActions, 
+    Grid, Button, ButtonGroup,Divider
 } from '@material-ui/core';
 import personImage from '../../assets/person.png'
 
@@ -33,6 +33,7 @@ function UserCard(props) {
 
                 {(actions) ? 
                     (<>
+                        <Divider variant="middle"/>
                         <CardActions>
                             <Grid container direction="row" justify="center" alignItems="center">
                                 <Grid item>

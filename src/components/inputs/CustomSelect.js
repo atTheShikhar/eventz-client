@@ -10,19 +10,20 @@ const useStyles = makeStyles(theme => ({
 }))
 
 function CustomSelect(props) {
-    const {selectData,selectHandler,dataHandler,url,page} = props;
+    const {selectData,selectHandler,dataHandler,url,page,search} = props;
     const [state,setState] = useState(selectData[0]);
     const {setFeedback} = useContext(ComponentContext);
     const classes = useStyles();
     const history = useHistory();
     useEffect(() => {
-        let fetchUrl = `${url}?type=${state}&page=${page}`
+        let fetchUrl = `${url}?type=${state}&search=${search}&page=${page}`
+        // console.log(fetchUrl);
         const getData = async () => {
             const data = await dataHandler(fetchUrl,setFeedback,history);
             selectHandler(data);
         }
         getData();
-    },[state])
+    },[state,search])
 
     const changeHandler = (e) => {
         setState(e.target.value);

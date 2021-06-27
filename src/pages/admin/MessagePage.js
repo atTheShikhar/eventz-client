@@ -1,18 +1,18 @@
 import { Card, CardContent, Chip, Container, Divider, Grid, Typography } from '@material-ui/core';
 import React from 'react'
 import { useParams } from 'react-router';
-import SubNav from '../../components/navbar/SubNav';
+// import SubNav from '../../components/navbar/SubNav';
 import useStyles from './Styles'
 
 function MessagePage(props) {
     const classes = useStyles();
     const { id } = useParams();
-    const {name,email,subject,messageType,message,time,date} = props.location.state;
+    const {name,email,subject,messageType,message,time,date} = props?.location?.state;
     console.log(id);
     return (
     <>
-        <SubNav title="Message Page" />
-        <div className={`${classes.bgColor} ${classes.pageHeight}`}>
+        {/* <SubNav title="Message Page" /> */}
+        <div className={`${classes.bgColor} ${classes.pageHeight} ${classes.vpadding}`}>
             <Container maxWidth="md">
                 <Grid container spacing={2}>
 

@@ -129,6 +129,9 @@ function PaymentDetailsPage(props) {
                                     variant="contained"
                                     color="primary"
                                     disableElevation
+                                    onClick={() => {
+                                        history.push(`/admin/event/${data.event_id}`);
+                                    }}
                                 >
                                     View Event
                                 </Button>

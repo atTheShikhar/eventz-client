@@ -1,4 +1,4 @@
-import React, { useContext, } from 'react'
+import React, { useContext, useState, } from 'react'
 import { DataContext,ComponentContext } from '../../context/Context'
 import useStyles from './Styles';
 import CustomSelect from '../../components/inputs/CustomSelect';
@@ -8,6 +8,7 @@ import CustomTable from '../../components/dataDisplay/CustomTable'
 import { useHistory } from 'react-router';
 import { submitFormdata } from '../../helpers/submitFormdata';
 import NotFound from '../../components/NotFound';
+import SearchBar from '../../components/inputs/SearchBar';
 
 const headerArray = [
     { id: 'name', label: 'Name' },
@@ -24,6 +25,7 @@ const dataNameArray = headerArray
 
 function Messages() {
     const {messages,setMessages} = useContext(DataContext);
+    const [search,setSearch] = useState(""); 
     const {setFeedback,setButtonDisabled,setDialog} = useContext(ComponentContext);
     const classes = useStyles();
     const history = useHistory();
@@ -61,11 +63,20 @@ function Messages() {
     const setMessageData = (data) => {
         setMessages(data.messages);
     }
+    const searchHandler = (query) => {
+        setSearch(query);
+    }
+
     return (
         <div className={classes.bgColor}>
             <Container maxWidth="lg" className={`${classes.vpadding}`}>
                 <Grid container direction="row" justify="space-between" alignItems="center">
-                <h1>Messages</h1>
+                <h1 className={classes.headingText}>Messages</h1>
+
+                <SearchBar
+                    submitHandler={searchHandler}
+                />
+
                 <div className={`${classes.flex}`}>
                     <CustomSelect 
                         page={1}
@@ -74,6 +85,7 @@ function Messages() {
                         label="Message Type"
                         url={"/api/admin/messages"}
                         dataHandler={fetchDataAuth}
+                        search={search}
                     />
                 </div>
                 </Grid>
