@@ -45,6 +45,7 @@ import MonitorPayments from './pages/admin/MonitorPayments';
 import { useContext } from 'react';
 import { UserContext } from './context/Context';
 import PaymentDetailsPage from './pages/admin/PaymentDetailsPage';
+import VerifyTickets from './pages/user/VerifyTickets';
 
 axios.defaults.withCredentials = true;
 
@@ -82,6 +83,7 @@ function App() {
               <PrivateRoute exact path="/user/changepassword" component={ChangePassword}/>
               <PrivateRoute exact path="/user/mybookings" component={MyTickets}/>
               <PrivateRoute exact path="/user/tickets/:id" component={TicketPage}/>
+              <PrivateRoute exact path="/user/verifytickets/:eventId" component={VerifyTickets}/>
 
               <AdminRoute exact path="/admin/events" component={MonitorEvents} />
               <AdminRoute exact path="/admin/event/:id" component={AdminEventPage} />

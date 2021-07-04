@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Container, Grid } from '@material-ui/core';
+import { Button, Container, Grid } from '@material-ui/core';
 import useStyles from './Styles';
 import Header from '../../components/eventpage/Header';
 import Address from '../../components/eventpage/Address';
@@ -54,7 +54,7 @@ function EventInfoPage(props) {
     },[])
 
     return (
-        <div className={`${classes.bgColor} ${classes.pageHeight} ${classes.vmargin}`}>
+        <div className={`${classes.bgColor} ${classes.pageHeight} ${classes.vpadding}`}>
             <Container maxWidth="lg" >
 
                 <Grid container spacing={1}>
@@ -92,7 +92,31 @@ function EventInfoPage(props) {
                             dateAndTime={dateAndTime}
                         />            
                         <br/>
-                        <h3>All Bookings</h3>
+                        <Grid container direction="row" 
+                            justify="space-between" alignItems="center"
+                            className={classes.vmargin}
+                        >
+                            <Grid item>
+                                <h2>All Bookings</h2>
+                            </Grid>
+                            {
+                                (userdata !== null && userdata?.length !== 0) ?
+                                (
+                                    <Grid item>
+                                        <Button 
+                                            onClick={() => { 
+                                                history.push(`/user/verifytickets/${_id}`) 
+                                            }}
+                                            variant="contained"
+                                            className={classes.button}
+                                        >
+                                            Verify Tickets
+                                        </Button>
+                                    </Grid>
+                                ) :
+                                (<></>)
+                            }
+                        </Grid>
                         {
                             (userdata !== null && userdata?.length !== 0) ?
                                 (<CustomTable
