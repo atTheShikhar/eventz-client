@@ -77,7 +77,7 @@ function App() {
               <PrivateRoute exact path="/book/:id" component={BookEvents}/>
               <PrivateRoute exact path="/user/myevents/uploadposter/:id" component={UploadEventPoster} />
               <PrivateRoute exact path="/user/myevents" component={MyEvents}/>
-              <PrivateRoute exact path="/user/myevents/:id" component={EventInfoPage}/>
+              <PrivateRoute exact path="/user/myevent/:id" component={EventInfoPage}/>
               <PrivateRoute exact path="/user/profile" component={Profile}/>
               <PrivateRoute exact path="/user/changepassword" component={ChangePassword}/>
               <PrivateRoute exact path="/user/mybookings" component={MyTickets}/>

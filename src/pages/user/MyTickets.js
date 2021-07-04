@@ -50,6 +50,7 @@ export default function MyTickets(props) {
                                             title={eventDetails.title}
                                             isFree={eventDetails.isFree}
                                             price={parseInt(eventDetails.price)}
+                                            dateAndTime={eventDetails.dateAndTime}
                                             eventId={_id}
                                         />
                                     </Grid>

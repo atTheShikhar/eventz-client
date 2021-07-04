@@ -24,6 +24,7 @@ function EventPage(props) {
         genre,
         price,
         isFree,
+        dateAndTime
     } = eventData.eventDetails;
 
     const {
@@ -53,6 +54,7 @@ function EventPage(props) {
                         eventId={_id}
                         totalTickets={totalTickets}
                         bookedTickets={bookedTickets}
+                        dateAndTime={dateAndTime}
                     />            
                 </Grid>
                 <Grid item md={6} sm={6} xs={12}>

@@ -11,7 +11,7 @@ import useStyles from './CardStyle'
 import { useHistory } from 'react-router';
 
 function TicketCard(props) {
-    const {eventId,imageLocation,noOfTickets,title,isFree,price} = props;
+    const {eventId,imageLocation,noOfTickets,title,isFree,price,dateAndTime} = props;
     const classes = useStyles()
     const history = useHistory();
     const [image,setImage] = useState(noImage);    
@@ -20,6 +20,10 @@ function TicketCard(props) {
             setImage(imageLocation);
         }
     },[])
+
+    const date = new Date(dateAndTime).toDateString()
+    const time = new Date(dateAndTime)
+            ?.toLocaleTimeString('en-US',{hour: 'numeric', hour12: true})
 
     const cardClickHandler = (e) => {
         history.push(`/user/tickets/${eventId}`);
@@ -38,10 +42,14 @@ function TicketCard(props) {
                     title="Event Poster"
                 />
                 <CardContent>
-                    <div className={classes.flexRow}>
+                    <div>
                         <h1 className={classes.heading}>
                             {title}
                         </h1>
+                    </div>
+                    <div className={classes.subheading} style={{paddingTop: "10px"}}>
+                        <span className={classes.textGrey}>Timing: </span>
+                        {date} at {time} 
                     </div>
 
                     <Divider variant="middle" className={classes.vmargin}/>

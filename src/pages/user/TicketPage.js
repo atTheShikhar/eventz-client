@@ -1,4 +1,4 @@
-import { Button, Box, Card, CardContent, Container, Grid, makeStyles } from '@material-ui/core';
+import { Button, Box, Card, CardContent, Container, Grid, makeStyles, Chip } from '@material-ui/core';
 import React,{useContext} from 'react'
 import { useParams } from 'react-router';
 import QRCode from 'qrcode.react';
@@ -50,12 +50,13 @@ function TicketPage(props) {
 
     let tickets = null;
     let eventInfo=null;
-    let date,time;
+    let date,time,expired;
 
     if(ticketData!==null) {
         const data = ticketData.filter(item => (item.eventInfo._id === id))[0]
         tickets=data.tickets;
         eventInfo=data.eventInfo;
+        expired= new Date(eventInfo.eventDetails.dateAndTime) < new Date()
         date = new Date(eventInfo.eventDetails.dateAndTime).toDateString()
         time = new Date(eventInfo.eventDetails.dateAndTime)
             .toLocaleTimeString('en-US',{hour: 'numeric', hour12: true})
@@ -100,12 +101,33 @@ function TicketPage(props) {
                             </Grid> 
 
                             <Grid item xs={9}>
-                                <h1>
-                                    <span className={classes.textGrey}>Title: </span> 
-                                    <span className={classes.textBlue}>
-                                        {eventInfo.eventDetails.title}
-                                    </span>
-                                </h1>
+                                <Grid container direction="row" justify="space-between" alignItems="center">
+
+                                    <Grid item>
+                                        <h1>
+                                        <span className={classes.textGrey}>Title: </span>
+                                        <span className={classes.textBlue}>
+                                            {eventInfo.eventDetails.title}
+                                        </span>
+                                        </h1>
+                                    </Grid>
+
+                                    <Grid item>
+                                        <Chip
+                                            label={
+                                                (!expired) ?
+                                                "Upcoming":
+                                                "Expired"
+                                            }
+                                            color={
+                                                (!expired) ?
+                                                "primary":
+                                                "secondary"
+                                            }
+                                        />
+                                    </Grid>
+
+                                </Grid>
                                 <div>
                                     <span className={classes.textGrey}>Timing: </span>
                                     {date} at {time}  
@@ -139,7 +161,21 @@ function TicketPage(props) {
                                                                         {item.ticketId}
                                                                     </span>
                                                                 </h2>
+
+                                                                <Chip
+                                                                    label={
+                                                                        item.availed === "No"? 
+                                                                        "Not availed":
+                                                                        "Availed"
+                                                                    }
+                                                                    color={
+                                                                        item.availed === "No"?
+                                                                        "primary": "secondary"
+                                                                    } 
+                                                                    size="small"
+                                                                />
                                                             </Box>
+
                                                             <Button 
                                                                 variant="contained"
                                                                 onClick={downloadTicket("ticket_"+item.ticketId)}

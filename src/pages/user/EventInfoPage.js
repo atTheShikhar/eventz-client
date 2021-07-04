@@ -25,12 +25,9 @@ const dataNameArray = headerArray
 function EventInfoPage(props) {
     const {eventData,date,time,imgLink} = props.location.state;
     const {
-        title,
-        description,
-        noOfPeople,
-        genre,
-        price,
-        isFree,
+        title,description,noOfPeople,
+        genre,price,isFree,
+        dateAndTime
     } = eventData.eventDetails;
     const {
         // eventOrganiser,
@@ -50,7 +47,7 @@ function EventInfoPage(props) {
             const url = "/api/get-bookings";
             const postData = { eventId: _id };
             const data = await fetchDataAuth(url,setFeedback,history,postData);
-            console.log(data);
+            // console.log(data);
             await setUserdata(data);
         } 
         getBookingsData();
@@ -92,6 +89,7 @@ function EventInfoPage(props) {
                             eventId={_id}
                             totalTickets={totalTickets}
                             bookedTickets={bookedTickets}
+                            dateAndTime={dateAndTime}
                         />            
                         <br/>
                         <h3>All Bookings</h3>

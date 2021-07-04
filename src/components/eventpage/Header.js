@@ -3,6 +3,7 @@ import { Button,
     Card, 
     CardContent, 
     CardMedia, 
+    Chip, 
     Container,
     Divider, 
 } from '@material-ui/core'
@@ -23,8 +24,10 @@ function Header(props) {
     const { imgLink,title,genre,
         noOfPeople,duration,date,
         time,isFree,price,createdBy,eventId,
-        bookedTickets,totalTickets
+        bookedTickets,totalTickets,dateAndTime
     } = props;
+
+    const expired = new Date(dateAndTime) < new Date() 
 
     return (
         <Container className={classes.container}>
@@ -52,23 +55,30 @@ function Header(props) {
                         <div>
                             {
                                 (user?.id === createdBy) ?
-                                (<>
-                                <ButtonGroup>
-                                    <Button 
-                                        variant="contained"
-                                        color="secondary"
-                                        className={classes.button}
-                                        onClick={() => history.push('/contactus')}
-                                    >
-                                        Request Update
-                                    </Button>
-                                    <Button
-                                        onClick={() => history.push(`/user/myevents/uploadposter/${eventId}`)}
-                                    >
-                                        Update Poster
-                                    </Button>
-                                </ButtonGroup>
-                                </>) :
+                                (
+                                    (!expired) ?
+                                    (<ButtonGroup>
+                                        <Button 
+                                            variant="contained"
+                                            color="secondary"
+                                            className={classes.button}
+                                            onClick={() => history.push('/contactus')}
+                                        >
+                                            Request Update
+                                        </Button>
+                                        <Button
+                                            onClick={() => history.push(`/user/myevents/uploadposter/${eventId}`)}
+                                        >
+                                            Update Poster
+                                        </Button>
+                                    </ButtonGroup>) :
+                                    (<>
+                                        <Chip
+                                            label="Expired"
+                                            color="secondary"
+                                        />
+                                    </>)
+                                ) :
                                 (<>
                                     <Button
                                         variant="contained"
