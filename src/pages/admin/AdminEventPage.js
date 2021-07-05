@@ -228,7 +228,7 @@ function AdminEventPage(props) {
                         <Container maxWidth="sm">
                             <ValidatorForm 
                                 onSubmit={() => {submitHandler('eventDetails')}} 
-                                instantValidate={true}
+                                instantValidate={false}
                             >
                             <Grid 
                                 container 
@@ -274,7 +274,7 @@ function AdminEventPage(props) {
                             <Container maxWidth="sm">
                                 <ValidatorForm 
                                     onSubmit={() => {submitHandler("eventAddress")}} 
-                                    instantValidate={true}
+                                    instantValidate={false}
                                 >
                                 <Grid 
                                     container 
@@ -318,7 +318,7 @@ function AdminEventPage(props) {
                             <Container maxWidth="xs">
                                 <ValidatorForm 
                                     onSubmit={() => {submitHandler('eventOrganiser')}} 
-                                    instantValidate={true}
+                                    instantValidate={false}
                                 >
                                 <Grid 
                                     direction="column"

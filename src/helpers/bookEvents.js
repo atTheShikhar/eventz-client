@@ -7,7 +7,7 @@ export const bookEvents = async (data,history,setFeedback,setButtonDisabled) => 
         const response = await axios.post('/api/book-tickets',data);
         successHandler(response,setFeedback,() => {
             setButtonDisabled(false);
-            history.push('/tickets',{tickets: response.data.createdTickets});
+            history.push('/user/mybookings',{tickets: response.data.createdTickets});
         })
     } catch(err) {
         setButtonDisabled(false);

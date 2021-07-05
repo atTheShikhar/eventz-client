@@ -26,6 +26,13 @@ const useStyles = makeStyles(theme => ({
             backgroundColor: theme.palette.grey[800]
         }
     },
+    successButton: {
+        backgroundColor: theme.palette.success.main,
+        color: "white",
+        "&:hover": {
+            backgroundColor: theme.palette.success.dark
+        }
+    },
     roundedCard: {
         borderRadius: "10px"
     },

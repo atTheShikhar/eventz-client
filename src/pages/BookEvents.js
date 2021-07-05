@@ -108,7 +108,7 @@ function BookEvents(props) {
                     severity: "success",
                     message: resData.message
                 });
-                history.push('/tickets',{tickets: resData.createdTickets});
+                history.push('/user/mybookings',{tickets: resData.createdTickets});
             },
             "prefill": {
                 "name": user.name,
