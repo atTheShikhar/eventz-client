@@ -1,7 +1,7 @@
 import { Card, CardContent } from '@material-ui/core'
 import React, { useContext, useEffect, useState } from 'react'
 import { ComponentContext } from '../context/Context';
-import { fetchData } from '../helpers/fetchData';
+import { fetchDataAuth } from '../helpers/fetchData';
 import { useHistory } from 'react-router';
 import CustomTable from './dataDisplay/CustomTable';
 import NotFound from './NotFound';
@@ -26,8 +26,9 @@ function Attendants(props) {
 
     useEffect(() => {
         const getAttendants = async () => {
-            const url = `/api/attendance/${eventId}`
-            const data = await fetchData(url,setFeedback,history);
+            const url = `/api/attendance`
+            const postData = {eventId};
+            const data = await fetchDataAuth(url,setFeedback,history,postData);
             if(data.length > 0) {
                 const count = data?.reduce((total,user) => {
                     return total+=user?.ticketCount;
