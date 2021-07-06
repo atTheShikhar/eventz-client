@@ -130,6 +130,8 @@ function VerifyTickets(props) {
                             load={refresh}
                             eventId={eventId}
                             classes={classes}
+                            url={'/api/attendance'}
+                            header={"Total Present: "}
                         />
                     </Grid>
                 </Grid>

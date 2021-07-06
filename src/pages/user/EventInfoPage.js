@@ -1,26 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React from 'react'
 import { Button, Container, Grid } from '@material-ui/core';
 import useStyles from './Styles';
 import Header from '../../components/eventpage/Header';
 import Address from '../../components/eventpage/Address';
 import Description from '../../components/eventpage/Description';
-import { fetchDataAuth } from '../../helpers/fetchData';
-import { ComponentContext } from '../../context/Context';
 import { useHistory } from 'react-router';
-import CustomTable from '../../components/dataDisplay/CustomTable';
-import NotFound from '../../components/NotFound';
+import Attendants from '../../components/Attendants';
 
-
-const headerArray = [
-    { id: 'name', label: 'Name' },
-    { id: 'email', label: 'Email' },
-    { id: 'joinedOn', label: 'Joined On' },
-    { id: 'ticketCount', label: 'Tickets Booked'},
-    { id: 'actions', lable: 'Actions'}
-];
-const dataNameArray = headerArray
-    .map(header => (header.id))
-    .filter(header => (header !== 'actions'));
 
 function EventInfoPage(props) {
     const {eventData,date,time,imgLink} = props.location.state;
@@ -38,20 +24,7 @@ function EventInfoPage(props) {
     } = eventData;
 
     const classes = useStyles();
-    const {setFeedback} = useContext(ComponentContext);
-    const [userdata,setUserdata] = useState(null);
     const history = useHistory();
-
-    useEffect(() => {
-        const getBookingsData = async () => {
-            const url = "/api/get-bookings";
-            const postData = { eventId: _id };
-            const data = await fetchDataAuth(url,setFeedback,history,postData);
-            // console.log(data);
-            await setUserdata(data);
-        } 
-        getBookingsData();
-    },[])
 
     return (
         <div className={`${classes.bgColor} ${classes.pageHeight} ${classes.vpadding}`}>
@@ -99,37 +72,26 @@ function EventInfoPage(props) {
                             <Grid item>
                                 <h2>All Bookings</h2>
                             </Grid>
-                            {
-                                (userdata !== null && userdata?.length !== 0) ?
-                                (
-                                    <Grid item>
-                                        <Button 
-                                            onClick={() => { 
-                                                history.push(`/user/verifytickets/${_id}`) 
-                                            }}
-                                            variant="contained"
-                                            className={classes.button}
-                                        >
-                                            Verify Tickets
-                                        </Button>
-                                    </Grid>
-                                ) :
-                                (<></>)
-                            }
+
+                            <Grid item>
+                                <Button 
+                                    onClick={() => { 
+                                        history.push(`/user/verifytickets/${_id}`) 
+                                    }}
+                                    variant="contained"
+                                    className={classes.button}
+                                >
+                                    Entries
+                                </Button>
+                            </Grid>
                         </Grid>
-                        {
-                            (userdata !== null && userdata?.length !== 0) ?
-                                (<CustomTable
-                                    headerArray={headerArray}
-                                    dataNameArray={dataNameArray}
-                                    dataArray={userdata}
-                                    actions={[
-                                    ]}
-                                />) :
-                                (
-                                    <NotFound/>
-                                )
-                        }
+                        <Attendants
+                            load={true}
+                            eventId={_id}
+                            classes={classes}
+                            url={'/api/get-bookings'}
+                            header={"Total Bookings: "}
+                        />
                     </Grid>
                 </Grid>
 

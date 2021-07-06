@@ -46,6 +46,7 @@ import { useContext } from 'react';
 import { UserContext } from './context/Context';
 import PaymentDetailsPage from './pages/admin/PaymentDetailsPage';
 import VerifyTickets from './pages/user/VerifyTickets';
+import Bookings from './pages/admin/Bookings';
 
 axios.defaults.withCredentials = true;
 
@@ -87,6 +88,7 @@ function App() {
 
               <AdminRoute exact path="/admin/events" component={MonitorEvents} />
               <AdminRoute exact path="/admin/event/:id" component={AdminEventPage} />
+              <AdminRoute exact path="/admin/event/bookings/:id" component={Bookings} />
               <AdminRoute exact path="/admin/messages" component={Messages} /> 
               <AdminRoute exact path="/admin/message/:id" component={MessagePage} /> 
               <AdminRoute exact path="/admin/users" component={MonitorUsers} /> 

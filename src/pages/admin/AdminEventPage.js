@@ -192,7 +192,9 @@ function AdminEventPage(props) {
                             <Button 
                                 color="primary" 
                                 //TODO: push to bookings page
-                                onClick={() => {}}
+                                onClick={() => {
+                                    history.push(`/admin/event/bookings/${id}`)
+                                }}
                             >
                                 Bookings
                             </Button>

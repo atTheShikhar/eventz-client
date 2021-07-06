@@ -10,7 +10,7 @@ const headerArray = [
     { id: 'name', label: 'Name' },
     { id: 'email', label: 'Email' },
     { id: 'joinedOn', label: 'Joined On' },
-    { id: 'ticketCount', label: 'Availed Tickets'},
+    { id: 'ticketCount', label: 'Ticket Count'},
     { id: 'actions', lable: 'Actions'}
 ];
 const dataNameArray = headerArray
@@ -18,7 +18,7 @@ const dataNameArray = headerArray
     .filter(header => (header !== 'actions'));
 
 function Attendants(props) {
-    const {eventId,load,classes} = props;
+    const {eventId,load,classes,url,header} = props;
     const {setFeedback} = useContext(ComponentContext);
     const history = useHistory();
     const [userdata,setUserdata] = useState([]);
@@ -26,7 +26,6 @@ function Attendants(props) {
 
     useEffect(() => {
         const getAttendants = async () => {
-            const url = `/api/attendance`
             const postData = {eventId};
             const data = await fetchDataAuth(url,setFeedback,history,postData);
             if(data.length > 0) {
@@ -49,7 +48,7 @@ function Attendants(props) {
                     <Card variant="outlined" style={{marginBottom: "10px"}}>
                         <CardContent>
                             <h1 className={classes.headingColor}>
-                                Participants Entered: {totalAttendants}
+                                {header || "Total: "} {totalAttendants}
                             </h1>
                         </CardContent>
                     </Card>
