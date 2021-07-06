@@ -12,7 +12,7 @@ import {
 } from '../../helpers/validators';
 
 function AddressDetailsInputs(props) {
-    const {details,handleChange} = props;
+    const {details,handleChange,disabled} = props;
     const [stateData,setStateData] = useState([{state_name: details.countryStateName,state_id: ""}]);
     const [district,setDistrict] = useState([
         {district_name: details.district},
@@ -61,6 +61,7 @@ function AddressDetailsInputs(props) {
                     onChange={handleChange('apartment')}
                     name="apartment"
                     autoFocus
+                    disabled={disabled}
                     validators={['required',maxSize(50)]}
                     errorMessages={[reqErr,maxSizeErr(50)]}
                 />
@@ -71,6 +72,7 @@ function AddressDetailsInputs(props) {
                     label="Street/Area/Colony"
                     value={details.street}
                     onChange={handleChange('street')}
+                    disabled={disabled}
                     name="street"
                     validators={['required',maxSize(100)]}
                     errorMessages={[reqErr,maxSizeErr(100)]}
@@ -81,6 +83,7 @@ function AddressDetailsInputs(props) {
                 <Textbox
                     label="States/UT"
                     select
+                    disabled={disabled}
                     value={details.countryStateName}
                     onChange={handleStateChange}
                     name="countryStateName"
@@ -99,6 +102,7 @@ function AddressDetailsInputs(props) {
                 <Textbox
                     label="District"
                     select
+                    disabled={disabled}
                     value={details.district}
                     onChange={handleChange('district')}
                     name="district"
@@ -119,6 +123,7 @@ function AddressDetailsInputs(props) {
                     value={details.pinCode}
                     onChange={handleChange('pinCode')}
                     name="pinCode"
+                    disabled={disabled}
                     validators={['required','isNumber',exactDigit(6)]}
                     errorMessages={[reqErr,numErr,exactDigitErr(6)]}
                 />

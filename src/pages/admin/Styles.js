@@ -7,11 +7,20 @@ const useStyles = makeStyles(theme => ({
     pageHeight: {
         minHeight: "90vh"
     },
+    textBlue: {
+        color: theme.palette.primary.dark
+    },
+    textRed: {
+        color: theme.palette.error.dark
+    },
     headingText: {
         color: theme.palette.grey[800]
     },
     subHeadingText: {
         color: theme.palette.grey[600]
+    },
+    underline: {
+        textDecoration: "underline"
     },
     widthScreen: {
         minWidth: "100vw"

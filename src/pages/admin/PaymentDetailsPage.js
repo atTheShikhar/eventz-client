@@ -13,12 +13,6 @@ function PaymentDetailsPage(props) {
     const viewUser = () => {
         history.push(
             `/admin/user/${data.user_id}`,
-            {
-                name: data?.name,
-                email: data?.email,
-                createdAt: data?.joinedOn,
-                imageLocation: data?.imageLocation
-            }
         )                
     }
 

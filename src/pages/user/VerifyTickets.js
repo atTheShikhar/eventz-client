@@ -129,9 +129,9 @@ function VerifyTickets(props) {
                         <Attendants
                             load={refresh}
                             eventId={eventId}
-                            classes={classes}
                             url={'/api/attendance'}
                             header={"Total Present: "}
+                            actions={[]}
                         />
                     </Grid>
                 </Grid>

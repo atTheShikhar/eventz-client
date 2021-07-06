@@ -14,7 +14,7 @@ import axios from 'axios';
 import Textbox from '../inputs/Textbox';
 
 function EventDetailsInputs(props) {
-    const {details,handleChange} = props;     
+    const {details,handleChange,disabled} = props;     
     const [genre,setGenre] = useState([details.eventGenre]); 
     const [num,setNum] = useState([details.noOfPeople]);
     const [timeLimits, setTimeLimits] = useState([details.duration]);
@@ -45,6 +45,7 @@ function EventDetailsInputs(props) {
                     value={details.eventTitle}
                     onChange={handleChange('eventTitle')}
                     name="eventTitle"
+                    disabled={disabled}
                     validators={['required',maxSize(100),regexText]}
                     errorMessages={[reqErr,maxSizeErr(100),textErr]}
                 />
@@ -55,6 +56,7 @@ function EventDetailsInputs(props) {
                     label="Genre"
                     select
                     value={details.eventGenre}
+                    disabled={disabled}
                     onChange={handleChange('eventGenre')}
                     name="eventGenre"
                 >
@@ -75,6 +77,7 @@ function EventDetailsInputs(props) {
                     value={details.noOfPeople}
                     onChange={handleChange('noOfPeople')}
                     name="noOfPeople"
+                    disabled={disabled}
                 >
                     {
                         num.map( option => (
@@ -99,6 +102,7 @@ function EventDetailsInputs(props) {
                     }}
                     validators={["futureDate"]}
                     errorMessages={[pastDateErr]}
+                    disabled={disabled}
                 />
             </Grid>
 
@@ -112,6 +116,7 @@ function EventDetailsInputs(props) {
                     InputLabelProps={{
                         shrink: true
                     }}
+                    disabled={disabled}
                 />
             </Grid>
 
@@ -122,6 +127,7 @@ function EventDetailsInputs(props) {
                     value={details.duration}
                     onChange={handleChange('duration')}
                     name="duration"
+                    disabled={disabled}
                 >
                     {
                         timeLimits.map( option => (
@@ -141,6 +147,7 @@ function EventDetailsInputs(props) {
                     value={details.isFree}
                     onChange={handleChange('isFree')}
                     name="isFree"
+                    disabled={disabled}
                 >
                     {
                         isFreeOptions.map( option => (
@@ -159,7 +166,7 @@ function EventDetailsInputs(props) {
                     value={details.price}
                     onChange={handleChange('price')}
                     name="price"
-                    disabled={details.isFree === "Yes"}
+                    disabled={details.isFree === "Yes" || disabled}
                     validators={['isFloat']}
                     errorMessages={[numErr]}
                 />
@@ -175,6 +182,7 @@ function EventDetailsInputs(props) {
                     rows={5}
                     validators={['required',maxSize(2000)]}
                     errorMessages={[reqErr,maxSizeErr(2000)]}
+                    disabled={disabled}
                 />
             </Grid>
         </>

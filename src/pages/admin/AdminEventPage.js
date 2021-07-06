@@ -28,7 +28,7 @@ function AdminEventPage(props) {
         addressForm: false,
         organiserForm: false
     });
-
+    const [disabled,setDisabled] = useState(false);
     const [details,setDetails] = useState({
         //Event Details
         eventTitle: "", eventDescription: "", noOfPeople: "Upto 100",
@@ -59,6 +59,9 @@ function AdminEventPage(props) {
                 eventDetails,eventAddress,eventOrganiser,status,
                 imageLocation,createdBy,_id,created_at,updated_at
             } = data;
+
+            if(new Date(eventDetails?.dateAndTime) < new Date())
+                await setDisabled(true);
 
             await setEventMetadata({
                 status,createdBy,_id,
@@ -191,9 +194,16 @@ function AdminEventPage(props) {
                             </Button>
                             <Button 
                                 color="primary" 
-                                //TODO: push to bookings page
                                 onClick={() => {
-                                    history.push(`/admin/event/bookings/${id}`)
+                                    history.push(
+                                        `/admin/event/bookings/${id}`,
+                                        {
+                                            userId: eventMetadata.createdBy,
+                                            title: details.eventTitle,
+                                            price: details?.price,
+                                            bookedTickets: eventMetadata.bookedTickets
+                                        }
+                                    )
                                 }}
                             >
                                 Bookings
@@ -226,7 +236,6 @@ function AdminEventPage(props) {
                     <Collapse in={showForm.eventForm} timeout="auto" unmountOnExit>
                         <CardContent>
 
-
                         <Container maxWidth="sm">
                             <ValidatorForm 
                                 onSubmit={() => {submitHandler('eventDetails')}} 
@@ -239,9 +248,12 @@ function AdminEventPage(props) {
                                     <EventDetailsInputs
                                         handleChange={handleChange}
                                         details={details}
+                                        disabled={disabled}
                                     />
                                     <Grid item xs={12}>
-                                        <SubmitButton fullWidth={true}>
+                                        <SubmitButton fullWidth={true}
+                                            disabled={disabled}
+                                        >
                                             Update Event Details
                                         </SubmitButton>
                                     </Grid>
@@ -285,9 +297,12 @@ function AdminEventPage(props) {
                                     <AddressDetailsInputs
                                         handleChange={handleChange}
                                         details={details}
+                                        disabled={disabled}
                                     />
                                     <Grid item xs={12}>
-                                        <SubmitButton fullWidth={true}>
+                                        <SubmitButton fullWidth={true}
+                                            disabled={disabled}
+                                        >
                                             Update Address Details
                                         </SubmitButton>
                                     </Grid>
@@ -330,9 +345,12 @@ function AdminEventPage(props) {
                                     <OrganiserDetailsInputs
                                         handleChange={handleChange}
                                         details={details}
+                                        disabled={disabled}
                                     /> 
                                     <Grid item xs={12}>
-                                        <SubmitButton fullWidth={true}>
+                                        <SubmitButton fullWidth={true}
+                                            disabled={disabled}
+                                        >
                                             Update Address Details
                                         </SubmitButton>
                                     </Grid>

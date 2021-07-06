@@ -52,23 +52,31 @@ function UserPage(props) {
     const {setFeedback} = useContext(ComponentContext);
 
     const {id} = useParams();
-    
-    const {
-        name,email,createdAt,imageLocation
-    } = props.location.state;
 
     const [createdEventsData,setCreatedEventsData] = useState(null);
     const [bookedEventsData,setBookedEventsData] = useState(null);
     const [transactionData,setTransactionData] = useState(null);
+    const [userdata,setUserdata] = useState(null);
 
     useEffect(() => {
         const getData = async () => {
+            const userInfo = { userId: `${id}` }
+            //Fetch Userdata
+            const userUrl = "/api/admin/user"
+            const data = await fetchDataAuth(userUrl,setFeedback,history,userInfo);
+            const {user} = data;
+            await setUserdata({
+                imageLocation: user?.imageLocation,
+                name: user?.name?.fname+" "+user?.name?.lname,
+                email: user?.email,
+                joinedOn: user?.created_at?.split('T')[0],
+                user_id: user?._id
+            });
 
             //Logic to get events created by the user
             const url = "/api/admin/events";
-            const userInfo = { userId: `${id}` }
             const eventsByUser = await fetchDataAuth(url,setFeedback,history,userInfo);
-            setCreatedEventsData(eventsByUser.events);
+            await setCreatedEventsData(eventsByUser.events);
 
             //Logic to get events booked by the user
             const bookedEventsUrl = "/api/admin/users/bookings";
@@ -131,16 +139,16 @@ function UserPage(props) {
                 <Grid item xs={4}>
                     <UserCard
                         classes={classes}
-                        imageLocation={imageLocation}
-                        name={name}
-                        email={email}
-                        joinedOn={createdAt.split(',')[0]}                        
+                        imageLocation={userdata?.imageLocation}
+                        name={userdata?.name}
+                        email={userdata?.email}
+                        joinedOn={userdata?.joinedOn}                        
                     />
                 </Grid>
 
                 <Grid item xs={8}>
                     <h2 className={classes.subHeadingText}>
-                        Events created by {name}
+                        Events created by {userdata?.name}
                     </h2>
                     {
                         createdEventsData!==null && createdEventsData.length!==0 ?
@@ -168,7 +176,7 @@ function UserPage(props) {
                 </Grid>
                 <Grid item xs={12}>
                     <h2 className={classes.subHeadingText}>
-                        Events booked by {name}
+                        Events booked by {userdata?.name}
                     </h2>
                     {
                         bookedEventsData!==null && bookedEventsData.length!==0 ?
@@ -198,7 +206,7 @@ function UserPage(props) {
                 {/*TODO: Fetch transactions and show in table*/}
                 <Grid item xs={12}>
                     <h2 className={classes.subHeadingText}>
-                        Transactions initiated By {name}
+                        Transactions initiated By {userdata?.name}
                     </h2>
                     {
                         transactionData!=null && transactionData.length!==0 ?

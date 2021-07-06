@@ -88,9 +88,9 @@ function EventInfoPage(props) {
                         <Attendants
                             load={true}
                             eventId={_id}
-                            classes={classes}
                             url={'/api/get-bookings'}
                             header={"Total Bookings: "}
+                            actions={[]}
                         />
                     </Grid>
                 </Grid>

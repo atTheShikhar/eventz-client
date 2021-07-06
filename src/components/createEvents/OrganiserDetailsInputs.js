@@ -14,7 +14,7 @@ import {
 } from '../../helpers/validators';
 
 function OrganiserDetailsInputs(props) {
-    const {details,handleChange} = props;
+    const {details,handleChange,disabled} = props;
 
     return (
         <>
@@ -27,6 +27,7 @@ function OrganiserDetailsInputs(props) {
                     autoFocus
                     validators={['required',regexText,maxSize(40)]}
                     errorMessages={[reqErr,textErr,maxSizeErr(40)]}
+                    disabled={disabled}
                 />
             </Grid>
 
@@ -38,6 +39,7 @@ function OrganiserDetailsInputs(props) {
                     name="phone"
                     validators={['required','isNumber',exactDigit(10)]}
                     errorMessages={[reqErr,numErr,exactDigitErr(10)]}
+                    disabled={disabled}
                 />
             </Grid>
 
@@ -61,6 +63,7 @@ function OrganiserDetailsInputs(props) {
                     name="organisationName"
                     validators={[regexText, maxSize(100)]}
                     errorMessages={[textErr, maxSizeErr(100)]}
+                    disabled={disabled}
                 />
             </Grid>
         </>

@@ -1,10 +1,18 @@
-import { Card, CardContent } from '@material-ui/core'
+import { Card, CardContent, makeStyles } from '@material-ui/core'
 import React, { useContext, useEffect, useState } from 'react'
 import { ComponentContext } from '../context/Context';
 import { fetchDataAuth } from '../helpers/fetchData';
 import { useHistory } from 'react-router';
 import CustomTable from './dataDisplay/CustomTable';
 import NotFound from './NotFound';
+
+const useStyles = makeStyles((theme) => ({
+    heading: {
+        fontWeight: "500",
+        color: theme.palette.grey[700],
+        padding: "10px"
+    },
+}))
 
 const headerArray = [
     { id: 'name', label: 'Name' },
@@ -18,8 +26,9 @@ const dataNameArray = headerArray
     .filter(header => (header !== 'actions'));
 
 function Attendants(props) {
-    const {eventId,load,classes,url,header} = props;
+    const {eventId,load,url,header,actions} = props;
     const {setFeedback} = useContext(ComponentContext);
+    const classes = useStyles();
     const history = useHistory();
     const [userdata,setUserdata] = useState([]);
     const [totalAttendants,setTotalAttendants] = useState(0);
@@ -46,18 +55,17 @@ function Attendants(props) {
                 (
                     <>
                     <Card variant="outlined" style={{marginBottom: "10px"}}>
-                        <CardContent>
-                            <h1 className={classes.headingColor}>
-                                {header || "Total: "} {totalAttendants}
-                            </h1>
-                        </CardContent>
+                        <h2
+                            className={classes.heading}
+                        >
+                            {header || "Total: "} {totalAttendants}
+                        </h2>
                     </Card>
                     <CustomTable
                         headerArray={headerArray}
                         dataNameArray={dataNameArray}
                         dataArray={userdata}
-                        actions={[
-                        ]}
+                        actions={actions}
                     />
                     </>
                 ):
