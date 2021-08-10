@@ -22,7 +22,6 @@ function ContactUs(props) {
         subject: "",
         message: ""
     })
-    //(feedback,question),name,email,subject,message
 
     const changeHandler = name => e => {
         setFormData({

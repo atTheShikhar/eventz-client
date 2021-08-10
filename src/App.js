@@ -98,7 +98,6 @@ function App() {
               <AdminRoute exact path="/admin/sendemail" component={SendEmail} /> 
 
                 {
-                  //TODO: Not working, fix it
                 (user?.type === 'admin') ? 
                   (<Route exact path="*" >
                     <Redirect to="/admin/events"/>

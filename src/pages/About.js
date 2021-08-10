@@ -1,5 +1,5 @@
 import React from 'react'
-import {Divider, Container, Grid,Box, makeStyles} from '@material-ui/core';
+import {Divider, Container, Grid,Box} from '@material-ui/core';
 import aboutUsImg from '../assets/about_us.svg'
 import Copyright from '../components/Copyright'
 import useStyles from './FormStyle';

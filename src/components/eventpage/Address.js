@@ -1,5 +1,5 @@
 import useStyles from './Styles'
-import { Container,Card,CardContent,Divider,Typography } from '@material-ui/core'
+import { Container,Card,CardContent,Divider} from '@material-ui/core'
 import FiberPinIcon from '@material-ui/icons/FiberPin';
 import PublicIcon from '@material-ui/icons/Public';
 import LocationCityIcon from '@material-ui/icons/LocationCity';

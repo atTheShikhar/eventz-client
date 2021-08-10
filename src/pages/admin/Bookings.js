@@ -1,4 +1,4 @@
-import { Card, CardContent, Container, Divider, Grid } from '@material-ui/core'
+import { Card, Container, Divider, Grid } from '@material-ui/core'
 import React, { useContext, useEffect, useState } from 'react'
 import Attendants from '../../components/Attendants';
 import UserCard from '../../components/cards/UserCard';
